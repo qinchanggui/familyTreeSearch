@@ -1,20 +1,16 @@
-# Family Tree
+# Family Tree (族谱)
 
 English | [中文](./README.zh.md)
 
-A family tree visualization project built with [Next.js](https://nextjs.org) for displaying and managing your family history and member relationships.
-
-## Demo Website
-
-You can visit [https://familytree.pomodiary.com/](https://familytree.pomodiary.com/) to see an online demonstration of this project.
+A family tree visualization project built with [Next.js](https://nextjs.org), for displaying and managing family history and member relationships.
 
 ## Features
 
 - Visual representation of multiple generations of family members
-- Relationship connections between family members
-- Detailed personal information records
-- Optional login authentication mechanism
-- Fully customizable interface and data
+- List view and tree view switching
+- Search by name, info, generation, and year range
+- Responsive design, works on mobile
+- Fully customizable family data
 
 ## Quick Start
 
@@ -22,98 +18,25 @@ You can visit [https://familytree.pomodiary.com/](https://familytree.pomodiary.c
 
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
 ```
 
-### Configure the Project
-
-1. Copy the environment variable template and configure it:
+### Configure
 
 ```bash
 cp .env.local.example .env.local
 ```
 
-2. Set your configurations in the `.env.local` file:
+Edit `.env.local`:
 
-```
-# Whether login authentication is required (true/false)
-NEXT_PUBLIC_REQUIRE_AUTH=false
-
-# Authentication mode (all: allow all family members, specific: only allow specific names)
-AUTH_MODE=specific
-# Specific user login name
-SPECIFIC_NAME=白景琦
-
-# Surname configuration (for website title, description, and footer)
-NEXT_PUBLIC_FAMILY_NAME=白
-
-# Application port configuration
+```env
+NEXT_PUBLIC_FAMILY_NAME=覃
 PORT=3000
 ```
 
 ### Add Family Data
 
-1. Create your family data file `family-data.json` in the `config` directory, you can refer to `family-data.example.json` or `family-data.json`.
+Create `config/family-data.json` (refer to `config/family-data.example.json`):
 
-2. Add your family member information in the following format:
-
-```json
-{
-  "generations": [
-    {
-      "title": "First Generation",
-      "people": [
-        {
-          "id": "person-id",
-          "name": "Name",
-          "info": "Person description",
-          "fatherId": "Father's ID",
-          "birthYear": 1900,
-          "deathYear": 1980
-        }
-      ]
-    }
-  ]
-}
-```
-
-Field descriptions:
-- `id`: Unique identifier for each person, used to establish relationships
-- `name`: Name
-- `info`: Personal description, life summary, etc.
-- `fatherId`: Father's ID, used to establish generational relationships
-- `birthYear`: Birth year (optional)
-- `deathYear`: Death year (optional)
-
-### Run the Project
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Visit [http://localhost:3000](http://localhost:3000) to view your family tree.
-
-## Data Format Details
-
-Family data is stored in JSON format, organized by generations:
-
-- Each generation has a title and a group of people
-- Each person includes ID, name, information, and father's ID
-- Parent-child relationships are established through `fatherId`
-- You can add spouse, children, and other important information in the info field
-
-Example:
 ```json
 {
   "generations": [
@@ -123,7 +46,8 @@ Example:
         {
           "id": "ancestor",
           "name": "Ancestor",
-          "info": "Family founder, born in 1850",
+          "info": "Family founder",
+          "fatherId": "",
           "birthYear": 1850
         }
       ]
@@ -132,20 +56,12 @@ Example:
       "title": "Second Generation",
       "people": [
         {
-          "id": "second-gen-1",
+          "id": "son-1",
           "name": "First Son",
-          "info": "Born in 1880, wife Wang",
+          "info": "Eldest son",
           "fatherId": "ancestor",
           "birthYear": 1880,
           "deathYear": 1950
-        },
-        {
-          "id": "second-gen-2",
-          "name": "Second Son",
-          "info": "Born in 1885, wife Li",
-          "fatherId": "ancestor",
-          "birthYear": 1885,
-          "deathYear": 1960
         }
       ]
     }
@@ -153,27 +69,52 @@ Example:
 }
 ```
 
+**Field descriptions:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique identifier for each person |
+| `name` | Yes | Name |
+| `info` | No | Personal description, life summary |
+| `fatherId` | No | Father's ID, for establishing parent-child relationships |
+| `birthYear` | No | Birth year |
+| `deathYear` | No | Death year |
+
+### Run
+
+```bash
+npm run dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000) to view your family tree.
+
+## Deploy to Vercel
+
+1. Push code to GitHub
+2. Go to [Vercel](https://vercel.com/new) and import the repository
+3. Add environment variable: `NEXT_PUBLIC_FAMILY_NAME`
+4. Deploy
+
+Every push to `main` branch will automatically trigger a new deployment.
+
 ## Using AI to Generate Family Data
 
-If you have a large amount of family data to organize, you can use AI to help you quickly generate JSON data in the correct format:
-
-1. Prepare your family information text, including names, relationships, and relevant information for each generation
-2. Provide the following format guide to AI (such as DeepSeek, ChatGPT, Claude, etc.):
+You can use AI (ChatGPT, Claude, etc.) to convert unstructured family information into JSON format. Provide this prompt:
 
 ```
-Please organize the family information I provide into the following JSON format:
+Please organize the family information into the following JSON format:
 {
   "generations": [
     {
       "title": "Xth Generation",
       "people": [
         {
-          "id": "unique-identifier",
+          "id": "unique-id",
           "name": "Name",
-          "info": "Detailed information",
-          "fatherId": "Father's ID",
-          "birthYear": birth year,
-          "deathYear": death year
+          "info": "Details",
+          "fatherId": "Father ID",
+          "birthYear": 1900,
+          "deathYear": 1980
         }
       ]
     }
@@ -181,40 +122,39 @@ Please organize the family information I provide into the following JSON format:
 }
 
 Requirements:
-1. Generate a unique id for each person (such as first-gen-1, second-gen-2, etc.)
-2. Correctly set fatherId to establish parent-child relationships
-3. Categorize people by generation
-4. Include spouse, achievements, etc. in the info field
-5. Use birthYear and deathYear to record birth and death years (if available)
-6. Ensure the JSON format is valid and can be directly imported into the system
+1. Generate unique id for each person
+2. Set fatherId to establish parent-child relationships
+3. Group by generation
+4. Include spouse info in the info field
+5. Ensure valid JSON
 ```
 
-3. Copy the AI-generated JSON to the `config/family-data.json` file
-4. Check and adjust the generated data to ensure relationships are accurate and the format is correct
+## Tech Stack
 
-This method can quickly convert unstructured family information into the JSON format required by the system, particularly suitable for large amounts of data.
+- [Next.js](https://nextjs.org) - React framework
+- [Tailwind CSS](https://tailwindcss.com) - Styling
+- [ReactFlow](https://reactflow.dev) - Tree visualization
 
-## Customization and Extension
+## Project Structure
 
-- Adjust the data file in `config/family-data.json` to update family information
-- Edit the `.env.local` file to change configuration and authentication methods
-
-## Deployment
-
-It is recommended to deploy your family tree project using the [Vercel platform](https://vercel.com/new):
-
-1. Push your code to GitHub/GitLab/Bitbucket
-2. Import your repository on Vercel
-3. Set environment variables
-4. Deploy
-
-## Related Services
-
-**[FateMaster.AI](https://www.fatemaster.ai)** - AI Chinese astrology website, providing intelligent fortune analysis services.
-
-## Contribution
-
-Pull Requests and Issues are welcome to improve this project.
+```
+├── config/
+│   ├── family-data.json          # Family data
+│   └── family-data.example.json  # Data template
+├── public/                       # Static assets
+├── src/
+│   ├── app/
+│   │   ├── api/                  # API routes
+│   │   ├── components/           # React components
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── data/                     # Data hooks
+│   ├── types/                    # TypeScript types
+│   └── utils/                    # Utilities
+├── .env.local.example            # Environment template
+├── next.config.ts                # Next.js config
+└── package.json
+```
 
 ## License
 

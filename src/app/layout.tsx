@@ -22,13 +22,11 @@ export const metadata: Metadata = {
   title: `${familyName}氏族谱`,
   description: `${familyName}氏家族族谱记录`,
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
+    index: true,
+    follow: true,
     googleBot: {
-      index: false,
-      follow: false,
-      noimageindex: true,
+      index: true,
+      follow: true,
     },
   },
 };
@@ -41,8 +39,6 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <head>
-        <meta name="robots" content="noindex,nofollow" />
-        <meta name="googlebot" content="noindex,nofollow" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
