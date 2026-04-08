@@ -1,0 +1,336 @@
+{
+  "generations": [
+    {
+      "title": "太始祖",
+      "people": [
+        {
+          "id": "tai-shi-zu-1",
+          "name": "廷钦公",
+          "info": "太始祖",
+          "fatherId": ""
+        }
+      ]
+    },
+    {
+      "title": "一世祖",
+      "people": [
+        {
+          "id": "yi-shi-1",
+          "name": "宗海公",
+          "info": "廷钦公长子",
+          "fatherId": "tai-shi-zu-1"
+        },
+        {
+          "id": "yi-shi-2",
+          "name": "宗雲公",
+          "info": "廷钦公之子",
+          "fatherId": "tai-shi-zu-1"
+        },
+        {
+          "id": "yi-shi-3",
+          "name": "宗正公",
+          "info": "廷钦公之子",
+          "fatherId": "tai-shi-zu-1"
+        },
+        {
+          "id": "yi-shi-4",
+          "name": "宗兴公",
+          "info": "廷钦公之子",
+          "fatherId": "tai-shi-zu-1"
+        },
+        {
+          "id": "yi-shi-5",
+          "name": "宗枝公",
+          "info": "廷钦公之子",
+          "fatherId": "tai-shi-zu-1"
+        },
+        {
+          "id": "yi-shi-6",
+          "name": "宗现公",
+          "info": "廷钦公之子",
+          "fatherId": "tai-shi-zu-1"
+        },
+        {
+          "id": "yi-shi-7",
+          "name": "宗厚公",
+          "info": "廷钦公之子",
+          "fatherId": "tai-shi-zu-1"
+        },
+        {
+          "id": "yi-shi-8",
+          "name": "宗宽公",
+          "info": "廷钦公之子",
+          "fatherId": "tai-shi-zu-1"
+        },
+        {
+          "id": "yi-shi-9",
+          "name": "宗规公",
+          "info": "廷钦公之子",
+          "fatherId": "tai-shi-zu-1"
+        }
+      ]
+    },
+    {
+      "title": "二世祖",
+      "people": [
+        {
+          "id": "er-shi-1",
+          "name": "演绍公",
+          "info": "宗海公之子",
+          "fatherId": "yi-shi-1"
+        },
+        {
+          "id": "er-shi-2",
+          "name": "演济公",
+          "info": "宗海公之子",
+          "fatherId": "yi-shi-1"
+        },
+        {
+          "id": "er-shi-3",
+          "name": "演清公",
+          "info": "宗海公之子",
+          "fatherId": "yi-shi-1"
+        },
+        {
+          "id": "er-shi-4",
+          "name": "演平公",
+          "info": "宗海公之子",
+          "fatherId": "yi-shi-1"
+        },
+        {
+          "id": "er-shi-5",
+          "name": "演明公",
+          "info": "宗海公之子",
+          "fatherId": "yi-shi-1"
+        },
+        {
+          "id": "er-shi-6",
+          "name": "演慝公",
+          "info": "宗海公之子",
+          "fatherId": "yi-shi-1"
+        },
+        {
+          "id": "er-shi-7",
+          "name": "演祥公",
+          "info": "宗海公之子",
+          "fatherId": "yi-shi-1"
+        }
+      ]
+    },
+    {
+      "title": "三世祖",
+      "people": [
+        {
+          "id": "san-shi-1",
+          "name": "善现公",
+          "info": "演绍公之子",
+          "fatherId": "er-shi-1"
+        },
+        {
+          "id": "san-shi-2",
+          "name": "有樟公",
+          "info": "演平公之子",
+          "fatherId": "er-shi-4"
+        }
+      ]
+    },
+    {
+      "title": "四世祖",
+      "people": [
+        {
+          "id": "si-shi-1",
+          "name": "帝球公",
+          "info": "善现公之子",
+          "fatherId": "san-shi-1"
+        },
+        {
+          "id": "si-shi-2",
+          "name": "覃绢公",
+          "info": "有樟公之子",
+          "fatherId": "san-shi-2"
+        },
+        {
+          "id": "si-shi-3",
+          "name": "贵哥公",
+          "info": "帝球公长子",
+          "fatherId": "si-shi-1"
+        },
+        {
+          "id": "si-shi-4",
+          "name": "音贵公",
+          "info": "帝球公之子",
+          "fatherId": "si-shi-1"
+        },
+        {
+          "id": "si-shi-5",
+          "name": "云峰公",
+          "info": "帝球公之子",
+          "fatherId": "si-shi-1"
+        },
+        {
+          "id": "si-shi-6",
+          "name": "李福公",
+          "info": "帝球公之子",
+          "fatherId": "si-shi-1"
+        },
+        {
+          "id": "si-shi-7",
+          "name": "胜聪公",
+          "info": "帝球公之子",
+          "fatherId": "si-shi-1"
+        },
+        {
+          "id": "si-shi-8",
+          "name": "胜教公",
+          "info": "帝球公之子",
+          "fatherId": "si-shi-1"
+        },
+        {
+          "id": "si-shi-9",
+          "name": "能富公",
+          "info": "覃绢公之子",
+          "fatherId": "si-shi-2"
+        },
+        {
+          "id": "si-shi-10",
+          "name": "福遇公",
+          "info": "覃绢公之子",
+          "fatherId": "si-shi-2"
+        },
+        {
+          "id": "si-shi-11",
+          "name": "福印公",
+          "info": "覃绢公之子",
+          "fatherId": "si-shi-2"
+        },
+        {
+          "id": "si-shi-12",
+          "name": "道暹公",
+          "info": "覃绢公之子",
+          "fatherId": "si-shi-2"
+        },
+        {
+          "id": "si-shi-13",
+          "name": "妙法公",
+          "info": "覃绢公之子",
+          "fatherId": "si-shi-2"
+        },
+        {
+          "id": "si-shi-14",
+          "name": "庆遅公",
+          "info": "覃绢公之子",
+          "fatherId": "si-shi-2"
+        },
+        {
+          "id": "si-shi-15",
+          "name": "长妙遅公",
+          "info": "覃绢公之子",
+          "fatherId": "si-shi-2"
+        }
+      ]
+    },
+    {
+      "title": "五世祖",
+      "people": [
+        {
+          "id": "wu-shi-1",
+          "name": "曰广公",
+          "info": "贵哥公之子",
+          "fatherId": "si-shi-3"
+        },
+        {
+          "id": "wu-shi-2",
+          "name": "曰林公",
+          "info": "贵哥公之子",
+          "fatherId": "si-shi-3"
+        },
+        {
+          "id": "wu-shi-3",
+          "name": "明甚公",
+          "info": "音贵公之子",
+          "fatherId": "si-shi-4"
+        }
+      ]
+    },
+    {
+      "title": "六世祖",
+      "people": [
+        {
+          "id": "liu-shi-1",
+          "name": "学训公",
+          "info": "明甚公之子",
+          "fatherId": "wu-shi-3"
+        },
+        {
+          "id": "liu-shi-2",
+          "name": "学全公",
+          "info": "明甚公之子",
+          "fatherId": "wu-shi-3"
+        }
+      ]
+    },
+    {
+      "title": "七世祖",
+      "people": [
+        {
+          "id": "qi-shi-1",
+          "name": "郧帥公",
+          "info": "学全公之子",
+          "fatherId": "liu-shi-2"
+        }
+      ]
+    },
+    {
+      "title": "八世祖",
+      "people": [
+        {
+          "id": "ba-shi-1",
+          "name": "社萱公",
+          "info": "郧帥公之子",
+          "fatherId": "qi-shi-1"
+        },
+        {
+          "id": "ba-shi-2",
+          "name": "振萱公",
+          "info": "郧帥公之子",
+          "fatherId": "qi-shi-1"
+        }
+      ]
+    },
+    {
+      "title": "九世祖",
+      "people": [
+        {
+          "id": "jiu-shi-1",
+          "name": "朝茂公",
+          "info": "振萱公之子",
+          "fatherId": "ba-shi-2"
+        },
+        {
+          "id": "jiu-shi-2",
+          "name": "朝聖公",
+          "info": "振萱公之子",
+          "fatherId": "ba-shi-2"
+        },
+        {
+          "id": "jiu-shi-3",
+          "name": "朝相公",
+          "info": "振萱公之子",
+          "fatherId": "ba-shi-2"
+        },
+        {
+          "id": "jiu-shi-4",
+          "name": "朝护公",
+          "info": "振萱公之子",
+          "fatherId": "ba-shi-2"
+        },
+        {
+          "id": "jiu-shi-5",
+          "name": "朝元公",
+          "info": "振萱公之子",
+          "fatherId": "ba-shi-2"
+        }
+      ]
+    }
+  ]
+}
