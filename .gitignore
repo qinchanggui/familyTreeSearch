@@ -1,6 +1,27 @@
+# 依赖
 node_modules/
+
+# 构建产物
 .next/
 .open-next/
-.env*.local
 out/
+
+# 环境文件
+.env*.local
+
+# Cloudflare
 .wrangler/
+
+# 日志
+*.log
+
+# 开发工具
+CLAUDE.md
+skills/
+
+# 锁文件（只保留 package-lock.json）
+pnpm-lock.yaml
+
+# IDE
+.vscode/
+.idea/
