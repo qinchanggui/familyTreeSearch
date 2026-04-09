@@ -3,7 +3,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import FamilyTree from './components/FamilyTree';
 import TreeView from './components/TreeView';
-import AccordionTreeView from './components/AccordionTreeView';
 import TimelineView from './components/TimelineView';
 import Footer from './components/Footer';
 import SearchBar, { SearchFilters } from './components/SearchBar';
@@ -14,8 +13,7 @@ import { searchFamilyData, createFilteredFamilyData, SearchResult } from '@/util
 import { buildFamilyTree } from '@/utils/familyTree';
 
 export default function Home() {
-  const [viewMode, setViewMode] = useState<'list' | 'tree'>('list');
-  const [treeSubMode, setTreeSubMode] = useState<'flow' | 'accordion' | 'timeline'>('flow');
+  const [viewMode, setViewMode] = useState<'list' | 'timeline' | 'tree'>('list');
   const { data: familyData, loading: dataLoading, error: dataError } = useFamilyData();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -101,6 +99,18 @@ export default function Home() {
               </button>
               <button
                 type="button"
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium flex items-center border-l-0 ${
+                  viewMode === 'timeline'
+                    ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                }`}
+                onClick={() => setViewMode('timeline')}
+              >
+                <Squares2X2Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                时间线
+              </button>
+              <button
+                type="button"
                 className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-r-md flex items-center ${
                   viewMode === 'tree'
                     ? 'bg-blue-50 text-blue-700 border border-blue-200'
@@ -155,49 +165,17 @@ export default function Home() {
             searchTerm={searchTerm}
             searchInInfo={searchFilters.searchInInfo}
           />
+        ) : viewMode === 'timeline' ? (
+          <TimelineView data={familyData} />
         ) : (
           <div>
             {/* PC端：ReactFlow树状图 */}
             <div className="hidden sm:block">
               <TreeView data={treeData} />
             </div>
-            {/* 手机端：方案切换 */}
+            {/* 手机端：时间线模式 */}
             <div className="sm:hidden">
-              <div className="flex gap-2 px-3 mb-3">
-                <button
-                  className={`flex-1 py-2 text-xs font-medium rounded-lg transition-colors ${
-                    treeSubMode === 'flow'
-                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                      : 'bg-white text-gray-600 border border-gray-200'
-                  }`}
-                  onClick={() => setTreeSubMode('flow')}
-                >
-                  树状图
-                </button>
-                <button
-                  className={`flex-1 py-2 text-xs font-medium rounded-lg transition-colors ${
-                    treeSubMode === 'accordion'
-                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                      : 'bg-white text-gray-600 border border-gray-200'
-                  }`}
-                  onClick={() => setTreeSubMode('accordion')}
-                >
-                  手风琴
-                </button>
-                <button
-                  className={`flex-1 py-2 text-xs font-medium rounded-lg transition-colors ${
-                    treeSubMode === 'timeline'
-                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                      : 'bg-white text-gray-600 border border-gray-200'
-                  }`}
-                  onClick={() => setTreeSubMode('timeline')}
-                >
-                  时间线
-                </button>
-              </div>
-              {treeSubMode === 'flow' && <TreeView data={treeData} />}
-              {treeSubMode === 'accordion' && <AccordionTreeView data={familyData} />}
-              {treeSubMode === 'timeline' && <TimelineView data={familyData} />}
+              <TimelineView data={familyData} />
             </div>
           </div>
         )}

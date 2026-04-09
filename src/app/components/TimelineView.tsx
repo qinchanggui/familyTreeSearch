@@ -75,7 +75,7 @@ export default function TimelineView({ data }: TimelineViewProps) {
     }
 
     return (
-        <div className="p-3">
+        <div className="p-3 max-w-2xl mx-auto">
             <div className="flex items-center justify-between mb-3">
                 <h2 className="text-sm font-bold text-gray-700">族谱时间线</h2>
                 <p className="text-[10px] text-gray-400">点击展开世代</p>
