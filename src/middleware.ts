@@ -6,7 +6,6 @@ const RATE_LIMIT = 100;
 const WINDOW_MS = 60 * 1000;
 
 export function middleware(request: NextRequest) {
-  // 仅对 API 路由限流
   if (!request.nextUrl.pathname.startsWith('/api/')) {
     return NextResponse.next();
   }

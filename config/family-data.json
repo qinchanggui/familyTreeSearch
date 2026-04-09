@@ -27,7 +27,7 @@
         {
           "id": "g1-2",
           "name": "宗雲公",
-          "info": "廷钦公次子，无嗣",
+          "info": "廷钦公次子",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -35,7 +35,7 @@
         {
           "id": "g1-3",
           "name": "宗正公",
-          "info": "廷钦公三子，无嗣",
+          "info": "廷钦公三子",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -43,7 +43,7 @@
         {
           "id": "g1-4",
           "name": "宗兴公",
-          "info": "廷钦公四子，无嗣",
+          "info": "廷钦公四子",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -51,7 +51,7 @@
         {
           "id": "g1-5",
           "name": "宗枝公",
-          "info": "廷钦公五子，无嗣",
+          "info": "廷钦公五子",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -59,7 +59,7 @@
         {
           "id": "g1-6",
           "name": "宗现公",
-          "info": "廷钦公六子，无嗣",
+          "info": "廷钦公六子",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -67,7 +67,7 @@
         {
           "id": "g1-7",
           "name": "宗厚公",
-          "info": "廷钦公七子，无嗣",
+          "info": "廷钦公七子",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -75,7 +75,7 @@
         {
           "id": "g1-8",
           "name": "宗宽公",
-          "info": "廷钦公八子，无嗣",
+          "info": "廷钦公八子",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -83,7 +83,7 @@
         {
           "id": "g1-9",
           "name": "宗规公",
-          "info": "廷钦公九子，无嗣",
+          "info": "廷钦公九子",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -104,7 +104,7 @@
         {
           "id": "g2-2",
           "name": "演济公",
-          "info": "宗海公次子，无嗣",
+          "info": "宗海公次子",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -112,7 +112,7 @@
         {
           "id": "g2-3",
           "name": "演清公",
-          "info": "宗海公三子，无嗣",
+          "info": "宗海公三子",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -128,7 +128,7 @@
         {
           "id": "g2-5",
           "name": "演明公",
-          "info": "宗海公五子，无嗣",
+          "info": "宗海公五子",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -136,7 +136,7 @@
         {
           "id": "g2-6",
           "name": "演慝公",
-          "info": "宗海公六子，无嗣",
+          "info": "宗海公六子",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -144,7 +144,7 @@
         {
           "id": "g2-7",
           "name": "演祥公",
-          "info": "宗海公七子，无嗣",
+          "info": "宗海公七子",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -215,7 +215,7 @@
         {
           "id": "g5-3",
           "name": "云峰公",
-          "info": "帝球公三子，无嗣",
+          "info": "帝球公三子",
           "fatherId": "g4-1",
           "birthYear": null,
           "deathYear": null
@@ -223,7 +223,7 @@
         {
           "id": "g5-4",
           "name": "李福公",
-          "info": "帝球公四子，无嗣",
+          "info": "帝球公四子",
           "fatherId": "g4-1",
           "birthYear": null,
           "deathYear": null
@@ -231,7 +231,7 @@
         {
           "id": "g5-5",
           "name": "胜聪公",
-          "info": "帝球公五子，无嗣",
+          "info": "帝球公五子",
           "fatherId": "g4-1",
           "birthYear": null,
           "deathYear": null
@@ -239,7 +239,7 @@
         {
           "id": "g5-6",
           "name": "胜教公",
-          "info": "帝球公六子，无嗣",
+          "info": "帝球公六子",
           "fatherId": "g4-1",
           "birthYear": null,
           "deathYear": null
@@ -247,7 +247,7 @@
         {
           "id": "g5-7",
           "name": "能富公",
-          "info": "覃绢公长子，无嗣",
+          "info": "覃绢公长子",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -255,7 +255,7 @@
         {
           "id": "g5-8",
           "name": "福遇公",
-          "info": "覃绢公次子，无嗣",
+          "info": "覃绢公次子",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -263,7 +263,7 @@
         {
           "id": "g5-9",
           "name": "福印公",
-          "info": "覃绢公三子，无嗣",
+          "info": "覃绢公三子",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -271,7 +271,7 @@
         {
           "id": "g5-10",
           "name": "道暹公",
-          "info": "覃绢公四子，无嗣",
+          "info": "覃绢公四子",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -279,7 +279,7 @@
         {
           "id": "g5-11",
           "name": "妙法公",
-          "info": "覃绢公五子，无嗣",
+          "info": "覃绢公五子",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -287,7 +287,7 @@
         {
           "id": "g5-12",
           "name": "庆遅公",
-          "info": "覃绢公六子，无嗣",
+          "info": "覃绢公六子",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -295,7 +295,7 @@
         {
           "id": "g5-13",
           "name": "长妙遅公",
-          "info": "覃绢公七子，无嗣",
+          "info": "覃绢公七子",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -308,7 +308,7 @@
         {
           "id": "g6-1",
           "name": "曰广公",
-          "info": "贵哥公长子，无嗣",
+          "info": "贵哥公长子",
           "fatherId": "g5-1",
           "birthYear": null,
           "deathYear": null
@@ -316,7 +316,7 @@
         {
           "id": "g6-2",
           "name": "曰林公",
-          "info": "贵哥公次子，无嗣",
+          "info": "贵哥公次子",
           "fatherId": "g5-1",
           "birthYear": null,
           "deathYear": null
@@ -337,7 +337,7 @@
         {
           "id": "g7-1",
           "name": "学训公",
-          "info": "明甚公长子，无嗣",
+          "info": "明甚公长子",
           "fatherId": "g6-3",
           "birthYear": null,
           "deathYear": null
@@ -371,7 +371,7 @@
         {
           "id": "g9-1",
           "name": "社萱公",
-          "info": "郧帥公长子，无嗣",
+          "info": "郧帥公长子",
           "fatherId": "g8-1",
           "birthYear": null,
           "deathYear": null
@@ -400,7 +400,7 @@
         {
           "id": "g10-2",
           "name": "朝茂公",
-          "info": "振萱之子，无嗣",
+          "info": "振萱之子",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -408,7 +408,7 @@
         {
           "id": "g10-3",
           "name": "朝相公",
-          "info": "振萱之子，无嗣",
+          "info": "振萱之子",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -416,7 +416,7 @@
         {
           "id": "g10-4",
           "name": "朝护公",
-          "info": "振萱之子，无嗣",
+          "info": "振萱之子",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -424,7 +424,7 @@
         {
           "id": "g10-5",
           "name": "朝元公",
-          "info": "振萱之子，无嗣",
+          "info": "振萱之子",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -527,7 +527,7 @@
         {
           "id": "g13-4",
           "name": "志亮",
-          "info": "维宁公四子，无嗣",
+          "info": "维宁公四子",
           "fatherId": "g12-1",
           "birthYear": null,
           "deathYear": null
@@ -543,7 +543,7 @@
         {
           "id": "g13-6",
           "name": "志镛",
-          "info": "维雅公子，无嗣",
+          "info": "维雅公子",
           "fatherId": "g12-3",
           "birthYear": null,
           "deathYear": null
@@ -551,7 +551,7 @@
         {
           "id": "g13-7",
           "name": "志美",
-          "info": "维昭公长子，无嗣",
+          "info": "维昭公长子",
           "fatherId": "g12-4",
           "birthYear": null,
           "deathYear": null
@@ -580,7 +580,7 @@
         {
           "id": "g14-1",
           "name": "业嵩",
-          "info": "志胡公子，无嗣",
+          "info": "志胡公子",
           "fatherId": "g13-1",
           "birthYear": null,
           "deathYear": null
@@ -588,7 +588,7 @@
         {
           "id": "g14-2",
           "name": "业添",
-          "info": "志信公子，无嗣",
+          "info": "志信公子",
           "fatherId": "g13-2",
           "birthYear": null,
           "deathYear": null
@@ -596,7 +596,7 @@
         {
           "id": "g14-3",
           "name": "业辉",
-          "info": "志明公子，无嗣",
+          "info": "志明公子",
           "fatherId": "g13-3",
           "birthYear": null,
           "deathYear": null
@@ -673,7 +673,7 @@
         {
           "id": "g15-1",
           "name": "英进",
-          "info": "业安公子，无嗣",
+          "info": "业安公子",
           "fatherId": "g14-4",
           "birthYear": null,
           "deathYear": null
@@ -705,7 +705,7 @@
         {
           "id": "g15-5",
           "name": "世才",
-          "info": "业情公四子，无嗣",
+          "info": "业情公四子",
           "fatherId": "g14-5",
           "birthYear": null,
           "deathYear": null
@@ -745,7 +745,7 @@
         {
           "id": "g15-10",
           "name": "鹏才",
-          "info": "业纯公次子，无嗣",
+          "info": "业纯公次子",
           "fatherId": "g14-8",
           "birthYear": null,
           "deathYear": null
@@ -753,7 +753,7 @@
         {
           "id": "g15-11",
           "name": "颜才",
-          "info": "业纯公三子，无嗣",
+          "info": "业纯公三子",
           "fatherId": "g14-8",
           "birthYear": null,
           "deathYear": null
@@ -809,7 +809,7 @@
         {
           "id": "g15-18",
           "name": "经才",
-          "info": "业精公三子，无嗣",
+          "info": "业精公三子",
           "fatherId": "g14-11",
           "birthYear": null,
           "deathYear": null
@@ -942,7 +942,7 @@
         {
           "id": "g16-15",
           "name": "瑞海",
-          "info": "其才公三子，无嗣",
+          "info": "其才公三子",
           "fatherId": "g15-9",
           "birthYear": null,
           "deathYear": null
@@ -982,7 +982,7 @@
         {
           "id": "g16-20",
           "name": "瑞廷",
-          "info": "骥才公长子，无嗣",
+          "info": "骥才公长子",
           "fatherId": "g15-13",
           "birthYear": null,
           "deathYear": null
@@ -1022,7 +1022,7 @@
         {
           "id": "g16-25",
           "name": "瑞珍",
-          "info": "敏才公长子，无嗣",
+          "info": "敏才公长子",
           "fatherId": "g15-17",
           "birthYear": null,
           "deathYear": null
@@ -1054,7 +1054,7 @@
         {
           "id": "g16-29",
           "name": "瑞辉",
-          "info": "济才公子，无嗣",
+          "info": "济才公子",
           "fatherId": "g15-19",
           "birthYear": null,
           "deathYear": null
@@ -1067,7 +1067,7 @@
         {
           "id": "g17-1",
           "name": "肇端",
-          "info": "瑞云公长子，无嗣",
+          "info": "瑞云公长子",
           "fatherId": "g16-1",
           "birthYear": null,
           "deathYear": null
@@ -1243,7 +1243,7 @@
         {
           "id": "g17-23",
           "name": "肇贵",
-          "info": "中各公次子，无嗣",
+          "info": "中各公次子",
           "fatherId": "g16-10",
           "birthYear": null,
           "deathYear": null
@@ -1308,7 +1308,7 @@
         {
           "id": "g17-31",
           "name": "肇宁",
-          "info": "瑞波公次子，无嗣",
+          "info": "瑞波公次子",
           "fatherId": "g16-14",
           "birthYear": null,
           "deathYear": null
@@ -1324,7 +1324,7 @@
         {
           "id": "g17-33",
           "name": "肇钦",
-          "info": "瑞洲公次子，无嗣",
+          "info": "瑞洲公次子",
           "fatherId": "g16-16",
           "birthYear": null,
           "deathYear": null
@@ -1340,7 +1340,7 @@
         {
           "id": "g17-35",
           "name": "肇涌",
-          "info": "瑞湖公次子，无嗣",
+          "info": "瑞湖公次子",
           "fatherId": "g16-17",
           "birthYear": null,
           "deathYear": null
@@ -1380,7 +1380,7 @@
         {
           "id": "g17-40",
           "name": "肇德",
-          "info": "瑞良公次子，无嗣",
+          "info": "瑞良公次子",
           "fatherId": "g16-19",
           "birthYear": null,
           "deathYear": null
@@ -1521,7 +1521,7 @@
         {
           "id": "g18-1",
           "name": "观佳",
-          "info": "肇杰公子，无嗣",
+          "info": "肇杰公子",
           "fatherId": "g17-2",
           "birthYear": null,
           "deathYear": null
@@ -1545,7 +1545,7 @@
         {
           "id": "g18-4",
           "name": "喜佳",
-          "info": "肇伟公长子，无嗣",
+          "info": "肇伟公长子",
           "fatherId": "g17-4",
           "birthYear": null,
           "deathYear": null
@@ -1633,7 +1633,7 @@
         {
           "id": "g18-15",
           "name": "兴佳",
-          "info": "肇记公子，无嗣",
+          "info": "肇记公子",
           "fatherId": "g17-11",
           "birthYear": null,
           "deathYear": null
@@ -1641,7 +1641,7 @@
         {
           "id": "g18-16",
           "name": "乐佳",
-          "info": "肇汉公子，无嗣",
+          "info": "肇汉公子",
           "fatherId": "g17-12",
           "birthYear": null,
           "deathYear": null
@@ -1665,7 +1665,7 @@
         {
           "id": "g18-19",
           "name": "炎佳",
-          "info": "肇新公长子，无嗣",
+          "info": "肇新公长子",
           "fatherId": "g17-14",
           "birthYear": null,
           "deathYear": null
@@ -1697,7 +1697,7 @@
         {
           "id": "g18-23",
           "name": "鑫佳",
-          "info": "肇荣公长子，无嗣",
+          "info": "肇荣公长子",
           "fatherId": "g17-16",
           "birthYear": null,
           "deathYear": null
@@ -1705,7 +1705,7 @@
         {
           "id": "g18-24",
           "name": "逸佳",
-          "info": "肇荣公次子，无嗣",
+          "info": "肇荣公次子",
           "fatherId": "g17-16",
           "birthYear": null,
           "deathYear": null
@@ -1713,7 +1713,7 @@
         {
           "id": "g18-25",
           "name": "秋佳",
-          "info": "肇源公长子，无嗣",
+          "info": "肇源公长子",
           "fatherId": "g17-17",
           "birthYear": null,
           "deathYear": null
@@ -1729,7 +1729,7 @@
         {
           "id": "g18-27",
           "name": "见佳",
-          "info": "肇东公子，无嗣",
+          "info": "肇东公子",
           "fatherId": "g17-18",
           "birthYear": null,
           "deathYear": null
@@ -1745,7 +1745,7 @@
         {
           "id": "g18-29",
           "name": "正佳",
-          "info": "肇艺公子，无嗣",
+          "info": "肇艺公子",
           "fatherId": "g17-20",
           "birthYear": null,
           "deathYear": null
@@ -1753,7 +1753,7 @@
         {
           "id": "g18-30",
           "name": "展佳",
-          "info": "肇勇公子，无嗣",
+          "info": "肇勇公子",
           "fatherId": "g17-21",
           "birthYear": null,
           "deathYear": null
@@ -1761,7 +1761,7 @@
         {
           "id": "g18-31",
           "name": "进佳",
-          "info": "肇志公子，无嗣",
+          "info": "肇志公子",
           "fatherId": "g17-22",
           "birthYear": null,
           "deathYear": null
@@ -1769,7 +1769,7 @@
         {
           "id": "g18-32",
           "name": "益佳",
-          "info": "肇能公子，无嗣",
+          "info": "肇能公子",
           "fatherId": "g17-24",
           "birthYear": null,
           "deathYear": null
@@ -1777,7 +1777,7 @@
         {
           "id": "g18-33",
           "name": "思睿",
-          "info": "肇干公子，无嗣",
+          "info": "肇干公子",
           "fatherId": "g17-25",
           "birthYear": null,
           "deathYear": null
@@ -1785,7 +1785,7 @@
         {
           "id": "g18-34",
           "name": "水佳",
-          "info": "肇来公子，无嗣",
+          "info": "肇来公子",
           "fatherId": "g17-26",
           "birthYear": null,
           "deathYear": null
@@ -1793,7 +1793,7 @@
         {
           "id": "g18-35",
           "name": "谊佳",
-          "info": "肇富公子，无嗣",
+          "info": "肇富公子",
           "fatherId": "g17-27",
           "birthYear": null,
           "deathYear": null
@@ -1801,7 +1801,7 @@
         {
           "id": "g18-36",
           "name": "昱佳",
-          "info": "肇勇2公长子，无嗣",
+          "info": "肇勇2公长子",
           "fatherId": "g17-28",
           "birthYear": null,
           "deathYear": null,
@@ -1810,7 +1810,7 @@
         {
           "id": "g18-37",
           "name": "汇佳",
-          "info": "肇勇2公次子，无嗣",
+          "info": "肇勇2公次子",
           "fatherId": "g17-28",
           "birthYear": null,
           "deathYear": null,
@@ -1819,7 +1819,7 @@
         {
           "id": "g18-38",
           "name": "迎佳",
-          "info": "肇敏公长子，无嗣",
+          "info": "肇敏公长子",
           "fatherId": "g17-29",
           "birthYear": null,
           "deathYear": null
@@ -1827,7 +1827,7 @@
         {
           "id": "g18-39",
           "name": "信佳",
-          "info": "肇敏公次子，无嗣",
+          "info": "肇敏公次子",
           "fatherId": "g17-29",
           "birthYear": null,
           "deathYear": null
@@ -1835,7 +1835,7 @@
         {
           "id": "g18-40",
           "name": "增佳",
-          "info": "肇静公子，无嗣",
+          "info": "肇静公子",
           "fatherId": "g17-30",
           "birthYear": null,
           "deathYear": null
@@ -1843,7 +1843,7 @@
         {
           "id": "g18-41",
           "name": "潇茗",
-          "info": "肇杨公子，无嗣",
+          "info": "肇杨公子",
           "fatherId": "g17-32",
           "birthYear": null,
           "deathYear": null
@@ -1851,7 +1851,7 @@
         {
           "id": "g18-42",
           "name": "烨佳",
-          "info": "肇斌公长子，无嗣",
+          "info": "肇斌公长子",
           "fatherId": "g17-34",
           "birthYear": null,
           "deathYear": null
@@ -1859,7 +1859,7 @@
         {
           "id": "g18-43",
           "name": "炼佳",
-          "info": "肇斌公次子，无嗣",
+          "info": "肇斌公次子",
           "fatherId": "g17-34",
           "birthYear": null,
           "deathYear": null
@@ -1907,7 +1907,7 @@
         {
           "id": "g18-49",
           "name": "富佳",
-          "info": "肇尤公次子，无嗣",
+          "info": "肇尤公次子",
           "fatherId": "g17-41",
           "birthYear": null,
           "deathYear": null
@@ -1987,7 +1987,7 @@
         {
           "id": "g18-59",
           "name": "满佳",
-          "info": "肇仍公次子，无嗣",
+          "info": "肇仍公次子",
           "fatherId": "g17-45",
           "birthYear": null,
           "deathYear": null
@@ -1995,7 +1995,7 @@
         {
           "id": "g18-60",
           "name": "德佳",
-          "info": "肇锐公长子，无嗣",
+          "info": "肇锐公长子",
           "fatherId": "g17-46",
           "birthYear": null,
           "deathYear": null
@@ -2011,7 +2011,7 @@
         {
           "id": "g18-62",
           "name": "航佳",
-          "info": "肇刚公子，无嗣",
+          "info": "肇刚公子",
           "fatherId": "g17-47",
           "birthYear": null,
           "deathYear": null
@@ -2027,7 +2027,7 @@
         {
           "id": "g18-64",
           "name": "奕佳",
-          "info": "肇飞公子，无嗣",
+          "info": "肇飞公子",
           "fatherId": "g17-49",
           "birthYear": null,
           "deathYear": null
@@ -2059,7 +2059,7 @@
         {
           "id": "g18-68",
           "name": "洪佳",
-          "info": "肇其公次子，无嗣",
+          "info": "肇其公次子",
           "fatherId": "g17-51",
           "birthYear": null,
           "deathYear": null
@@ -2083,7 +2083,7 @@
         {
           "id": "g18-71",
           "name": "超佳",
-          "info": "肇怀公三子，无嗣",
+          "info": "肇怀公三子",
           "fatherId": "g17-52",
           "birthYear": null,
           "deathYear": null
@@ -2099,7 +2099,7 @@
         {
           "id": "g18-73",
           "name": "胜佳",
-          "info": "肇庆公次子，无嗣",
+          "info": "肇庆公次子",
           "fatherId": "g17-53",
           "birthYear": null,
           "deathYear": null
@@ -2131,7 +2131,7 @@
         {
           "id": "g18-77",
           "name": "万佳",
-          "info": "肇全公次子，无嗣",
+          "info": "肇全公次子",
           "fatherId": "g17-55",
           "birthYear": null,
           "deathYear": null
@@ -2139,7 +2139,7 @@
         {
           "id": "g18-78",
           "name": "锡佳",
-          "info": "肇耿公长子，无嗣",
+          "info": "肇耿公长子",
           "fatherId": "g17-56",
           "birthYear": null,
           "deathYear": null
@@ -2147,7 +2147,7 @@
         {
           "id": "g18-79",
           "name": "玉佳",
-          "info": "肇耿公次子，无嗣",
+          "info": "肇耿公次子",
           "fatherId": "g17-56",
           "birthYear": null,
           "deathYear": null
@@ -2160,7 +2160,7 @@
         {
           "id": "g19-1",
           "name": "荫平",
-          "info": "昌佳公子，无嗣",
+          "info": "昌佳公子",
           "fatherId": "g18-2",
           "birthYear": null,
           "deathYear": null
@@ -2168,7 +2168,7 @@
         {
           "id": "g19-2",
           "name": "镇平",
-          "info": "燕佳公子，无嗣",
+          "info": "燕佳公子",
           "fatherId": "g18-3",
           "birthYear": null,
           "deathYear": null
@@ -2176,7 +2176,7 @@
         {
           "id": "g19-3",
           "name": "淞平",
-          "info": "青佳公子，无嗣",
+          "info": "青佳公子",
           "fatherId": "g18-5",
           "birthYear": null,
           "deathYear": null
@@ -2184,7 +2184,7 @@
         {
           "id": "g19-4",
           "name": "津平",
-          "info": "佳能公子，无嗣",
+          "info": "佳能公子",
           "fatherId": "g18-6",
           "birthYear": null,
           "deathYear": null
@@ -2192,7 +2192,7 @@
         {
           "id": "g19-5",
           "name": "洛平",
-          "info": "佳寅公子，无嗣",
+          "info": "佳寅公子",
           "fatherId": "g18-7",
           "birthYear": null,
           "deathYear": null
@@ -2200,7 +2200,7 @@
         {
           "id": "g19-6",
           "name": "思平",
-          "info": "耀佳公子，无嗣",
+          "info": "耀佳公子",
           "fatherId": "g18-8",
           "birthYear": null,
           "deathYear": null
@@ -2208,7 +2208,7 @@
         {
           "id": "g19-7",
           "name": "林平",
-          "info": "宇佳公子，无嗣",
+          "info": "宇佳公子",
           "fatherId": "g18-9",
           "birthYear": null,
           "deathYear": null
@@ -2216,7 +2216,7 @@
         {
           "id": "g19-8",
           "name": "铧平",
-          "info": "世佳公长子，无嗣",
+          "info": "世佳公长子",
           "fatherId": "g18-10",
           "birthYear": null,
           "deathYear": null
@@ -2224,7 +2224,7 @@
         {
           "id": "g19-9",
           "name": "译平",
-          "info": "世佳公次子，无嗣",
+          "info": "世佳公次子",
           "fatherId": "g18-10",
           "birthYear": null,
           "deathYear": null
@@ -2232,7 +2232,7 @@
         {
           "id": "g19-10",
           "name": "革平",
-          "info": "志佳公子，无嗣",
+          "info": "志佳公子",
           "fatherId": "g18-11",
           "birthYear": null,
           "deathYear": null
@@ -2240,7 +2240,7 @@
         {
           "id": "g19-11",
           "name": "皓平",
-          "info": "江佳公子，无嗣",
+          "info": "江佳公子",
           "fatherId": "g18-12",
           "birthYear": null,
           "deathYear": null
@@ -2248,7 +2248,7 @@
         {
           "id": "g19-12",
           "name": "宋平",
-          "info": "业佳公子，无嗣",
+          "info": "业佳公子",
           "fatherId": "g18-13",
           "birthYear": null,
           "deathYear": null
@@ -2256,7 +2256,7 @@
         {
           "id": "g19-13",
           "name": "关平",
-          "info": "泽佳公子，无嗣",
+          "info": "泽佳公子",
           "fatherId": "g18-14",
           "birthYear": null,
           "deathYear": null
@@ -2264,7 +2264,7 @@
         {
           "id": "g19-14",
           "name": "钊平",
-          "info": "健佳公长子，无嗣",
+          "info": "健佳公长子",
           "fatherId": "g18-17",
           "birthYear": null,
           "deathYear": null
@@ -2272,7 +2272,7 @@
         {
           "id": "g19-15",
           "name": "锐平",
-          "info": "健佳公次子，无嗣",
+          "info": "健佳公次子",
           "fatherId": "g18-17",
           "birthYear": null,
           "deathYear": null
@@ -2280,7 +2280,7 @@
         {
           "id": "g19-16",
           "name": "延平",
-          "info": "彬佳公子，无嗣",
+          "info": "彬佳公子",
           "fatherId": "g18-18",
           "birthYear": null,
           "deathYear": null
@@ -2288,7 +2288,7 @@
         {
           "id": "g19-17",
           "name": "旺平",
-          "info": "栋佳公子，无嗣",
+          "info": "栋佳公子",
           "fatherId": "g18-20",
           "birthYear": null,
           "deathYear": null
@@ -2296,7 +2296,7 @@
         {
           "id": "g19-18",
           "name": "楠平",
-          "info": "艺佳公子，无嗣",
+          "info": "艺佳公子",
           "fatherId": "g18-21",
           "birthYear": null,
           "deathYear": null
@@ -2304,7 +2304,7 @@
         {
           "id": "g19-19",
           "name": "曦平",
-          "info": "棋佳公子，无嗣",
+          "info": "棋佳公子",
           "fatherId": "g18-22",
           "birthYear": null,
           "deathYear": null
@@ -2312,7 +2312,7 @@
         {
           "id": "g19-20",
           "name": "泷平",
-          "info": "卓佳公子，无嗣",
+          "info": "卓佳公子",
           "fatherId": "g18-26",
           "birthYear": null,
           "deathYear": null
@@ -2320,7 +2320,7 @@
         {
           "id": "g19-21",
           "name": "康平",
-          "info": "以佳公长子，无嗣",
+          "info": "以佳公长子",
           "fatherId": "g18-28",
           "birthYear": null,
           "deathYear": null
@@ -2328,7 +2328,7 @@
         {
           "id": "g19-22",
           "name": "舒平",
-          "info": "以佳公次子，无嗣",
+          "info": "以佳公次子",
           "fatherId": "g18-28",
           "birthYear": null,
           "deathYear": null
@@ -2336,7 +2336,7 @@
         {
           "id": "g19-23",
           "name": "柱平",
-          "info": "以佳公三子，无嗣",
+          "info": "以佳公三子",
           "fatherId": "g18-28",
           "birthYear": null,
           "deathYear": null
@@ -2344,7 +2344,7 @@
         {
           "id": "g19-24",
           "name": "镜平",
-          "info": "小佳公子，无嗣",
+          "info": "小佳公子",
           "fatherId": "g18-44",
           "birthYear": null,
           "deathYear": null
@@ -2352,7 +2352,7 @@
         {
           "id": "g19-25",
           "name": "轩平",
-          "info": "长佳公子，无嗣",
+          "info": "长佳公子",
           "fatherId": "g18-45",
           "birthYear": null,
           "deathYear": null
@@ -2360,7 +2360,7 @@
         {
           "id": "g19-26",
           "name": "聪平",
-          "info": "奋佳公子，无嗣",
+          "info": "奋佳公子",
           "fatherId": "g18-46",
           "birthYear": null,
           "deathYear": null
@@ -2368,7 +2368,7 @@
         {
           "id": "g19-27",
           "name": "昱平",
-          "info": "佐佳公子，无嗣",
+          "info": "佐佳公子",
           "fatherId": "g18-47",
           "birthYear": null,
           "deathYear": null
@@ -2384,7 +2384,7 @@
         {
           "id": "g19-29",
           "name": "文平",
-          "info": "亮佳公子，无嗣",
+          "info": "亮佳公子",
           "fatherId": "g18-50",
           "birthYear": null,
           "deathYear": null
@@ -2400,7 +2400,7 @@
         {
           "id": "g19-31",
           "name": "义平",
-          "info": "善佳公子，无嗣",
+          "info": "善佳公子",
           "fatherId": "g18-52",
           "birthYear": null,
           "deathYear": null
@@ -2408,7 +2408,7 @@
         {
           "id": "g19-32",
           "name": "军平",
-          "info": "旺佳公长子，无嗣",
+          "info": "旺佳公长子",
           "fatherId": "g18-53",
           "birthYear": null,
           "deathYear": null
@@ -2416,7 +2416,7 @@
         {
           "id": "g19-33",
           "name": "上平",
-          "info": "旺佳公次子，无嗣",
+          "info": "旺佳公次子",
           "fatherId": "g18-53",
           "birthYear": null,
           "deathYear": null
@@ -2432,7 +2432,7 @@
         {
           "id": "g19-35",
           "name": "郎平",
-          "info": "福佳公长子，无嗣",
+          "info": "福佳公长子",
           "fatherId": "g18-55",
           "birthYear": null,
           "deathYear": null
@@ -2440,7 +2440,7 @@
         {
           "id": "g19-36",
           "name": "卓平",
-          "info": "福佳公次子，无嗣",
+          "info": "福佳公次子",
           "fatherId": "g18-55",
           "birthYear": null,
           "deathYear": null
@@ -2456,7 +2456,7 @@
         {
           "id": "g19-38",
           "name": "贤平",
-          "info": "昆佳公次子，无嗣",
+          "info": "昆佳公次子",
           "fatherId": "g18-56",
           "birthYear": null,
           "deathYear": null
@@ -2464,7 +2464,7 @@
         {
           "id": "g19-39",
           "name": "鑫平",
-          "info": "昆佳公三子，无嗣",
+          "info": "昆佳公三子",
           "fatherId": "g18-56",
           "birthYear": null,
           "deathYear": null
@@ -2472,7 +2472,7 @@
         {
           "id": "g19-40",
           "name": "磊平",
-          "info": "永佳公长子，无嗣",
+          "info": "永佳公长子",
           "fatherId": "g18-57",
           "birthYear": null,
           "deathYear": null
@@ -2480,7 +2480,7 @@
         {
           "id": "g19-41",
           "name": "鉴平",
-          "info": "永佳公次子，无嗣",
+          "info": "永佳公次子",
           "fatherId": "g18-57",
           "birthYear": null,
           "deathYear": null
@@ -2488,7 +2488,7 @@
         {
           "id": "g19-42",
           "name": "霄平",
-          "info": "永佳公三子，无嗣",
+          "info": "永佳公三子",
           "fatherId": "g18-57",
           "birthYear": null,
           "deathYear": null
@@ -2496,7 +2496,7 @@
         {
           "id": "g19-43",
           "name": "洪平",
-          "info": "国佳公子，无嗣",
+          "info": "国佳公子",
           "fatherId": "g18-58",
           "birthYear": null,
           "deathYear": null
@@ -2504,7 +2504,7 @@
         {
           "id": "g19-44",
           "name": "伟平",
-          "info": "育佳公子，无嗣",
+          "info": "育佳公子",
           "fatherId": "g18-61",
           "birthYear": null,
           "deathYear": null
@@ -2512,7 +2512,7 @@
         {
           "id": "g19-45",
           "name": "耀平",
-          "info": "常佳公子，无嗣",
+          "info": "常佳公子",
           "fatherId": "g18-63",
           "birthYear": null,
           "deathYear": null
@@ -2552,7 +2552,7 @@
         {
           "id": "g19-50",
           "name": "旭平",
-          "info": "佳勇公三子，无嗣",
+          "info": "佳勇公三子",
           "fatherId": "g18-66",
           "birthYear": null,
           "deathYear": null
@@ -2560,7 +2560,7 @@
         {
           "id": "g19-51",
           "name": "栩平",
-          "info": "旅佳公子，无嗣",
+          "info": "旅佳公子",
           "fatherId": "g18-67",
           "birthYear": null,
           "deathYear": null
@@ -2568,7 +2568,7 @@
         {
           "id": "g19-52",
           "name": "凯平",
-          "info": "延佳公子，无嗣",
+          "info": "延佳公子",
           "fatherId": "g18-69",
           "birthYear": null,
           "deathYear": null
@@ -2576,7 +2576,7 @@
         {
           "id": "g19-53",
           "name": "锦平",
-          "info": "廷佳公子，无嗣",
+          "info": "廷佳公子",
           "fatherId": "g18-70",
           "birthYear": null,
           "deathYear": null
@@ -2584,7 +2584,7 @@
         {
           "id": "g19-54",
           "name": "晖平",
-          "info": "春佳公子，无嗣",
+          "info": "春佳公子",
           "fatherId": "g18-72",
           "birthYear": null,
           "deathYear": null
@@ -2592,7 +2592,7 @@
         {
           "id": "g19-55",
           "name": "宝平",
-          "info": "坚佳公子，无嗣",
+          "info": "坚佳公子",
           "fatherId": "g18-74",
           "birthYear": null,
           "deathYear": null
@@ -2600,7 +2600,7 @@
         {
           "id": "g19-56",
           "name": "增平",
-          "info": "朝佳公子，无嗣",
+          "info": "朝佳公子",
           "fatherId": "g18-75",
           "birthYear": null,
           "deathYear": null
@@ -2608,7 +2608,7 @@
         {
           "id": "g19-57",
           "name": "栎平",
-          "info": "运佳公长子，无嗣",
+          "info": "运佳公长子",
           "fatherId": "g18-76",
           "birthYear": null,
           "deathYear": null
@@ -2616,7 +2616,7 @@
         {
           "id": "g19-58",
           "name": "柯平",
-          "info": "运佳公次子，无嗣",
+          "info": "运佳公次子",
           "fatherId": "g18-76",
           "birthYear": null,
           "deathYear": null
