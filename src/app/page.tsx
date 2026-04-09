@@ -100,82 +100,79 @@ export default function Home() {
           </p>
           <div className="mt-3 sm:mt-6 flex justify-center gap-3">
             {/* 深色模式切换 */}
-            <button
-              onClick={() => {
-                document.documentElement.classList.toggle('dark');
-                localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-              }}
-              className="p-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
-              aria-label="切换深色模式"
-            >
-              <MoonIcon className="h-4 w-4 dark:hidden" />
-              <SunIcon className="h-4 w-4 hidden dark:block" />
-            </button>
-            <div className="inline-flex rounded-md shadow-sm">
+            <div className="flex items-center gap-2 flex-wrap justify-center">
+              <div className="inline-flex rounded-md shadow-sm">
+                <button
+                  type="button"
+                  className={`px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-l-md flex items-center ${
+                    viewMode === 'list'
+                      ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
+                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
+                  onClick={() => setViewMode('list')}
+                >
+                  <QueueListIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
+                  <span className="hidden sm:inline">列表</span>
+                </button>
+                <button
+                  type="button"
+                  className={`px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium flex items-center ${
+                    viewMode === 'timeline'
+                      ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
+                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
+                  onClick={() => setViewMode('timeline')}
+                >
+                  <ClockIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
+                  <span className="hidden sm:inline">时间线</span>
+                </button>
+                <button
+                  type="button"
+                  className={`px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium flex items-center ${
+                    viewMode === 'tree'
+                      ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
+                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
+                  onClick={() => setViewMode('tree')}
+                >
+                  <Squares2X2Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
+                  <span className="hidden sm:inline">树状</span>
+                </button>
+                <button
+                  type="button"
+                  className={`px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium flex items-center ${
+                    viewMode === 'stats'
+                      ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
+                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
+                  onClick={() => setViewMode('stats')}
+                >
+                  <ChartBarIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
+                  <span className="hidden sm:inline">统计</span>
+                </button>
+                <button
+                  type="button"
+                  className={`px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-r-md flex items-center ${
+                    viewMode === 'memorial'
+                      ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
+                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
+                  onClick={() => setViewMode('memorial')}
+                >
+                  <MapPinIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
+                  <span className="hidden sm:inline">祭祖</span>
+                </button>
+              </div>
               <button
-                type="button"
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-l-md flex items-center ${
-                  viewMode === 'list'
-                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }`}
-                style={{ minWidth: '72px' }}
-                onClick={() => setViewMode('list')}
+                onClick={() => {
+                  document.documentElement.classList.toggle('dark');
+                  localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                }}
+                className="p-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                aria-label="切换深色模式"
               >
-                <QueueListIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                列表
-              </button>
-              <button
-                type="button"
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium flex items-center ${
-                  viewMode === 'timeline'
-                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }`}
-                style={{ minWidth: '72px' }}
-                onClick={() => setViewMode('timeline')}
-              >
-                <ClockIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                时间线
-              </button>
-              <button
-                type="button"
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-md flex items-center ${
-                  viewMode === 'tree'
-                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }`}
-                style={{ minWidth: '72px' }}
-                onClick={() => setViewMode('tree')}
-              >
-                <Squares2X2Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                树状
-              </button>
-              <button
-                type="button"
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-md flex items-center ${
-                  viewMode === 'stats'
-                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }`}
-                style={{ minWidth: '72px' }}
-                onClick={() => setViewMode('stats')}
-              >
-                <ChartBarIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                统计
-              </button>
-              <button
-                type="button"
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-r-md flex items-center ${
-                  viewMode === 'memorial'
-                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }`}
-                style={{ minWidth: '72px' }}
-                onClick={() => setViewMode('memorial')}
-              >
-                <MapPinIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                祭祖
+                <MoonIcon className="h-4 w-4 dark:hidden" />
+                <SunIcon className="h-4 w-4 hidden dark:block" />
               </button>
             </div>
           </div>

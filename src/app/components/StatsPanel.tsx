@@ -108,23 +108,7 @@ export default function StatsPanel({ data }: StatsPanelProps) {
                 </div>
             </div>
 
-            {/* 同名人物 */}
-            {stats.duplicates.length > 0 && (
-                <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700">
-                    <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">同名人物</h3>
-                    <div className="flex flex-wrap gap-2">
-                        {stats.duplicates.map(([name, count]) => (
-                            <span
-                                key={name}
-                                className="inline-flex items-center gap-1 px-2 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 rounded-full text-xs"
-                            >
-                                {name}
-                                <span className="bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-200 rounded-full px-1.5 py-0.5 text-[10px] font-medium">{count}</span>
-                            </span>
-                        ))}
-                    </div>
-                </div>
-            )}
+
         </div>
     );
 }
