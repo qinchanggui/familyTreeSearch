@@ -136,31 +136,36 @@ export default function Home() {
           </div>
         )}
 
-        {/* 列表视图：显示搜索框和筛选 */}
-        {viewMode === 'list' && (
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 mb-4 sm:mb-6">
-            <div className="mb-4">
-              <SearchBar
-                onSearch={handleSearch}
-                generations={familyData.generations.map(g => g.title)}
-              />
-            </div>
-
-            {searchResults.length === 0 && (searchTerm || searchFilters.selectedGenerations.length > 0 ||
-             searchFilters.yearRange.start || searchFilters.yearRange.end) && (
-              <div className="text-center text-gray-500 py-6 sm:py-8">
-                <p className="text-base sm:text-lg">未找到匹配的家族成员</p>
-                <p className="text-xs sm:text-sm">请尝试修改搜索条件</p>
-              </div>
-            )}
-
-            {searchResults.length > 0 && (
-              <div className="text-xs sm:text-sm text-gray-600 text-center mb-3 sm:mb-4">
-                找到 <span className="font-medium text-blue-600">{searchResults.length}</span> 个匹配结果
-              </div>
-            )}
+        {/* 搜索框：所有视图共享 */}
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 mb-4 sm:mb-6">
+          <div className="mb-4">
+            <SearchBar
+              onSearch={handleSearch}
+              generations={familyData.generations.map(g => g.title)}
+            />
           </div>
-        )}
+
+          {viewMode !== 'list' && searchResults.length > 0 && (
+            <div className="text-xs sm:text-sm text-gray-600 text-center mb-3">
+              找到 <span className="font-medium text-blue-600">{searchResults.length}</span> 个结果，
+              <button onClick={() => setViewMode('list')} className="text-blue-600 underline ml-1">切换到列表查看</button>
+            </div>
+          )}
+
+          {viewMode === 'list' && searchResults.length === 0 && (searchTerm || searchFilters.selectedGenerations.length > 0 ||
+           searchFilters.yearRange.start || searchFilters.yearRange.end) && (
+            <div className="text-center text-gray-500 py-6 sm:py-8">
+              <p className="text-base sm:text-lg">未找到匹配的家族成员</p>
+              <p className="text-xs sm:text-sm">请尝试修改搜索条件</p>
+            </div>
+          )}
+
+          {viewMode === 'list' && searchResults.length > 0 && (
+            <div className="text-xs sm:text-sm text-gray-600 text-center mb-3 sm:mb-4">
+              找到 <span className="font-medium text-blue-600">{searchResults.length}</span> 个匹配结果
+            </div>
+          )}
+        </div>
 
         {viewMode === 'list' ? (
           <FamilyTree
@@ -175,7 +180,34 @@ export default function Home() {
         )}
       </div>
 
+      {/* 回到顶部浮动按钮 */}
+      <BackToTop />
+
       <Footer />
     </main>
+  );
+}
+
+function BackToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 600);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      className="fixed bottom-20 right-4 z-50 w-10 h-10 bg-blue-500 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-600 active:scale-95 transition-all"
+      aria-label="回到顶部"
+    >
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+      </svg>
+    </button>
   );
 }

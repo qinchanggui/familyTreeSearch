@@ -152,7 +152,7 @@ const PersonCard = ({
                     </div>
                 )}
                 
-                <p className={`text-gray-600 text-sm leading-relaxed mb-3 ${expanded ? '' : 'line-clamp-3'}`}>
+                <p className={`text-gray-600 text-sm leading-relaxed mb-3 ${expanded ? '' : 'line-clamp-2 sm:line-clamp-3'}`}>
                     {(searchTerm && searchInInfo)
                         ? splitHighlightSegments(escapeHtml(person.info), searchTerm).map((seg, i) => (
                             seg.isMatch
@@ -201,7 +201,7 @@ const Generation = ({
                 </h2>
                 <div className="flex-1 h-px bg-gradient-to-r from-blue-50 to-transparent"></div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {people.map((person, index) => (
                     <PersonCard 
                         key={index} 
