@@ -7,7 +7,7 @@ import TimelineView from './components/TimelineView';
 import Footer from './components/Footer';
 import SearchBar, { SearchFilters } from './components/SearchBar';
 import { useFamilyData } from '../data/familyDataWithIds';
-import { QueueListIcon, Squares2X2Icon } from '@heroicons/react/24/outline';
+import { QueueListIcon, Squares2X2Icon, ClockIcon } from '@heroicons/react/24/outline';
 import { getFamilyFullName } from '@/utils/config';
 import { searchFamilyData, createFilteredFamilyData, SearchResult } from '@/utils/search';
 import { buildFamilyTree } from '@/utils/familyTree';
@@ -76,14 +76,14 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col">
       <header className="bg-white shadow-sm mb-4 sm:mb-6">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-6">
+          <h1 className="text-xl sm:text-3xl font-bold text-gray-900 text-center">
             {familyFullName}族谱
           </h1>
-          <p className="mt-1 sm:mt-2 text-gray-500 text-center text-xs sm:text-sm tracking-wide">
+          <p className="mt-0.5 sm:mt-2 text-gray-500 text-center text-[10px] sm:text-sm tracking-wide">
             传承历史 · 延续文化
           </p>
-          <div className="mt-4 sm:mt-6 flex justify-center">
+          <div className="mt-3 sm:mt-6 flex justify-center">
             <div className="inline-flex rounded-md shadow-sm">
               <button
                 type="button"
@@ -92,6 +92,7 @@ export default function Home() {
                     ? 'bg-blue-50 text-blue-700 border border-blue-200'
                     : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
                 }`}
+                style={{ minWidth: '72px' }}
                 onClick={() => setViewMode('list')}
               >
                 <QueueListIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
@@ -99,14 +100,15 @@ export default function Home() {
               </button>
               <button
                 type="button"
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium flex items-center border-l-0 ${
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium flex items-center ${
                   viewMode === 'timeline'
                     ? 'bg-blue-50 text-blue-700 border border-blue-200'
                     : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
                 }`}
+                style={{ minWidth: '72px' }}
                 onClick={() => setViewMode('timeline')}
               >
-                <Squares2X2Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                <ClockIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 时间线
               </button>
               <button
@@ -116,6 +118,7 @@ export default function Home() {
                     ? 'bg-blue-50 text-blue-700 border border-blue-200'
                     : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
                 }`}
+                style={{ minWidth: '72px' }}
                 onClick={() => setViewMode('tree')}
               >
                 <Squares2X2Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
@@ -168,16 +171,7 @@ export default function Home() {
         ) : viewMode === 'timeline' ? (
           <TimelineView data={familyData} />
         ) : (
-          <div>
-            {/* PC端：ReactFlow树状图 */}
-            <div className="hidden sm:block">
-              <TreeView data={treeData} />
-            </div>
-            {/* 手机端：时间线模式 */}
-            <div className="sm:hidden">
-              <TimelineView data={familyData} />
-            </div>
-          </div>
+          <TreeView data={treeData} />
         )}
       </div>
 
