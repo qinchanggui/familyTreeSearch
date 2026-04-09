@@ -82,11 +82,56 @@ export default function Home() {
     }
   }, [familyData, searchTerm, searchFilters, dataLoading, dataError]);
 
+  // P2: 搜索结果变化后自动滚动到第一个匹配人物
+  useEffect(() => {
+    if (searchResults.length > 0 && viewMode === 'list' && !selectedPersonId) {
+      const firstPerson = searchResults[0];
+      if (firstPerson?.person?.id) {
+        // 等待 DOM 渲染后再滚动
+        requestAnimationFrame(() => {
+          const el = document.getElementById(`person-${firstPerson.person.id}`);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.classList.add('ring-2', 'ring-blue-500');
+            setTimeout(() => el.classList.remove('ring-2', 'ring-blue-500'), 2000);
+          }
+        });
+      }
+    }
+  }, [searchResults, viewMode, selectedPersonId]);
+
   if (dataLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
+      <main className="min-h-screen bg-gray-50 dark:bg-gray-950">
+        <header className="bg-white dark:bg-gray-900 shadow-sm mb-4 sm:mb-6">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-6">
+            <div className="animate-pulse h-8 w-40 bg-gray-200 dark:bg-gray-700 rounded mx-auto mb-2" />
+            <div className="animate-pulse h-4 w-28 bg-gray-200 dark:bg-gray-700 rounded mx-auto" />
+            <div className="mt-4 flex justify-center gap-3">
+              {[1,2,3,4,5].map(i => (
+                <div key={i} className="animate-pulse h-9 w-16 bg-gray-200 dark:bg-gray-700 rounded" />
+              ))}
+            </div>
+          </div>
+        </header>
+        <div className="max-w-7xl mx-auto px-3 sm:px-4">
+          <div className="animate-pulse h-10 w-full bg-gray-200 dark:bg-gray-700 rounded mb-6" />
+          <div className="flex gap-2 mb-6 overflow-hidden">
+            {[1,2,3,4,5,6,7,8].map(i => (
+              <div key={i} className="animate-pulse h-8 w-20 bg-gray-200 dark:bg-gray-700 rounded-full flex-shrink-0" />
+            ))}
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {[1,2,3,4,5,6].map(i => (
+              <div key={i} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 p-6">
+                <div className="animate-pulse h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded mb-3" />
+                <div className="animate-pulse h-4 w-full bg-gray-200 dark:bg-gray-700 rounded mb-2" />
+                <div className="animate-pulse h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
     );
   }
 
@@ -226,9 +271,10 @@ export default function Home() {
 
         {!selectedPersonId && (
           <>
-            {/* 世代快速跳转导航条：仅列表视图 */}
+            {/* 世代快速跳转导航条：仅列表视图，sticky 吸顶 */}
             {viewMode === 'list' && (
-              <div className="max-w-7xl mx-auto px-3 sm:px-4 mb-4">
+              <div className="sticky top-0 z-20 bg-gray-50 dark:bg-gray-950 pb-2 mb-4">
+              <div className="max-w-7xl mx-auto px-3 sm:px-4">
               <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-1 px-1">
                 {familyData.generations.map((g, i) => (
                   <button
@@ -244,7 +290,8 @@ export default function Home() {
                   </button>
                 ))}
               </div>
-            </div>
+              </div>
+              </div>
             )}
 
             {viewMode === 'list' ? (
