@@ -4,19 +4,16 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import FamilyTree from './components/FamilyTree';
 import TreeView from './components/TreeView';
 import TimelineView from './components/TimelineView';
-import StatsPanel from './components/StatsPanel';
-import PersonDetail from './components/PersonDetail';
 import Footer from './components/Footer';
 import SearchBar, { SearchFilters } from './components/SearchBar';
 import { useFamilyData } from '../data/familyDataWithIds';
-import { QueueListIcon, Squares2X2Icon, ClockIcon, SunIcon, MoonIcon, ChartBarIcon } from '@heroicons/react/24/outline';
+import { QueueListIcon, Squares2X2Icon, ClockIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 import { getFamilyFullName } from '@/utils/config';
 import { searchFamilyData, createFilteredFamilyData, SearchResult } from '@/utils/search';
 import { buildFamilyTree } from '@/utils/familyTree';
 
 export default function Home() {
-  const [viewMode, setViewMode] = useState<'list' | 'timeline' | 'tree' | 'stats'>('list');
-  const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<'list' | 'timeline' | 'tree'>('list');
   const { data: familyData, loading: dataLoading, error: dataError } = useFamilyData();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -139,19 +136,6 @@ export default function Home() {
                 <Squares2X2Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 树状
               </button>
-              <button
-                type="button"
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-md flex items-center ${
-                  viewMode === 'stats'
-                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }`}
-                style={{ minWidth: '72px' }}
-                onClick={() => setViewMode('stats')}
-              >
-                <ChartBarIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                统计
-              </button>
             </div>
           </div>
         </div>
@@ -190,54 +174,37 @@ export default function Home() {
           </div>
         )}
 
-        {/* 人物详情页 */}
-        {selectedPersonId && (
-          <PersonDetail
-            data={familyData}
-            personId={selectedPersonId}
-            onBack={() => setSelectedPersonId(null)}
-            onNavigate={(id) => setSelectedPersonId(id)}
-          />
+        {/* 世代快速跳转导航条：仅列表视图 */}
+        {viewMode === 'list' && (
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 mb-4">
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-1 px-1">
+            {familyData.generations.map((g, i) => (
+              <button
+                key={g.title}
+                onClick={() => {
+                  const el = document.getElementById(`gen-${g.title}`);
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                className="flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-300 hover:border-blue-200 dark:hover:border-blue-700 transition-colors whitespace-nowrap"
+              >
+                {g.title}
+                <span className="ml-1 text-[10px] opacity-60">{g.people.length}</span>
+              </button>
+            ))}
+          </div>
+        </div>
         )}
 
-        {!selectedPersonId && (
-          <>
-            {/* 世代快速跳转导航条：仅列表视图 */}
-            {viewMode === 'list' && (
-              <div className="max-w-7xl mx-auto px-3 sm:px-4 mb-4">
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-1 px-1">
-                {familyData.generations.map((g, i) => (
-                  <button
-                    key={g.title}
-                    onClick={() => {
-                      const el = document.getElementById(`gen-${g.title}`);
-                      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }}
-                    className="flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-300 hover:border-blue-200 dark:hover:border-blue-700 transition-colors whitespace-nowrap"
-                  >
-                    {g.title}
-                    <span className="ml-1 text-[10px] opacity-60">{g.people.length}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-            )}
-
-            {viewMode === 'list' ? (
-              <FamilyTree
-                familyData={filteredFamilyData}
-                searchTerm={searchTerm}
-                searchInInfo={searchFilters.searchInInfo}
-                onPersonClick={(id) => setSelectedPersonId(id)}
-              />
-            ) : viewMode === 'timeline' ? (
-              <TimelineView data={familyData} />
-            ) : viewMode === 'stats' ? (
-              <StatsPanel data={familyData} />
-            ) : (
-              <TreeView data={treeData} />
-            )}
-          </>
+        {viewMode === 'list' ? (
+          <FamilyTree
+            familyData={filteredFamilyData}
+            searchTerm={searchTerm}
+            searchInInfo={searchFilters.searchInInfo}
+          />
+        ) : viewMode === 'timeline' ? (
+          <TimelineView data={familyData} />
+        ) : (
+          <TreeView data={treeData} />
         )}
       </div>
 
