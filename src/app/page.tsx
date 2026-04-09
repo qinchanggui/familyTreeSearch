@@ -113,28 +113,31 @@ export default function Home() {
           </div>
         )}
 
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 mb-4 sm:mb-6">
-          <div className="mb-4">
-            <SearchBar
-              onSearch={handleSearch}
-              generations={familyData.generations.map(g => g.title)}
-            />
+        {/* 列表视图：显示搜索框和筛选 */}
+        {viewMode === 'list' && (
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 mb-4 sm:mb-6">
+            <div className="mb-4">
+              <SearchBar
+                onSearch={handleSearch}
+                generations={familyData.generations.map(g => g.title)}
+              />
+            </div>
+
+            {searchResults.length === 0 && (searchTerm || searchFilters.selectedGenerations.length > 0 ||
+             searchFilters.yearRange.start || searchFilters.yearRange.end) && (
+              <div className="text-center text-gray-500 py-6 sm:py-8">
+                <p className="text-base sm:text-lg">未找到匹配的家族成员</p>
+                <p className="text-xs sm:text-sm">请尝试修改搜索条件</p>
+              </div>
+            )}
+
+            {searchResults.length > 0 && (
+              <div className="text-xs sm:text-sm text-gray-600 text-center mb-3 sm:mb-4">
+                找到 <span className="font-medium text-blue-600">{searchResults.length}</span> 个匹配结果
+              </div>
+            )}
           </div>
-
-          {searchResults.length === 0 && (searchTerm || searchFilters.selectedGenerations.length > 0 ||
-           searchFilters.yearRange.start || searchFilters.yearRange.end) && (
-            <div className="text-center text-gray-500 py-6 sm:py-8">
-              <p className="text-base sm:text-lg">未找到匹配的家族成员</p>
-              <p className="text-xs sm:text-sm">请尝试修改搜索条件</p>
-            </div>
-          )}
-
-          {searchResults.length > 0 && (
-            <div className="text-xs sm:text-sm text-gray-600 text-center mb-3 sm:mb-4">
-              找到 <span className="font-medium text-blue-600">{searchResults.length}</span> 个匹配结果
-            </div>
-          )}
-        </div>
+        )}
 
         {viewMode === 'list' ? (
           <FamilyTree
@@ -144,11 +147,6 @@ export default function Home() {
           />
         ) : (
           <TreeView data={treeData} />
-
-
-
-
-
         )}
       </div>
 
