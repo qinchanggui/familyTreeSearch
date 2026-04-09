@@ -1,244 +1,215 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
+import ReactFlow, {
+  Node,
+  Edge,
+  Background,
+  Controls,
+  MiniMap,
+  useNodesState,
+  useEdgesState,
+  Position,
+  NodeProps,
+  Handle,
+  BackgroundVariant,
+} from 'reactflow';
+import 'reactflow/dist/style.css';
 import { FamilyData, Person } from '@/types/family';
-import { ChevronDownIcon, ChevronRightIcon, UserIcon, CalendarIcon } from '@heroicons/react/24/outline';
-import { escapeHtml, splitHighlightSegments } from '@/utils/search';
-import { ANIMATION_DELAYS, CSS_CLASSES } from '@/utils/constants';
 
 interface TreeViewProps {
   data: FamilyData;
-  searchTerm?: string;
-  searchInInfo?: boolean;
 }
 
-interface TreeNodeProps {
-  person: Person;
-  level: number;
-  searchTerm?: string;
-  searchInInfo?: boolean;
-  firstMatchId?: string | null;
-}
-
-// 检查是否匹配搜索条件
-const isPersonMatch = (person: Person, searchTerm: string, searchInInfo: boolean): boolean => {
-  if (!searchTerm) return false;
-
-  const lowerSearchTerm = searchTerm.toLowerCase();
-  const nameMatch = person.name.toLowerCase().includes(lowerSearchTerm);
-  const infoMatch = searchInInfo && person.info && person.info.toLowerCase().includes(lowerSearchTerm);
-  const yearMatch = (person.birthYear?.toString().includes(lowerSearchTerm) || false) ||
-                    (person.deathYear?.toString().includes(lowerSearchTerm) || false);
-
-  return nameMatch || !!infoMatch || yearMatch;
-};
-
-// 递归判断子孙中是否有匹配
-const hasDescendantMatch = (person: Person, searchTerm: string, searchInInfo: boolean): boolean => {
-  if (isPersonMatch(person, searchTerm, searchInInfo)) return true;
-  if (person.children) {
-    return person.children.some(child => hasDescendantMatch(child, searchTerm, searchInInfo));
-  }
-  return false;
-};
-
-const TreeNode = ({ person, level, searchTerm, searchInInfo, firstMatchId }: TreeNodeProps) => {
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [isHighlighted, setIsHighlighted] = useState(false);
-  const nodeRef = useRef<HTMLDivElement>(null);
-  const timeoutRefs = useRef<(NodeJS.Timeout | null)[]>([]);
-  const hasChildren = person.children && person.children.length > 0;
-  const isFirstMatch = person.id === firstMatchId;
-  const isMatch = searchTerm ? isPersonMatch(person, searchTerm, searchInInfo || false) : false;
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  const clearAllTimeouts = () => {
-    timeoutRefs.current.forEach(timeout => {
-      if (timeout) clearTimeout(timeout);
-    });
-    timeoutRefs.current = [];
-  };
-
-  useEffect(() => {
-    if (isFirstMatch && nodeRef.current) {
-      clearAllTimeouts();
-      const scrollTimeout = setTimeout(() => {
-        if (nodeRef.current) {
-          nodeRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          setIsHighlighted(true);
-          const highlightTimeout = setTimeout(() => setIsHighlighted(false), ANIMATION_DELAYS.HIGHLIGHT_DURATION);
-          timeoutRefs.current.push(highlightTimeout);
-        }
-      }, ANIMATION_DELAYS.SCROLL_TO_MATCH);
-      timeoutRefs.current.push(scrollTimeout);
-    }
-    return () => clearAllTimeouts();
-  }, [isFirstMatch]);
-
+// 自定义节点
+function PersonNode({ data }: NodeProps) {
   return (
-    <div className={level === 0 ? '' : 'ml-3 sm:ml-5 md:ml-6'}>
-      <div
-        ref={nodeRef}
-        className={`flex items-start py-2 px-2 rounded-md cursor-pointer transition-all duration-300 ${
-          isHighlighted
-            ? `${CSS_CLASSES.HIGHLIGHT.RING} ${CSS_CLASSES.HIGHLIGHT.RING_COLOR} ${CSS_CLASSES.HIGHLIGHT.BACKGROUND}`
-            : isMatch && searchTerm
-              ? 'bg-yellow-50'
-              : 'hover:bg-gray-50'
-        }`}
-        onClick={toggleExpand}
-      >
-        {hasChildren ? (
-          <div className="mr-1 mt-0.5 text-gray-400 flex-shrink-0">
-            {isExpanded ? (
-              <ChevronDownIcon className="h-4 w-4" />
-            ) : (
-              <ChevronRightIcon className="h-4 w-4" />
-            )}
-          </div>
-        ) : (
-          <div className="w-4 mr-1 flex-shrink-0"></div>
+    <div className="px-3 py-2 rounded-lg bg-white border-2 border-blue-300 shadow-sm min-w-[80px] max-w-[160px]">
+      <Handle type="target" position={Position.Top} className="!bg-blue-400 !w-2 !h-2" />
+      <div className="text-center">
+        <p className="font-bold text-gray-800 text-sm leading-tight">{data.label}</p>
+        {data.info && (
+          <p className="text-gray-500 text-xs mt-1 leading-snug line-clamp-2">{data.info}</p>
         )}
-
-        <div className="flex items-start min-w-0 flex-1">
-          <div className="bg-blue-50 p-1 rounded-md mr-2 flex-shrink-0">
-            <UserIcon className="h-4 w-4 text-blue-600" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <span className={`font-medium ${isMatch ? 'text-blue-700' : 'text-gray-800'}`}>
-              {searchTerm
-                ? splitHighlightSegments(escapeHtml(person.name), searchTerm).map((seg, i) => (
-                    seg.isMatch
-                      ? <mark key={i} className="bg-yellow-200 px-0.5 rounded">{seg.text}</mark>
-                      : <span key={i}>{seg.text}</span>
-                  ))
-                : person.name}
-            </span>
-            {person.info && (
-              <p className="text-gray-600 text-sm mt-1 break-words">
-                {(searchTerm && searchInInfo)
-                  ? splitHighlightSegments(escapeHtml(person.info), searchTerm).map((seg, i) => (
-                      seg.isMatch
-                        ? <mark key={i} className="bg-yellow-200 px-0.5 rounded">{seg.text}</mark>
-                        : <span key={i}>{seg.text}</span>
-                    ))
-                  : person.info}
-              </p>
-            )}
-            {(person.birthYear || person.deathYear) && (
-              <div className="flex items-center gap-1 text-gray-500 text-xs mt-1">
-                <CalendarIcon className="h-3 w-3 flex-shrink-0" />
-                <span>
-                  {person.birthYear}
-                  {person.birthYear && person.deathYear && ' - '}
-                  {person.deathYear && (person.birthYear ? person.deathYear : `- ${person.deathYear}`)}
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
       </div>
-
-      {hasChildren && isExpanded && (
-        <div className="border-l border-gray-200 ml-2 sm:ml-3 pl-1 sm:pl-2">
-          {person.children?.map((child, index) => (
-            <TreeNode
-              key={index}
-              person={child}
-              level={level + 1}
-              searchTerm={searchTerm}
-              searchInInfo={searchInInfo}
-              firstMatchId={firstMatchId}
-            />
-          ))}
-        </div>
-      )}
+      <Handle type="source" position={Position.Bottom} className="!bg-blue-400 !w-2 !h-2" />
     </div>
   );
-};
+}
 
-// 递归查找所有匹配的人员
-const findAllMatches = (person: Person, searchTerm: string, searchInInfo: boolean): Person[] => {
-  const matches: Person[] = [];
-  if (isPersonMatch(person, searchTerm, searchInInfo)) {
-    matches.push(person);
+const nodeTypes = { person: PersonNode };
+
+// 递归计算子树宽度
+function getSubtreeWidth(person: Person): number {
+  if (!person.children || person.children.length === 0) return 1;
+  return person.children.reduce((sum, child) => sum + getSubtreeWidth(child), 0);
+}
+
+// 布局算法：自顶向下分配坐标
+const NODE_VERTICAL_GAP = 120;
+const NODE_MIN_WIDTH = 180;
+
+interface LayoutNode {
+  id: string;
+  name: string;
+  info: string;
+  x: number;
+  y: number;
+  children: LayoutNode[];
+}
+
+function layoutTree(person: Person, x: number, y: number): LayoutNode {
+  const children = person.children || [];
+
+  if (children.length === 0) {
+    return {
+      id: person.id || '',
+      name: person.name,
+      info: person.info || '',
+      x,
+      y,
+      children: [],
+    };
   }
-  if (person.children) {
-    person.children.forEach(child => {
-      matches.push(...findAllMatches(child, searchTerm, searchInInfo));
+
+  // 计算每个子节点的子树宽度
+  const childWidths = children.map(c => getSubtreeWidth(c));
+  const totalWidth = childWidths.reduce((a, b) => a + b, 0);
+
+  // 递归布局子节点
+  const layoutChildren: LayoutNode[] = [];
+  let currentX = x - (totalWidth * NODE_MIN_WIDTH) / 2;
+
+  for (let i = 0; i < children.length; i++) {
+    const childX = currentX + (childWidths[i] * NODE_MIN_WIDTH) / 2;
+    layoutChildren.push(layoutTree(children[i], childX, y + NODE_VERTICAL_GAP));
+    currentX += childWidths[i] * NODE_MIN_WIDTH;
+  }
+
+  // 父节点居中于子节点上方
+  const firstChild = layoutChildren[0];
+  const lastChild = layoutChildren[layoutChildren.length - 1];
+  const parentX = (firstChild.x + lastChild.x) / 2;
+
+  return {
+    id: person.id || '',
+    name: person.name,
+    info: person.info || '',
+    x: parentX,
+    y,
+    children: layoutChildren,
+  };
+}
+
+// 将布局树转为 ReactFlow nodes 和 edges
+function layoutToElements(layout: LayoutNode): { nodes: Node[]; edges: Edge[] } {
+  const nodes: Node[] = [];
+  const edges: Edge[] = [];
+
+  function traverse(ln: LayoutNode) {
+    nodes.push({
+      id: ln.id,
+      type: 'person',
+      position: { x: ln.x - NODE_MIN_WIDTH / 2, y: ln.y },
+      data: { label: ln.name, info: ln.info },
     });
-  }
-  return matches;
-};
 
-// 过滤树：只保留匹配节点及其祖先路径
-const filterTree = (people: Person[], searchTerm: string, searchInInfo: boolean): Person[] => {
-  return people.reduce<Person[]>((acc, person) => {
-    const childrenFiltered = person.children
-      ? filterTree(person.children, searchTerm, searchInInfo)
-      : [];
-
-    if (isPersonMatch(person, searchTerm, searchInInfo) || childrenFiltered.length > 0) {
-      acc.push({
-        ...person,
-        children: childrenFiltered.length > 0 ? childrenFiltered : person.children,
+    for (const child of ln.children) {
+      edges.push({
+        id: `${ln.id}-${child.id}`,
+        source: ln.id,
+        target: child.id,
+        type: 'smoothstep',
+        style: { stroke: '#93c5fd', strokeWidth: 2 },
       });
+      traverse(child);
     }
-    return acc;
-  }, []);
-};
+  }
 
-export default function TreeView({ data, searchTerm, searchInInfo }: TreeViewProps) {
-  const [firstMatchId, setFirstMatchId] = useState<string | null>(null);
+  traverse(layout);
+  return { nodes, edges };
+}
+
+export default function TreeView({ data }: TreeViewProps) {
   const rootPeople = data.generations[0]?.people || [];
 
-  // 搜索时过滤树数据
-  const filteredRootPeople = useMemo(() => {
-    if (!searchTerm) return rootPeople;
-    return filterTree(rootPeople, searchTerm, searchInInfo || false);
-  }, [rootPeople, searchTerm, searchInInfo]);
+  const { initialNodes, initialEdges } = useMemo(() => {
+    const allNodes: Node[] = [];
+    const allEdges: Edge[] = [];
 
-  useEffect(() => {
-    if (searchTerm) {
-      const allMatches: Person[] = [];
-      rootPeople.forEach(person => {
-        allMatches.push(...findAllMatches(person, searchTerm, searchInInfo || false));
-      });
-      setFirstMatchId(allMatches.length > 0 ? allMatches[0].id || null : null);
-    } else {
-      setFirstMatchId(null);
+    let offsetX = 0;
+    for (const person of rootPeople) {
+      const layout = layoutTree(person, 0, 0);
+      const { nodes, edges } = layoutToElements(layout);
+
+      // 偏移每棵子树使其不相交
+      if (allNodes.length > 0) {
+        const maxX = Math.max(...allNodes.map(n => n.position.x + NODE_MIN_WIDTH));
+        const minX = Math.min(...nodes.map(n => n.position.x));
+        const shift = maxX + NODE_MIN_WIDTH - minX;
+        nodes.forEach(n => (n.position.x += shift));
+      }
+
+      allNodes.push(...nodes);
+      allEdges.push(...edges);
+      offsetX += nodes.length * NODE_MIN_WIDTH;
     }
-  }, [searchTerm, searchInInfo, rootPeople]);
+
+    return { initialNodes: allNodes, initialEdges: allEdges };
+  }, [rootPeople]);
+
+  const [nodes] = useNodesState(initialNodes);
+  const [edges] = useEdgesState(initialEdges);
+
+  // 计算初始视口：适配屏幕
+  const getFitViewOptions = useCallback(() => {
+    return { padding: 0.2, duration: 300 };
+  }, []);
+
+  if (rootPeople.length === 0) {
+    return (
+      <div className="max-w-7xl mx-auto px-3 sm:px-4">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 text-center text-gray-400 py-8">
+          <p className="text-sm">暂无数据</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-4">
-      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-        <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6">家族树状图</h2>
-        <div className="overflow-x-auto -mx-2 px-2">
-          {filteredRootPeople.length > 0 ? (
-            filteredRootPeople.map((person, index) => (
-              <TreeNode
-                key={index}
-                person={person}
-                level={0}
-                searchTerm={searchTerm}
-                searchInInfo={searchInInfo}
-                firstMatchId={firstMatchId}
-              />
-            ))
-          ) : searchTerm ? (
-            <div className="text-center text-gray-500 py-8">
-              <p className="text-base sm:text-lg">未找到匹配的家族成员</p>
-              <p className="text-sm">请尝试修改搜索条件</p>
-            </div>
-          ) : (
-            <div className="text-center text-gray-400 py-8">
-              <p className="text-sm">暂无数据</p>
-            </div>
-          )}
+      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+        <h2 className="text-lg sm:text-xl font-bold text-gray-800 px-4 sm:px-6 pt-4 sm:pt-6 pb-2">
+          家族树状图
+        </h2>
+        <p className="text-xs text-gray-400 px-4 sm:px-6 pb-2">
+          可拖拽移动，滚轮缩放，双指捏合缩放
+        </p>
+        <div className="w-full h-[60vh] sm:h-[70vh]">
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            nodeTypes={nodeTypes}
+            fitView
+            fitViewOptions={getFitViewOptions()}
+            minZoom={0.05}
+            maxZoom={2}
+            attributionPosition="bottom-left"
+            proOptions={{ hideAttribution: true }}
+          >
+            <Background variant={BackgroundVariant.Dots} gap={16} size={1} color="#e5e7eb" />
+            <Controls
+              showInteractive={false}
+              position="bottom-right"
+            />
+            <MiniMap
+              nodeColor="#93c5fd"
+              maskColor="rgba(0,0,0,0.1)"
+              position="bottom-left"
+              pannable
+              zoomable
+            />
+          </ReactFlow>
         </div>
       </div>
     </div>

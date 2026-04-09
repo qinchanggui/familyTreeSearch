@@ -143,11 +143,12 @@ export default function Home() {
             searchInInfo={searchFilters.searchInInfo}
           />
         ) : (
-          <TreeView
-            data={treeData}
-            searchTerm={searchTerm}
-            searchInInfo={searchFilters.searchInInfo}
-          />
+          <TreeView data={treeData} />
+
+
+
+
+
         )}
       </div>
 
