@@ -75,7 +75,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-white shadow-sm mb-2 sm:mb-4">
+      <header className="bg-white shadow-sm mb-4 sm:mb-6">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center">
             {familyFullName}族谱
