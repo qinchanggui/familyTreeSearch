@@ -20,28 +20,27 @@ interface TreeViewProps {
   data: FamilyData;
 }
 
-// 自定义节点 — 手机端紧凑样式
+// 节点：字体正常大小，紧凑排列
 function PersonNode({ data }: NodeProps) {
   return (
     <div
-      className="px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-white border-2 shadow-sm min-w-[60px] max-w-[120px] sm:max-w-[160px] hover:shadow-md transition-shadow"
+      className="px-3 py-2 rounded-lg bg-white border-2 shadow-sm min-w-[70px] max-w-[180px] hover:shadow-md transition-shadow"
       style={{ borderColor: data.borderColor || '#93c5fd' }}
     >
-      <Handle type="target" position={Position.Top} className="!bg-blue-400 !w-1.5 !h-1.5 sm:!w-2 sm:!h-2" />
+      <Handle type="target" position={Position.Top} className="!bg-blue-400 !w-2 !h-2" />
       <div className="text-center">
-        <p className="font-bold text-gray-800 text-xs sm:text-sm leading-tight">{data.label}</p>
+        <p className="font-bold text-gray-800 text-sm leading-tight whitespace-nowrap">{data.label}</p>
         {data.info && (
-          <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5 leading-snug line-clamp-2">{data.info}</p>
+          <p className="text-gray-500 text-xs mt-1 leading-snug line-clamp-2">{data.info}</p>
         )}
       </div>
-      <Handle type="source" position={Position.Bottom} className="!bg-blue-400 !w-1.5 !h-1.5 sm:!w-2 sm:!h-2" />
+      <Handle type="source" position={Position.Bottom} className="!bg-blue-400 !w-2 !h-2" />
     </div>
   );
 }
 
 const nodeTypes = { person: PersonNode };
 
-// 世代对应颜色
 const generationColors = [
   '#1e40af', '#2563eb', '#3b82f6', '#60a5fa', '#93c5fd',
   '#0d9488', '#14b8a6', '#2dd4bf', '#5eead4', '#99f6e4',
@@ -49,109 +48,93 @@ const generationColors = [
   '#c2410c', '#ea580c', '#f97316', '#fb923c', '#fdba74', '#fed7aa',
 ];
 
-// 递归计算子树宽度
+// 水平间距：按名字宽度估算
+const NODE_H_GAP = 160;   // 兄弟节点水平最小间距
+const NODE_V_GAP = 60;    // 父子垂直间距（紧凑）
+const NODE_HALF_W = 50;   // 节点半宽偏移
+
 function getSubtreeWidth(person: Person): number {
   if (!person.children || person.children.length === 0) return 1;
-  return person.children.reduce((sum, child) => sum + getSubtreeWidth(child), 0);
+  return person.children.reduce((sum, c) => sum + getSubtreeWidth(c), 0);
 }
 
-// 布局算法
-const NODE_GAP_V = 110;
-const NODE_GAP_V_MOBILE = 90;
-const NODE_WIDTH = 140;
+interface LayoutResult {
+  id: string;
+  name: string;
+  info: string;
+  x: number;
+  y: number;
+  borderColor: string;
+  children: LayoutResult[];
+}
 
-function layoutTree(person: Person, x: number, y: number, depth: number, isMobile: boolean): any {
+function layoutTree(person: Person, x: number, y: number, depth: number): LayoutResult {
   const children = person.children || [];
-  const gap = isMobile ? NODE_GAP_V_MOBILE : NODE_GAP_V;
   const borderColor = generationColors[depth % generationColors.length];
 
   if (children.length === 0) {
-    return {
-      id: person.id || '',
-      name: person.name,
-      info: isMobile ? '' : (person.info || ''),  // 手机端不显示info，节省空间
-      x, y,
-      borderColor,
-      children: [],
-    };
+    return { id: person.id || '', name: person.name, info: person.info || '', x, y, borderColor, children: [] };
   }
 
   const childWidths = children.map(c => getSubtreeWidth(c));
-  const totalWidth = childWidths.reduce((a, b) => a + b, 0);
-  const width = isMobile ? NODE_WIDTH * 0.7 : NODE_WIDTH;
+  const totalUnits = childWidths.reduce((a, b) => a + b, 0);
+  const totalSpan = totalUnits * NODE_H_GAP;
 
-  const layoutChildren: any[] = [];
-  let currentX = x - (totalWidth * width) / 2;
+  const layoutChildren: LayoutResult[] = [];
+  let cx = x - totalSpan / 2;
 
   for (let i = 0; i < children.length; i++) {
-    const childX = currentX + (childWidths[i] * width) / 2;
-    layoutChildren.push(layoutTree(children[i], childX, y + gap, depth + 1, isMobile));
-    currentX += childWidths[i] * width;
+    const childCenter = cx + (childWidths[i] * NODE_H_GAP) / 2;
+    layoutChildren.push(layoutTree(children[i], childCenter, y + NODE_V_GAP, depth + 1));
+    cx += childWidths[i] * NODE_H_GAP;
   }
 
-  const firstChild = layoutChildren[0];
-  const lastChild = layoutChildren[layoutChildren.length - 1];
-  const parentX = (firstChild.x + lastChild.x) / 2;
-
-  return {
-    id: person.id || '',
-    name: person.name,
-    info: isMobile ? '' : (person.info || ''),
-    x: parentX,
-    y,
-    borderColor,
-    children: layoutChildren,
-  };
+  const parentX = (layoutChildren[0].x + layoutChildren[layoutChildren.length - 1].x) / 2;
+  return { id: person.id || '', name: person.name, info: person.info || '', x: parentX, y, borderColor, children: layoutChildren };
 }
 
-function layoutToElements(layout: any): { nodes: Node[]; edges: Edge[] } {
+function toElements(layout: LayoutResult): { nodes: Node[]; edges: Edge[] } {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
 
-  function traverse(ln: any) {
-    const w = typeof window !== 'undefined' && window.innerWidth < 640 ? 50 : 70;
+  (function walk(ln: LayoutResult) {
     nodes.push({
       id: ln.id,
       type: 'person',
-      position: { x: ln.x - w, y: ln.y },
+      position: { x: ln.x - NODE_HALF_W, y: ln.y },
       data: { label: ln.name, info: ln.info, borderColor: ln.borderColor },
     });
-
-    for (const child of ln.children) {
+    for (const ch of ln.children) {
       edges.push({
-        id: `${ln.id}-${child.id}`,
+        id: `${ln.id}-${ch.id}`,
         source: ln.id,
-        target: child.id,
+        target: ch.id,
         type: 'smoothstep',
-        style: { stroke: '#93c5fd', strokeWidth: 1.5 },
+        style: { stroke: '#93c5fd', strokeWidth: 2 },
       });
-      traverse(child);
+      walk(ch);
     }
-  }
+  })(layout);
 
-  traverse(layout);
   return { nodes, edges };
 }
 
 export default function TreeView({ data }: TreeViewProps) {
   const rootPeople = data.generations[0]?.people || [];
 
-  // 检测是否移动端
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-
   const { initialNodes, initialEdges } = useMemo(() => {
     const allNodes: Node[] = [];
     const allEdges: Edge[] = [];
 
     for (const person of rootPeople) {
-      const layout = layoutTree(person, 0, 0, 0, isMobile);
-      const { nodes, edges } = layoutToElements(layout);
+      const layout = layoutTree(person, 0, 0, 0);
+      const { nodes, edges } = toElements(layout);
 
+      // 偏移多棵子树使其不相交
       if (allNodes.length > 0) {
-        const w = isMobile ? NODE_WIDTH * 0.7 : NODE_WIDTH;
-        const maxX = Math.max(...allNodes.map(n => n.position.x + w));
+        const maxX = Math.max(...allNodes.map(n => n.position.x + NODE_HALF_W * 2));
         const minX = Math.min(...nodes.map(n => n.position.x));
-        const shift = maxX + w * 0.5 - minX;
+        const shift = maxX + NODE_H_GAP * 0.4 - minX;
         nodes.forEach(n => (n.position.x += shift));
       }
 
@@ -160,21 +143,15 @@ export default function TreeView({ data }: TreeViewProps) {
     }
 
     return { initialNodes: allNodes, initialEdges: allEdges };
-  }, [rootPeople, isMobile]);
+  }, [rootPeople]);
 
   const [nodes] = useNodesState(initialNodes);
   const [edges] = useEdgesState(initialEdges);
 
-  const getFitViewOptions = useCallback(() => {
-    return { padding: 0.15, duration: 200 };
-  }, []);
-
   if (rootPeople.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto px-3 sm:px-4">
-        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 text-center text-gray-400 py-8">
-          <p className="text-sm">暂无数据</p>
-        </div>
+      <div className="w-full bg-white shadow-sm p-6 text-center text-gray-400">
+        <p className="text-sm">暂无数据</p>
       </div>
     );
   }
@@ -182,25 +159,23 @@ export default function TreeView({ data }: TreeViewProps) {
   return (
     <div className="w-full">
       <div className="bg-white shadow-sm overflow-hidden">
-        <div className="flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4 border-b border-gray-100">
-          <h2 className="text-base sm:text-xl font-bold text-gray-800">家族树状图</h2>
-          <p className="text-[10px] sm:text-xs text-gray-400">
-            {isMobile ? '双指缩放 · 拖拽移动' : '滚轮缩放 · 拖拽移动'}
-          </p>
+        <div className="flex items-center justify-between px-3 sm:px-6 py-3 border-b border-gray-100">
+          <h2 className="text-base sm:text-lg font-bold text-gray-800">家族树状图</h2>
+          <p className="text-[10px] sm:text-xs text-gray-400">双指缩放 · 拖拽移动</p>
         </div>
-        <div className="w-full h-[65vh] sm:h-[75vh]">
+        <div className="w-full h-[70vh] sm:h-[80vh]">
           <ReactFlow
             nodes={nodes}
             edges={edges}
             nodeTypes={nodeTypes}
             fitView
-            fitViewOptions={getFitViewOptions()}
-            minZoom={0.03}
-            maxZoom={2}
-            attributionPosition="bottom-left"
+            fitViewOptions={{ padding: 0.1 }}
+            minZoom={0.05}
+            maxZoom={3}
+            defaultEdgeOptions={{ type: 'smoothstep' }}
             proOptions={{ hideAttribution: true }}
           >
-            <Background variant={BackgroundVariant.Dots} gap={16} size={1} color="#f3f4f6" />
+            <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#e5e7eb" />
             <Controls
               showInteractive={false}
               position="bottom-right"
