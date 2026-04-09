@@ -24,7 +24,7 @@ const Footer = () => {
         </div>
         <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
           <p className="text-xs leading-5 text-gray-500 dark:text-gray-400 text-center">
-            &copy; {new Date().getFullYear()} {familyFullName}族谱
+            &copy; 2026 {familyFullName}族谱
           </p>
         </div>
       </div>

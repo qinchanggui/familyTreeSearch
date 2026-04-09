@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { MagnifyingGlassIcon, XMarkIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
-import { UI_CONFIG } from '@/utils/constants';
+import { UI_CONFIG, ANIMATION_DELAYS } from '@/utils/constants';
 
 interface SearchBarProps {
     onSearch: (searchTerm: string, filters: SearchFilters) => void;
@@ -20,6 +20,7 @@ export interface SearchFilters {
 }
 
 export default function SearchBar({ onSearch, generations }: SearchBarProps) {
+    const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [showFilters, setShowFilters] = useState(false);
     const [filters, setFilters] = useState<SearchFilters>({
@@ -39,7 +40,19 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
         onSearch(currentSearchTerm, currentFilters);
     }, [searchTerm, filters, onSearch]);
 
+    const debouncedSearch = useCallback((value: string) => {
+        if (debounceTimerRef.current) {
+            clearTimeout(debounceTimerRef.current);
+        }
+        debounceTimerRef.current = setTimeout(() => {
+            handleSearch(value);
+        }, ANIMATION_DELAYS.SEARCH_DEBOUNCE);
+    }, [handleSearch]);
+
     const clearSearch = useCallback(() => {
+        if (debounceTimerRef.current) {
+            clearTimeout(debounceTimerRef.current);
+        }
         setSearchTerm('');
         const clearedFilters = {
             searchTerm: '',
@@ -99,7 +112,7 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
                     value={searchTerm}
                     onChange={(e) => {
                         setSearchTerm(e.target.value);
-                        handleSearch(e.target.value);
+                        debouncedSearch(e.target.value);
                     }}
                 />
                 {searchTerm && (

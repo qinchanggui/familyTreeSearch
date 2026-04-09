@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   title: `${familyName}氏族谱`,
   description: `${familyName}氏家族族谱记录`,
   robots: {
-    index: true,
+    index: false,
     follow: true,
     googleBot: {
       index: true,

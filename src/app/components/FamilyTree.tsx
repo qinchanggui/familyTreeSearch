@@ -7,6 +7,7 @@ import { escapeHtml, splitHighlightSegments } from '@/utils/search';
 
 interface FamilyTreeProps {
     familyData: FamilyData;
+    fullFamilyData?: FamilyData;
     searchTerm?: string;
     searchInInfo?: boolean;
     onPersonClick?: (personId: string) => void;
@@ -230,18 +231,15 @@ const Generation = ({
     );
 };
 
-export default function FamilyTree({ familyData, searchTerm, searchInInfo, onPersonClick }: FamilyTreeProps) {
+export default function FamilyTree({ familyData, fullFamilyData, searchTerm, searchInInfo, onPersonClick }: FamilyTreeProps) {
     const [personMap, setPersonMap] = useState<Map<string, Person>>(new Map());
     const [sonsMap, setSonsMap] = useState<Map<string, Person[]>>(new Map());
     
     useEffect(() => {
         // 搜索模式下，personMap和sonsMap需要基于全量数据构建
-        // 但由于组件只接收filteredFamilyData，这里需要从props推导
-        // 解决方案：使用window上缓存的全量数据（由page.tsx注入）
-        if (typeof window !== 'undefined' && (window as any).__familyDataFull) {
-            const fullData: FamilyData = (window as any).__familyDataFull;
-            setPersonMap(createPersonMap(fullData));
-            setSonsMap(createSonsMap(fullData));
+        if (fullFamilyData) {
+            setPersonMap(createPersonMap(fullFamilyData));
+            setSonsMap(createSonsMap(fullFamilyData));
         } else {
             setPersonMap(createPersonMap(familyData));
             setSonsMap(createSonsMap(familyData));

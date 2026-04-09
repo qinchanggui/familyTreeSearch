@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import FamilyTree from './components/FamilyTree';
-import TreeView from './components/TreeView';
 import TimelineView from './components/TimelineView';
 import StatsPanel from './components/StatsPanel';
 import PersonDetail from './components/PersonDetail';
 import MemorialMap from './components/MemorialMap';
+const TreeView = dynamic(() => import('./components/TreeView'), { ssr: false });
+
 import Footer from './components/Footer';
 import SearchBar, { SearchFilters } from './components/SearchBar';
 import { useFamilyData } from '../data/familyDataWithIds';
@@ -54,7 +56,7 @@ export default function Home() {
   useEffect(() => {
     // 缓存全量数据供搜索模式下FamilyTree组件使用
     if (!dataLoading && !dataError && familyData.generations.length) {
-      (window as any).__familyDataFull = familyData;
+      // 全量数据缓存供搜索模式使用
     }
   }, [familyData, dataLoading, dataError]);
 
@@ -248,6 +250,7 @@ export default function Home() {
             {viewMode === 'list' ? (
               <FamilyTree
                 familyData={filteredFamilyData}
+                fullFamilyData={familyData}
                 searchTerm={searchTerm}
                 searchInInfo={searchFilters.searchInInfo}
                 onPersonClick={(id) => setSelectedPersonId(id)}

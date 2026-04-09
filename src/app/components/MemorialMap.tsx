@@ -23,7 +23,10 @@ const MARKER_COLORS = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#
 export default function MemorialMap({ places }: MemorialMapProps) {
   const openNavigation = (place: Place) => {
     const amapNavUrl = `https://uri.amap.com/navigation?to=${place.lng},${place.lat},${encodeURIComponent(place.name)}&mode=car&policy=1&src=myapp&coordinate=gaode&callnative=1`;
-    window.open(amapNavUrl, '_blank');
+    const opened = window.open(amapNavUrl, '_blank');
+    if (!opened) {
+      window.location.href = amapNavUrl;
+    }
   };
 
   return (
