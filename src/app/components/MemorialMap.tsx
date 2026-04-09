@@ -19,7 +19,6 @@ interface MemorialMapProps {
   places: Place[];
 }
 
-// 高德地图标记颜色
 const MARKER_COLORS = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#e67e22', '#34495e'];
 
 export default function MemorialMap({ places }: MemorialMapProps) {
@@ -29,17 +28,14 @@ export default function MemorialMap({ places }: MemorialMapProps) {
   const AMapRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
 
-  // 初始化高德地图
   useEffect(() => {
     if (mapRef.current && typeof window !== 'undefined') {
-      // 动态加载高德地图JS API
       const script = document.createElement('script');
       script.src = 'https://webapi.amap.com/maps?v=2.0&key=15bab9f5bf3ab11493cf97fc1732669f';
       script.onload = () => {
         initMap();
       };
       script.onerror = () => {
-        // 如果JS API加载失败，使用静态图片模式
         setMapLoaded(true);
       };
       document.head.appendChild(script);
@@ -49,7 +45,6 @@ export default function MemorialMap({ places }: MemorialMapProps) {
   const initMap = useCallback(() => {
     if (!mapRef.current || !(window as any).AMap) return;
 
-    // 计算中心点
     const centerLng = places.reduce((s, p) => s + p.lng, 0) / places.length;
     const centerLat = places.reduce((s, p) => s + p.lat, 0) / places.length;
 
@@ -63,7 +58,6 @@ export default function MemorialMap({ places }: MemorialMapProps) {
 
     AMapRef.current = map;
 
-    // 添加标记
     places.forEach((place, index) => {
       const marker = new AMap.Marker({
         position: [place.lng, place.lat],
@@ -71,9 +65,9 @@ export default function MemorialMap({ places }: MemorialMapProps) {
         content: `<div style="
           background: ${MARKER_COLORS[index % MARKER_COLORS.length]};
           color: white;
-          padding: 4px 10px;
+          padding: 6px 12px;
           border-radius: 20px;
-          font-size: 12px;
+          font-size: 13px;
           font-weight: bold;
           white-space: nowrap;
           box-shadow: 0 2px 6px rgba(0,0,0,0.3);
@@ -95,23 +89,15 @@ export default function MemorialMap({ places }: MemorialMapProps) {
     setMapLoaded(true);
   }, [places]);
 
-  // 导航功能
   const openNavigation = (place: Place) => {
-    // 优先尝试打开高德App导航
     const amapNavUrl = `https://uri.amap.com/navigation?to=${place.lng},${place.lat},${encodeURIComponent(place.name)}&mode=car&policy=1&src=myapp&coordinate=gaode&callnative=1`;
     window.open(amapNavUrl, '_blank');
   };
 
-  // 地图静态图片URL（备用方案）
-  const centerLng = places.reduce((s, p) => s + p.lng, 0) / places.length;
-  const centerLat = places.reduce((s, p) => s + p.lat, 0) / places.length;
-  const markers = places.map(p => `${p.lng},${p.lat}`).join('|');
-  const staticMapUrl = `https://restapi.amap.com/v3/staticmap?location=${centerLng},${centerLat}&zoom=13&size=750*400&markers=${markers}&key=YOUR_AMAP_KEY`;
-
   return (
     <div className="relative">
-      {/* 地图区域 */}
-      <div ref={mapRef} className="w-full h-[50vh] sm:h-[60vh] bg-gray-200 dark:bg-gray-800 rounded-xl overflow-hidden">
+      {/* 地图区域 - 全屏高度 */}
+      <div ref={mapRef} className="w-full h-[70vh] sm:h-[75vh] bg-gray-200 dark:bg-gray-800 rounded-xl overflow-hidden">
         {!mapLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
             <div className="text-center">
@@ -122,40 +108,24 @@ export default function MemorialMap({ places }: MemorialMapProps) {
         )}
       </div>
 
-      {/* 地点列表 */}
-      <div className="mt-4 space-y-2">
-        <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-          祭祖地点 ({places.length}处)
-        </h3>
-        {places.map((place, index) => (
-          <div
-            key={place.id}
-            className={`flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 cursor-pointer hover:shadow-md transition-all active:scale-[0.98] ${selectedPlace?.id === place.id ? 'ring-2 ring-blue-400' : ''}`}
-            onClick={() => setSelectedPlace(place)}
-          >
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-xs"
-              style={{ background: MARKER_COLORS[index % MARKER_COLORS.length] }}
-            >
-              {index + 1}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="font-medium text-gray-800 dark:text-gray-100 text-sm">{place.name}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{place.address}</p>
-            </div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                openNavigation(place);
-              }}
-              className="p-2 text-blue-500 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg flex-shrink-0"
-              title="导航"
-            >
-              <MapPinIcon className="h-5 w-5" />
-            </button>
+      {/* 扫墓照片墙 */}
+      {places.length > 0 && (
+        <div className="mt-6">
+          <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">扫墓照片</h3>
+          <div className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide">
+            {[1,2,3,4,5].map(i => (
+              <div key={i} className="flex-shrink-0 w-48 sm:w-56 snap-start">
+                <img
+                  src={`/memorial-photos/photo${i}.jpg`}
+                  alt={`扫墓照片${i}`}
+                  className="w-full h-64 sm:h-72 object-cover rounded-xl"
+                  loading="lazy"
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
 
       {/* 地点详情弹窗 */}
       {selectedPlace && (

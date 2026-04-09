@@ -168,7 +168,7 @@ export default function Home() {
                   document.documentElement.classList.toggle('dark');
                   localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
                 }}
-                className="p-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center"
                 aria-label="切换深色模式"
               >
                 <MoonIcon className="h-4 w-4 dark:hidden" />
