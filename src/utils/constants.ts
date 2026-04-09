@@ -7,8 +7,8 @@ export const ANIMATION_DELAYS = {
 
 // UI相关常量
 export const UI_CONFIG = {
-  SEARCH_INPUT_WIDTH: 'w-48',
-  FILTER_PANEL_WIDTH: 'w-80',
+  SEARCH_INPUT_WIDTH: 'w-full sm:w-48',
+  FILTER_PANEL_WIDTH: 'w-72 sm:w-80',
   MAX_SEARCH_RESULTS_DISPLAY: 50, // 最多显示的搜索结果数量
 } as const;
 
