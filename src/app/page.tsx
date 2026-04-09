@@ -112,7 +112,7 @@ export default function Home() {
                   onClick={() => setViewMode('list')}
                 >
                   <QueueListIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
-                  <span className="hidden sm:inline">列表</span>
+                  <span className="inline">列表</span>
                 </button>
                 <button
                   type="button"
@@ -124,7 +124,7 @@ export default function Home() {
                   onClick={() => setViewMode('timeline')}
                 >
                   <ClockIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
-                  <span className="hidden sm:inline">时间线</span>
+                  <span className="inline">时间线</span>
                 </button>
                 <button
                   type="button"
@@ -136,7 +136,7 @@ export default function Home() {
                   onClick={() => setViewMode('tree')}
                 >
                   <Squares2X2Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
-                  <span className="hidden sm:inline">树状</span>
+                  <span className="inline">树状</span>
                 </button>
                 <button
                   type="button"
@@ -148,7 +148,7 @@ export default function Home() {
                   onClick={() => setViewMode('stats')}
                 >
                   <ChartBarIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
-                  <span className="hidden sm:inline">统计</span>
+                  <span className="inline">统计</span>
                 </button>
                 <button
                   type="button"
@@ -160,7 +160,7 @@ export default function Home() {
                   onClick={() => setViewMode('memorial')}
                 >
                   <MapPinIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
-                  <span className="hidden sm:inline">祭祖</span>
+                  <span className="inline">祭祖</span>
                 </button>
               </div>
               <button
