@@ -1,39 +1,25 @@
 "use client";
 
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import ReactFlow, {
-  Node,
-  Edge,
-  Background,
-  Controls,
-  useNodesState,
-  useEdgesState,
-  Position,
-  NodeProps,
-  Handle,
-  BackgroundVariant,
+  Node, Edge, Background, Controls,
+  useNodesState, useEdgesState,
+  Position, NodeProps, Handle, BackgroundVariant,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { FamilyData, Person } from '@/types/family';
 
-interface TreeViewProps {
-  data: FamilyData;
-}
+interface TreeViewProps { data: FamilyData }
 
-// 节点：字体正常大小，紧凑排列
+// 节点：只显示名字，大字体
 function PersonNode({ data }: NodeProps) {
   return (
     <div
-      className="px-3 py-2 rounded-lg bg-white border-2 shadow-sm min-w-[70px] max-w-[180px] hover:shadow-md transition-shadow"
+      className="px-3 py-1.5 rounded-lg bg-white border-2 shadow-sm hover:shadow-md transition-shadow"
       style={{ borderColor: data.borderColor || '#93c5fd' }}
     >
       <Handle type="target" position={Position.Top} className="!bg-blue-400 !w-2 !h-2" />
-      <div className="text-center">
-        <p className="font-bold text-gray-800 text-sm leading-tight whitespace-nowrap">{data.label}</p>
-        {data.info && (
-          <p className="text-gray-500 text-xs mt-1 leading-snug line-clamp-2">{data.info}</p>
-        )}
-      </div>
+      <p className="font-bold text-gray-800 text-base whitespace-nowrap">{data.label}</p>
       <Handle type="source" position={Position.Bottom} className="!bg-blue-400 !w-2 !h-2" />
     </div>
   );
@@ -48,113 +34,66 @@ const generationColors = [
   '#c2410c', '#ea580c', '#f97316', '#fb923c', '#fdba74', '#fed7aa',
 ];
 
-// 水平间距：按名字宽度估算
-const NODE_H_GAP = 160;   // 兄弟节点水平最小间距
-const NODE_V_GAP = 60;    // 父子垂直间距（紧凑）
-const NODE_HALF_W = 50;   // 节点半宽偏移
+const H_GAP = 140;
+const V_GAP = 50;
 
-function getSubtreeWidth(person: Person): number {
-  if (!person.children || person.children.length === 0) return 1;
-  return person.children.reduce((sum, c) => sum + getSubtreeWidth(c), 0);
+function getWidth(p: Person): number {
+  if (!p.children?.length) return 1;
+  return p.children.reduce((s, c) => s + getWidth(c), 0);
 }
 
-interface LayoutResult {
-  id: string;
-  name: string;
-  info: string;
-  x: number;
-  y: number;
-  borderColor: string;
-  children: LayoutResult[];
-}
+interface L { id: string; name: string; x: number; y: number; bc: string; ch: L[] }
 
-function layoutTree(person: Person, x: number, y: number, depth: number): LayoutResult {
-  const children = person.children || [];
-  const borderColor = generationColors[depth % generationColors.length];
+function layout(p: Person, x: number, y: number, d: number): L {
+  const bc = generationColors[d % generationColors.length];
+  const ch = p.children || [];
+  if (!ch.length) return { id: p.id || '', name: p.name, x, y, bc, ch: [] };
 
-  if (children.length === 0) {
-    return { id: person.id || '', name: person.name, info: person.info || '', x, y, borderColor, children: [] };
+  const ws = ch.map(c => getWidth(c));
+  const total = ws.reduce((a, b) => a + b, 0) * H_GAP;
+  const ls: L[] = [];
+  let cx = x - total / 2;
+  for (let i = 0; i < ch.length; i++) {
+    ls.push(layout(ch[i], cx + ws[i] * H_GAP / 2, y + V_GAP, d + 1));
+    cx += ws[i] * H_GAP;
   }
-
-  const childWidths = children.map(c => getSubtreeWidth(c));
-  const totalUnits = childWidths.reduce((a, b) => a + b, 0);
-  const totalSpan = totalUnits * NODE_H_GAP;
-
-  const layoutChildren: LayoutResult[] = [];
-  let cx = x - totalSpan / 2;
-
-  for (let i = 0; i < children.length; i++) {
-    const childCenter = cx + (childWidths[i] * NODE_H_GAP) / 2;
-    layoutChildren.push(layoutTree(children[i], childCenter, y + NODE_V_GAP, depth + 1));
-    cx += childWidths[i] * NODE_H_GAP;
-  }
-
-  const parentX = (layoutChildren[0].x + layoutChildren[layoutChildren.length - 1].x) / 2;
-  return { id: person.id || '', name: person.name, info: person.info || '', x: parentX, y, borderColor, children: layoutChildren };
+  return { id: p.id || '', name: p.name, x: (ls[0].x + ls[ls.length - 1].x) / 2, y, bc, ch: ls };
 }
 
-function toElements(layout: LayoutResult): { nodes: Node[]; edges: Edge[] } {
-  const nodes: Node[] = [];
-  const edges: Edge[] = [];
-
-  (function walk(ln: LayoutResult) {
-    nodes.push({
-      id: ln.id,
-      type: 'person',
-      position: { x: ln.x - NODE_HALF_W, y: ln.y },
-      data: { label: ln.name, info: ln.info, borderColor: ln.borderColor },
-    });
-    for (const ch of ln.children) {
-      edges.push({
-        id: `${ln.id}-${ch.id}`,
-        source: ln.id,
-        target: ch.id,
-        type: 'smoothstep',
-        style: { stroke: '#93c5fd', strokeWidth: 2 },
-      });
-      walk(ch);
+function toEl(l: L): { nodes: Node[]; edges: Edge[] } {
+  const nodes: Node[] = [], edges: Edge[] = [];
+  const hw = 50;
+  (function w(n: L) {
+    nodes.push({ id: n.id, type: 'person', position: { x: n.x - hw, y: n.y }, data: { label: n.name, borderColor: n.bc } });
+    for (const c of n.ch) {
+      edges.push({ id: `${n.id}-${c.id}`, source: n.id, target: c.id, type: 'smoothstep', style: { stroke: '#93c5fd', strokeWidth: 2 } });
+      w(c);
     }
-  })(layout);
-
+  })(l);
   return { nodes, edges };
 }
 
 export default function TreeView({ data }: TreeViewProps) {
-  const rootPeople = data.generations[0]?.people || [];
+  const roots = data.generations[0]?.people || [];
 
   const { initialNodes, initialEdges } = useMemo(() => {
-    const allNodes: Node[] = [];
-    const allEdges: Edge[] = [];
-
-    for (const person of rootPeople) {
-      const layout = layoutTree(person, 0, 0, 0);
-      const { nodes, edges } = toElements(layout);
-
-      // 偏移多棵子树使其不相交
-      if (allNodes.length > 0) {
-        const maxX = Math.max(...allNodes.map(n => n.position.x + NODE_HALF_W * 2));
-        const minX = Math.min(...nodes.map(n => n.position.x));
-        const shift = maxX + NODE_H_GAP * 0.4 - minX;
-        nodes.forEach(n => (n.position.x += shift));
+    const ns: Node[] = [], es: Edge[] = [];
+    for (const p of roots) {
+      const { nodes, edges } = toEl(layout(p, 0, 0, 0));
+      if (ns.length) {
+        const mx = Math.max(...ns.map(n => n.position.x + 100));
+        const mn = Math.min(...nodes.map(n => n.position.x));
+        nodes.forEach(n => n.position.x += mx + H_GAP * 0.3 - mn);
       }
-
-      allNodes.push(...nodes);
-      allEdges.push(...edges);
+      ns.push(...nodes); es.push(...edges);
     }
-
-    return { initialNodes: allNodes, initialEdges: allEdges };
-  }, [rootPeople]);
+    return { initialNodes: ns, initialEdges: es };
+  }, [roots]);
 
   const [nodes] = useNodesState(initialNodes);
   const [edges] = useEdgesState(initialEdges);
 
-  if (rootPeople.length === 0) {
-    return (
-      <div className="w-full bg-white shadow-sm p-6 text-center text-gray-400">
-        <p className="text-sm">暂无数据</p>
-      </div>
-    );
-  }
+  if (!roots.length) return <div className="w-full bg-white shadow-sm p-6 text-center text-gray-400 text-sm">暂无数据</div>;
 
   return (
     <div className="w-full">
@@ -169,18 +108,13 @@ export default function TreeView({ data }: TreeViewProps) {
             edges={edges}
             nodeTypes={nodeTypes}
             fitView
-            fitViewOptions={{ padding: 0.1 }}
+            fitViewOptions={{ padding: 0.05 }}
             minZoom={0.05}
-            maxZoom={3}
-            defaultEdgeOptions={{ type: 'smoothstep' }}
+            maxZoom={4}
             proOptions={{ hideAttribution: true }}
           >
             <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#e5e7eb" />
-            <Controls
-              showInteractive={false}
-              position="bottom-right"
-              className="!bg-white !rounded-lg !shadow-md !border !border-gray-200"
-            />
+            <Controls showInteractive={false} position="bottom-right" className="!bg-white !rounded-lg !shadow-md !border !border-gray-200" />
           </ReactFlow>
         </div>
       </div>
