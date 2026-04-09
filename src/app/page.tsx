@@ -3,6 +3,8 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import FamilyTree from './components/FamilyTree';
 import TreeView from './components/TreeView';
+import AccordionTreeView from './components/AccordionTreeView';
+import TimelineView from './components/TimelineView';
 import Footer from './components/Footer';
 import SearchBar, { SearchFilters } from './components/SearchBar';
 import { useFamilyData } from '../data/familyDataWithIds';
@@ -13,6 +15,7 @@ import { buildFamilyTree } from '@/utils/familyTree';
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<'list' | 'tree'>('list');
+  const [treeSubMode, setTreeSubMode] = useState<'flow' | 'accordion' | 'timeline'>('flow');
   const { data: familyData, loading: dataLoading, error: dataError } = useFamilyData();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -44,6 +47,13 @@ export default function Home() {
     setSearchTerm(term);
     setSearchFilters(filters);
   }, []);
+
+  useEffect(() => {
+    // 缓存全量数据供搜索模式下FamilyTree组件使用
+    if (!dataLoading && !dataError && familyData.generations.length) {
+      (window as any).__familyDataFull = familyData;
+    }
+  }, [familyData, dataLoading, dataError]);
 
   useEffect(() => {
     if (!dataLoading && !dataError && familyData.generations.length) {
@@ -146,7 +156,50 @@ export default function Home() {
             searchInInfo={searchFilters.searchInInfo}
           />
         ) : (
-          <TreeView data={treeData} />
+          <div>
+            {/* PC端：ReactFlow树状图 */}
+            <div className="hidden sm:block">
+              <TreeView data={treeData} />
+            </div>
+            {/* 手机端：方案切换 */}
+            <div className="sm:hidden">
+              <div className="flex gap-2 px-3 mb-3">
+                <button
+                  className={`flex-1 py-2 text-xs font-medium rounded-lg transition-colors ${
+                    treeSubMode === 'flow'
+                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                      : 'bg-white text-gray-600 border border-gray-200'
+                  }`}
+                  onClick={() => setTreeSubMode('flow')}
+                >
+                  树状图
+                </button>
+                <button
+                  className={`flex-1 py-2 text-xs font-medium rounded-lg transition-colors ${
+                    treeSubMode === 'accordion'
+                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                      : 'bg-white text-gray-600 border border-gray-200'
+                  }`}
+                  onClick={() => setTreeSubMode('accordion')}
+                >
+                  手风琴
+                </button>
+                <button
+                  className={`flex-1 py-2 text-xs font-medium rounded-lg transition-colors ${
+                    treeSubMode === 'timeline'
+                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                      : 'bg-white text-gray-600 border border-gray-200'
+                  }`}
+                  onClick={() => setTreeSubMode('timeline')}
+                >
+                  时间线
+                </button>
+              </div>
+              {treeSubMode === 'flow' && <TreeView data={treeData} />}
+              {treeSubMode === 'accordion' && <AccordionTreeView data={familyData} />}
+              {treeSubMode === 'timeline' && <TimelineView data={familyData} />}
+            </div>
+          </div>
         )}
       </div>
 
