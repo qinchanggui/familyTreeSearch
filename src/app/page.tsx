@@ -6,17 +6,19 @@ import TreeView from './components/TreeView';
 import TimelineView from './components/TimelineView';
 import StatsPanel from './components/StatsPanel';
 import PersonDetail from './components/PersonDetail';
+import MemorialMap from './components/MemorialMap';
 import Footer from './components/Footer';
 import SearchBar, { SearchFilters } from './components/SearchBar';
 import { useFamilyData } from '../data/familyDataWithIds';
-import { QueueListIcon, Squares2X2Icon, ClockIcon, SunIcon, MoonIcon, ChartBarIcon } from '@heroicons/react/24/outline';
+import { QueueListIcon, Squares2X2Icon, ClockIcon, SunIcon, MoonIcon, ChartBarIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import { getFamilyFullName } from '@/utils/config';
 import { searchFamilyData, createFilteredFamilyData, SearchResult } from '@/utils/search';
 import { buildFamilyTree } from '@/utils/familyTree';
 
 export default function Home() {
-  const [viewMode, setViewMode] = useState<'list' | 'timeline' | 'tree' | 'stats'>('list');
+  const [viewMode, setViewMode] = useState<'list' | 'timeline' | 'tree' | 'stats' | 'memorial'>('list');
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
+  const [memorialPlaces, setMemorialPlaces] = useState<any[]>([]);
   const { data: familyData, loading: dataLoading, error: dataError } = useFamilyData();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -55,6 +57,16 @@ export default function Home() {
       (window as any).__familyDataFull = familyData;
     }
   }, [familyData, dataLoading, dataError]);
+
+  // 加载祭祖地点数据
+  useEffect(() => {
+    fetch('/api/memorial-places')
+      .then(res => res.json())
+      .then(data => {
+        if (data.places) setMemorialPlaces(data.places);
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (!dataLoading && !dataError && familyData.generations.length) {
@@ -128,7 +140,7 @@ export default function Home() {
               </button>
               <button
                 type="button"
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-r-md flex items-center ${
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-md flex items-center ${
                   viewMode === 'tree'
                     ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
@@ -151,6 +163,19 @@ export default function Home() {
               >
                 <ChartBarIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 统计
+              </button>
+              <button
+                type="button"
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-r-md flex items-center ${
+                  viewMode === 'memorial'
+                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }`}
+                style={{ minWidth: '72px' }}
+                onClick={() => setViewMode('memorial')}
+              >
+                <MapPinIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                祭祖
               </button>
             </div>
           </div>
@@ -234,6 +259,10 @@ export default function Home() {
               <TimelineView data={familyData} />
             ) : viewMode === 'stats' ? (
               <StatsPanel data={familyData} />
+            ) : viewMode === 'memorial' ? (
+              <div className="max-w-4xl mx-auto px-3 sm:px-4 py-4">
+                <MemorialMap places={memorialPlaces} />
+              </div>
             ) : (
               <TreeView data={treeData} />
             )}

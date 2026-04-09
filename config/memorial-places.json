@@ -1,0 +1,92 @@
+{
+  "places": [
+    {
+      "id": "memorial-1",
+      "name": "马头",
+      "address": "广西壮族自治区贵港市覃塘区Z004",
+      "lng": 109.435643,
+      "lat": 22.932513,
+      "memorialDay": "",
+      "ancestor": "",
+      "note": "",
+      "photo": ""
+    },
+    {
+      "id": "memorial-2",
+      "name": "翻到底",
+      "address": "广西壮族自治区贵港市覃塘区Z004",
+      "lng": 109.443101,
+      "lat": 22.945139,
+      "memorialDay": "",
+      "ancestor": "",
+      "note": "",
+      "photo": ""
+    },
+    {
+      "id": "memorial-3",
+      "name": "高公山",
+      "address": "广西壮族自治区贵港市覃塘区西外环高速",
+      "lng": 109.433290,
+      "lat": 22.943136,
+      "memorialDay": "",
+      "ancestor": "",
+      "note": "",
+      "photo": ""
+    },
+    {
+      "id": "memorial-4",
+      "name": "马后背",
+      "address": "广西壮族自治区贵港市覃塘区Z004",
+      "lng": 109.443387,
+      "lat": 22.936928,
+      "memorialDay": "",
+      "ancestor": "",
+      "note": "",
+      "photo": ""
+    },
+    {
+      "id": "memorial-5",
+      "name": "滑水",
+      "address": "广西壮族自治区贵港市覃塘区九凌湖大道",
+      "lng": 109.468653,
+      "lat": 22.948365,
+      "memorialDay": "",
+      "ancestor": "",
+      "note": "",
+      "photo": ""
+    },
+    {
+      "id": "memorial-6",
+      "name": "扛啷塘",
+      "address": "广西壮族自治区贵港市覃塘区G80广昆高速",
+      "lng": 109.508229,
+      "lat": 22.899601,
+      "memorialDay": "",
+      "ancestor": "",
+      "note": "",
+      "photo": ""
+    },
+    {
+      "id": "memorial-7",
+      "name": "家庙",
+      "address": "广西壮族自治区贵港市覃塘区西外环高速",
+      "lng": 109.432126,
+      "lat": 22.951722,
+      "memorialDay": "",
+      "ancestor": "",
+      "note": "",
+      "photo": ""
+    },
+    {
+      "id": "memorial-8",
+      "name": "岐山公路边",
+      "address": "广西壮族自治区贵港市覃塘区西外环高速",
+      "lng": 109.425399,
+      "lat": 22.954443,
+      "memorialDay": "",
+      "ancestor": "",
+      "note": "",
+      "photo": ""
+    }
+  ]
+}
