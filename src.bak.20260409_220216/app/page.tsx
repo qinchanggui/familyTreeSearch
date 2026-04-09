@@ -7,7 +7,7 @@ import TimelineView from './components/TimelineView';
 import Footer from './components/Footer';
 import SearchBar, { SearchFilters } from './components/SearchBar';
 import { useFamilyData } from '../data/familyDataWithIds';
-import { QueueListIcon, Squares2X2Icon, ClockIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
+import { QueueListIcon, Squares2X2Icon, ClockIcon } from '@heroicons/react/24/outline';
 import { getFamilyFullName } from '@/utils/config';
 import { searchFamilyData, createFilteredFamilyData, SearchResult } from '@/utils/search';
 import { buildFamilyTree } from '@/utils/familyTree';
@@ -74,35 +74,23 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
-      <header className="bg-white dark:bg-gray-900 shadow-sm mb-4 sm:mb-6">
+    <main className="min-h-screen bg-gray-50 flex flex-col">
+      <header className="bg-white shadow-sm mb-4 sm:mb-6">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-6">
-          <h1 className="text-xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 text-center">
+          <h1 className="text-xl sm:text-3xl font-bold text-gray-900 text-center">
             {familyFullName}族谱
           </h1>
-          <p className="mt-0.5 sm:mt-2 text-gray-500 dark:text-gray-400 text-center text-[10px] sm:text-sm tracking-wide">
+          <p className="mt-0.5 sm:mt-2 text-gray-500 text-center text-[10px] sm:text-sm tracking-wide">
             传承历史 · 延续文化
           </p>
-          <div className="mt-3 sm:mt-6 flex justify-center gap-3">
-            {/* 深色模式切换 */}
-            <button
-              onClick={() => {
-                document.documentElement.classList.toggle('dark');
-                localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-              }}
-              className="p-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
-              aria-label="切换深色模式"
-            >
-              <MoonIcon className="h-4 w-4 dark:hidden" />
-              <SunIcon className="h-4 w-4 hidden dark:block" />
-            </button>
+          <div className="mt-3 sm:mt-6 flex justify-center">
             <div className="inline-flex rounded-md shadow-sm">
               <button
                 type="button"
                 className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-l-md flex items-center ${
                   viewMode === 'list'
-                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
                 }`}
                 style={{ minWidth: '72px' }}
                 onClick={() => setViewMode('list')}
@@ -114,8 +102,8 @@ export default function Home() {
                 type="button"
                 className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium flex items-center ${
                   viewMode === 'timeline'
-                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
                 }`}
                 style={{ minWidth: '72px' }}
                 onClick={() => setViewMode('timeline')}
@@ -127,8 +115,8 @@ export default function Home() {
                 type="button"
                 className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-r-md flex items-center ${
                   viewMode === 'tree'
-                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
                 }`}
                 style={{ minWidth: '72px' }}
                 onClick={() => setViewMode('tree')}
@@ -148,52 +136,36 @@ export default function Home() {
           </div>
         )}
 
-        {/* 搜索框和世代导航：仅列表视图显示 */}
-        {viewMode === 'list' && (
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 mb-4 sm:mb-6">
-            <div className="mb-4">
-              <SearchBar
-                onSearch={handleSearch}
-                generations={familyData.generations.map(g => g.title)}
-              />
+        {/* 搜索框：所有视图共享 */}
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 mb-4 sm:mb-6">
+          <div className="mb-4">
+            <SearchBar
+              onSearch={handleSearch}
+              generations={familyData.generations.map(g => g.title)}
+            />
+          </div>
+
+          {viewMode !== 'list' && searchResults.length > 0 && (
+            <div className="text-xs sm:text-sm text-gray-600 text-center mb-3">
+              找到 <span className="font-medium text-blue-600">{searchResults.length}</span> 个结果，
+              <button onClick={() => setViewMode('list')} className="text-blue-600 underline ml-1">切换到列表查看</button>
             </div>
+          )}
 
-            {searchResults.length === 0 && (searchTerm || searchFilters.selectedGenerations.length > 0 ||
-             searchFilters.yearRange.start || searchFilters.yearRange.end) && (
-              <div className="text-center text-gray-500 dark:text-gray-400 py-6 sm:py-8">
-                <p className="text-base sm:text-lg">未找到匹配的家族成员</p>
-                <p className="text-xs sm:text-sm">请尝试修改搜索条件</p>
-              </div>
-            )}
+          {viewMode === 'list' && searchResults.length === 0 && (searchTerm || searchFilters.selectedGenerations.length > 0 ||
+           searchFilters.yearRange.start || searchFilters.yearRange.end) && (
+            <div className="text-center text-gray-500 py-6 sm:py-8">
+              <p className="text-base sm:text-lg">未找到匹配的家族成员</p>
+              <p className="text-xs sm:text-sm">请尝试修改搜索条件</p>
+            </div>
+          )}
 
-            {searchResults.length > 0 && (
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 text-center mb-3 sm:mb-4">
-                找到 <span className="font-medium text-blue-600">{searchResults.length}</span> 个匹配结果
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* 世代快速跳转导航条：仅列表视图 */}
-        {viewMode === 'list' && (
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 mb-4">
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-1 px-1">
-            {familyData.generations.map((g, i) => (
-              <button
-                key={g.title}
-                onClick={() => {
-                  const el = document.getElementById(`gen-${g.title}`);
-                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }}
-                className="flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-300 hover:border-blue-200 dark:hover:border-blue-700 transition-colors whitespace-nowrap"
-              >
-                {g.title}
-                <span className="ml-1 text-[10px] opacity-60">{g.people.length}</span>
-              </button>
-            ))}
-          </div>
+          {viewMode === 'list' && searchResults.length > 0 && (
+            <div className="text-xs sm:text-sm text-gray-600 text-center mb-3 sm:mb-4">
+              找到 <span className="font-medium text-blue-600">{searchResults.length}</span> 个匹配结果
+            </div>
+          )}
         </div>
-        )}
 
         {viewMode === 'list' ? (
           <FamilyTree

@@ -83,7 +83,7 @@ const PersonCard = ({
     return (
         <div 
             id={`person-${person.id}`} 
-            className={`group bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-blue-100 dark:hover:border-blue-800 relative overflow-hidden cursor-pointer ${expanded ? 'ring-1 ring-blue-300' : ''}`}
+            className={`group bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-blue-100 relative overflow-hidden cursor-pointer ${expanded ? 'ring-1 ring-blue-300' : ''}`}
             onClick={toggleExpand}
         >
             <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -93,7 +93,7 @@ const PersonCard = ({
                         <div className="bg-blue-50 p-2 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
                             <UserIcon className="h-5 w-5 text-blue-600" />
                         </div>
-                        <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                        <h3 className="text-xl font-semibold text-gray-800 group-hover:text-blue-600 transition-colors duration-300">
                             {searchTerm
                                 ? splitHighlightSegments(escapeHtml(person.name), searchTerm).map((seg, i) => (
                                     seg.isMatch
@@ -112,7 +112,7 @@ const PersonCard = ({
                 </div>
                 
                 {father && (
-                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm mb-2">
+                    <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
                         <UserGroupIcon className="h-4 w-4 text-blue-500" />
                         <span>父亲：</span>
                         <button 
@@ -122,7 +122,7 @@ const PersonCard = ({
                                     scrollToPerson(father.id);
                                 }
                             }}
-                            className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline font-medium"
+                            className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
                         >
                             {father.name}
                         </button>
@@ -130,7 +130,7 @@ const PersonCard = ({
                 )}
                 
                 {sons.length > 0 && (
-                    <div className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-400 text-sm mb-2">
+                    <div className="flex flex-wrap items-center gap-2 text-gray-600 text-sm mb-2">
                         <UserGroupIcon className="h-4 w-4 text-green-500" />
                         <span>子嗣：</span>
                         {sons.map((son, index) => (
@@ -142,7 +142,7 @@ const PersonCard = ({
                                             scrollToPerson(son.id);
                                         }
                                     }}
-                                    className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 hover:underline font-medium"
+                                    className="text-green-600 hover:text-green-800 hover:underline font-medium"
                                 >
                                     {son.name}
                                 </button>
@@ -152,7 +152,7 @@ const PersonCard = ({
                     </div>
                 )}
                 
-                <p className={`text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-3 ${expanded ? '' : 'line-clamp-2 sm:line-clamp-3'}`}>
+                <p className={`text-gray-600 text-sm leading-relaxed mb-3 ${expanded ? '' : 'line-clamp-2 sm:line-clamp-3'}`}>
                     {(searchTerm && searchInInfo)
                         ? splitHighlightSegments(escapeHtml(person.info), searchTerm).map((seg, i) => (
                             seg.isMatch
@@ -162,7 +162,7 @@ const PersonCard = ({
                         : person.info}
                 </p>
                 {(person.birthYear || person.deathYear) && (
-                    <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+                    <div className="flex items-center gap-2 text-gray-500 text-sm mt-4 pt-4 border-t border-gray-100">
                         <CalendarIcon className="h-4 w-4" />
                         <span>
                             {person.birthYear}
@@ -194,12 +194,12 @@ const Generation = ({
     searchInInfo?: boolean;
 }) => {
     return (
-        <div className="mb-10" id={`gen-${title}`}>
+        <div className="mb-10">
             <div className="flex items-center gap-4 mb-6">
-                <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                <h2 className="text-xl font-bold text-gray-800">
                     {title}
                 </h2>
-                <div className="flex-1 h-px bg-gradient-to-r from-blue-50 dark:from-blue-900/30 to-transparent"></div>
+                <div className="flex-1 h-px bg-gradient-to-r from-blue-50 to-transparent"></div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {people.map((person, index) => (
