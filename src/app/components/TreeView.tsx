@@ -15,12 +15,12 @@ interface TreeViewProps { data: FamilyData }
 function PersonNode({ data }: NodeProps) {
   return (
     <div
-      className="px-3 py-1.5 rounded-lg bg-white border-2 shadow-sm hover:shadow-md transition-shadow"
+      className="px-5 py-2.5 rounded-xl bg-white border-2 shadow-md hover:shadow-lg transition-shadow"
       style={{ borderColor: data.borderColor || '#93c5fd' }}
     >
-      <Handle type="target" position={Position.Top} className="!bg-blue-400 !w-2 !h-2" />
-      <p className="font-bold text-gray-800 text-base whitespace-nowrap">{data.label}</p>
-      <Handle type="source" position={Position.Bottom} className="!bg-blue-400 !w-2 !h-2" />
+      <Handle type="target" position={Position.Top} className="!bg-blue-400 !w-3 !h-3" />
+      <p className="font-bold text-gray-800 text-lg whitespace-nowrap">{data.label}</p>
+      <Handle type="source" position={Position.Bottom} className="!bg-blue-400 !w-3 !h-3" />
     </div>
   );
 }
@@ -34,8 +34,8 @@ const generationColors = [
   '#c2410c', '#ea580c', '#f97316', '#fb923c', '#fdba74', '#fed7aa',
 ];
 
-const H_GAP = 140;
-const V_GAP = 50;
+const H_GAP = 180;
+const V_GAP = 80;
 
 function getWidth(p: Person): number {
   if (!p.children?.length) return 1;
@@ -62,7 +62,7 @@ function layout(p: Person, x: number, y: number, d: number): L {
 
 function toEl(l: L): { nodes: Node[]; edges: Edge[] } {
   const nodes: Node[] = [], edges: Edge[] = [];
-  const hw = 50;
+  const hw = 70;
   (function w(n: L) {
     nodes.push({ id: n.id, type: 'person', position: { x: n.x - hw, y: n.y }, data: { label: n.name, borderColor: n.bc } });
     for (const c of n.ch) {
@@ -108,7 +108,7 @@ export default function TreeView({ data }: TreeViewProps) {
             edges={edges}
             nodeTypes={nodeTypes}
             fitView
-            fitViewOptions={{ padding: 0.05 }}
+            fitViewOptions={{ padding: 0.08 }}
             minZoom={0.05}
             maxZoom={4}
             proOptions={{ hideAttribution: true }}
