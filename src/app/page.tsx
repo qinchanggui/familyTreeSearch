@@ -258,7 +258,7 @@ export default function Home() {
 
             {searchResults.length > 0 && (
               <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 text-center mb-3 sm:mb-4">
-                找到 <span className="font-medium text-blue-600">{searchResults.length}</span> 个匹配结果
+                找到 <span className="font-medium text-blue-600">{searchResults.filter(r => r.matchType === 'name' || r.matchType === 'id').length}</span> 个匹配结果{searchResults.filter(r => r.matchType !== 'name' && r.matchType !== 'id').length > 0 && <span>，含 <span className="text-gray-400">{searchResults.filter(r => r.matchType !== 'name' && r.matchType !== 'id').length}</span> 个描述匹配</span>}
               </div>
             )}
           </div>
