@@ -27,7 +27,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     searchTerm: '',
-    searchInInfo: true,
+    
     selectedGenerations: [],
   });
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -76,8 +76,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!dataLoading && !dataError && familyData.generations.length) {
-      if (searchTerm || searchFilters.selectedGenerations.length > 0 ||
-          !searchFilters.searchInInfo) {
+      if (searchTerm || searchFilters.selectedGenerations.length > 0) {
         const results = searchFamilyData(familyData, searchTerm, searchFilters);
         setSearchResults(results);
       } else {
@@ -162,8 +161,8 @@ export default function Home() {
                   }`}
                   onClick={() => { setSelectedPersonId(null); setViewMode('list'); }}
                 >
-                  <QueueListIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
-                  <span className="inline">列表</span>
+                  <QueueListIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-1.5" />
+                  <span className="hidden sm:inline">列表</span>
                 </button>
                 <button
                   type="button"
@@ -174,8 +173,8 @@ export default function Home() {
                   }`}
                   onClick={() => { setSelectedPersonId(null); setViewMode('timeline'); }}
                 >
-                  <ClockIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
-                  <span className="inline">时间线</span>
+                  <ClockIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-1.5" />
+                  <span className="hidden sm:inline">时间线</span>
                 </button>
                 <button
                   type="button"
@@ -186,8 +185,8 @@ export default function Home() {
                   }`}
                   onClick={() => { setSelectedPersonId(null); setViewMode('tree'); }}
                 >
-                  <Squares2X2Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
-                  <span className="inline">树状</span>
+                  <Squares2X2Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-1.5" />
+                  <span className="hidden sm:inline">树状</span>
                 </button>
                 <button
                   type="button"
@@ -198,8 +197,8 @@ export default function Home() {
                   }`}
                   onClick={() => { setSelectedPersonId(null); setViewMode('stats'); }}
                 >
-                  <ChartBarIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
-                  <span className="inline">统计</span>
+                  <ChartBarIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-1.5" />
+                  <span className="hidden sm:inline">统计</span>
                 </button>
                 <button
                   type="button"
@@ -210,8 +209,8 @@ export default function Home() {
                   }`}
                   onClick={() => { setSelectedPersonId(null); setViewMode('memorial'); }}
                 >
-                  <MapPinIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
-                  <span className="inline">祭祖</span>
+                  <MapPinIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-1.5" />
+                  <span className="hidden sm:inline">祭祖</span>
                 </button>
               </div>
               <button
@@ -247,8 +246,7 @@ export default function Home() {
               />
             </div>
 
-            {searchResults.length === 0 && (searchTerm || searchFilters.selectedGenerations.length > 0 ||
-             !searchFilters.searchInInfo) && (
+            {searchResults.length === 0 && (searchTerm || searchFilters.selectedGenerations.length > 0) && (
               <div className="text-center text-gray-500 dark:text-muted py-6 sm:py-8">
                 <p className="text-base sm:text-lg">未找到匹配的家族成员</p>
                 <p className="text-xs sm:text-sm">请尝试修改搜索条件</p>
@@ -304,7 +302,7 @@ export default function Home() {
                 familyData={filteredFamilyData}
                 fullFamilyData={familyData}
                 searchTerm={searchTerm}
-                searchInInfo={searchFilters.searchInInfo}
+                
                 onPersonClick={(id) => setSelectedPersonId(id)}
                 matchedIds={matchedIds}
               />

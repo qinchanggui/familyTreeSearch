@@ -8,10 +8,8 @@ interface SearchBarProps {
     onSearch: (searchTerm: string, filters: SearchFilters) => void;
     generations: string[];
 }
-
 export interface SearchFilters {
     searchTerm: string;
-    searchInInfo: boolean;
     selectedGenerations: string[];
 }
 
@@ -21,7 +19,6 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
     const [showFilters, setShowFilters] = useState(false);
     const [filters, setFilters] = useState<SearchFilters>({
         searchTerm: '',
-        searchInInfo: true,
         selectedGenerations: [],
     });
     
@@ -50,7 +47,6 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
         setSearchTerm('');
         const clearedFilters = {
             searchTerm: '',
-            searchInInfo: true,
             selectedGenerations: [],
         };
         setFilters(clearedFilters);
@@ -67,7 +63,7 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
     }, [filters.selectedGenerations, handleSearch]);
 
     const hasActiveFilters = useMemo(() => 
-        filters.selectedGenerations.length > 0 || !filters.searchInInfo
+        filters.selectedGenerations.length > 0
     , [filters]);
 
     useEffect(() => {
@@ -129,16 +125,6 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
             {showFilters && (
                 <div className={`absolute top-full left-0 mt-2 ${UI_CONFIG.FILTER_PANEL_WIDTH} bg-card dark:bg-dark-card rounded-lg shadow-lg border border-border z-50`}>
                     <div className="p-4 space-y-3">
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-ink">包含详细信息</span>
-                            <input
-                                type="checkbox"
-                                checked={filters.searchInInfo}
-                                onChange={(e) => handleSearch(undefined, { searchInInfo: e.target.checked })}
-                                className="rounded border-border text-cinnabar focus:ring-gold"
-                            />
-                        </div>
-
                         {generations.length > 0 && (
                             <div>
                                 <h4 className="text-sm font-medium text-ink mb-2">世代</h4>

@@ -81,7 +81,7 @@ const PersonCard = ({
     return (
         <div 
             id={`person-${person.id}`} 
-            className={`group bg-card dark:bg-dark-card p-6 rounded-xl shadow-sm border card-heritage ${isRelated ? 'border-l-4 border-l-gold-light dark:border-l-dark-gold border-t-border dark:border-t-dark-border border-r-border dark:border-r-dark-border border-b-border dark:border-b-dark-border' : 'border-border dark:border-dark-border hover:border-gold-light dark:hover:border-dark-gold'} relative overflow-hidden`}
+            className={`group bg-card dark:bg-dark-card p-4 sm:p-6 rounded-xl shadow-sm border card-heritage ${isRelated ? 'border-l-4 border-l-gold-light dark:border-l-dark-gold border-t-border dark:border-t-dark-border border-r-border dark:border-r-dark-border border-b-border dark:border-b-dark-border' : 'border-border dark:border-dark-border hover:border-gold-light dark:hover:border-dark-gold'} relative overflow-hidden`}
         >
             <div className="absolute top-0 right-0 w-24 h-24 bg-heritage rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative">
@@ -91,7 +91,7 @@ const PersonCard = ({
                     </div>
                     {isRelated && <span className="text-[10px] text-gold dark:text-dark-gold bg-heritage-subtle dark:bg-dark-heritage-subtle px-1.5 py-0.5 rounded">关联</span>}
                     <h3
-                        className="text-xl font-semibold text-gray-800 dark:text-gray-100 group-hover:text-cinnabar dark:text-dark-cinnabar dark:group-hover:text-blue-400 transition-colors duration-300 cursor-pointer"
+                        className="text-xl font-semibold text-ink dark:text-dark-text group-hover:text-cinnabar dark:group-hover:text-dark-cinnabar transition-colors duration-300 cursor-pointer"
                         onClick={() => {
                             if (onPersonClick && person.id) onPersonClick(person.id);
                         }}
@@ -107,14 +107,14 @@ const PersonCard = ({
                 </div>
                 
                 {father && (
-                    <div className="flex items-center gap-2 text-gray-600 dark:text-gold-warm dark:text-dark-gold-warm text-sm mb-2">
+                    <div className="flex items-center gap-2 text-muted text-sm mb-2">
                         <UserGroupIcon className="h-4 w-4 text-cinnabar" />
                         <span>父亲：</span>
                         <button 
                             onClick={() => {
                                 if (father.id && onPersonClick) onPersonClick(father.id);
                             }}
-                            className="text-cinnabar dark:text-dark-cinnabar dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline font-medium"
+                            className="text-cinnabar dark:text-dark-cinnabar hover:underline hover:underline font-medium"
                         >
                             {father.name}
                         </button>
@@ -122,7 +122,7 @@ const PersonCard = ({
                 )}
                 
                 {sons.length > 0 && (
-                    <div className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gold-warm dark:text-dark-gold-warm text-sm mb-2">
+                    <div className="flex flex-wrap items-center gap-2 text-muted text-sm mb-2">
                         <UserGroupIcon className="h-4 w-4 text-forest" />
                         <span>子嗣：</span>
                         {sons.map((son, index) => (
@@ -151,7 +151,7 @@ const PersonCard = ({
                         : person.info}
                 </p>
                 {(person.birthYear || person.deathYear) && (
-                    <div className="flex items-center gap-2 text-gray-500 dark:text-gold-warm dark:text-dark-gold-warm text-sm mt-4 pt-4 border-t border-border dark:border-dark-border">
+                    <div className="flex items-center gap-2 text-gray-500 dark:text-muted text-sm mt-4 pt-4 border-t border-border dark:border-dark-border">
                         <CalendarIcon className="h-4 w-4" />
                         <span>
                             {person.birthYear}

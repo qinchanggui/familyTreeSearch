@@ -59,9 +59,9 @@ export default function PersonDetail({ data, personId, onBack, onNavigate }: Per
             <div className="flex items-center gap-3 py-3 sticky top-0 bg-parchment dark:bg-dark-bg z-10">
                 <button
                     onClick={onBack}
-                    className="p-2 -ml-2 rounded-lg hover:bg-border dark:hover:bg-dark-border transition-colors"
+                    className="p-3 -ml-1 rounded-xl hover:bg-border dark:hover:bg-dark-border active:scale-95 transition-colors"
                 >
-                    <ArrowLeftIcon className="h-5 w-5 text-gray-600 dark:text-muted" />
+                    <ArrowLeftIcon className="h-5 w-5 text-muted" />
                 </button>
                 <h1 className="text-lg font-bold text-ink dark:text-dark-text truncate">{person.name}</h1>
                 <span className="text-xs text-muted ml-auto flex-shrink-0">{generation}</span>
@@ -75,12 +75,12 @@ export default function PersonDetail({ data, personId, onBack, onNavigate }: Per
                     </div>
                     <div>
                         <h2 className="text-2xl font-bold text-ink dark:text-dark-text">{person.name}</h2>
-                        <p className="text-sm text-gray-500 dark:text-muted mt-1">{generation}</p>
+                        <p className="text-sm text-gold dark:text-dark-gold mt-1">{generation}</p>
                     </div>
                 </div>
                 <p className="text-desc dark:text-dark-desc leading-relaxed">{person.info}</p>
                 {(person.birthYear || person.deathYear) && (
-                    <div className="mt-4 pt-4 border-t border-border dark:border-dark-border text-sm text-gray-500 dark:text-muted">
+                    <div className="mt-4 pt-4 border-t border-border dark:border-dark-border text-sm text-gold dark:text-dark-gold">
                         {person.birthYear && <span>出生: {person.birthYear}</span>}
                         {person.birthYear && person.deathYear && <span> · </span>}
                         {person.deathYear && <span>去世: {person.deathYear}</span>}
@@ -101,7 +101,7 @@ export default function PersonDetail({ data, personId, onBack, onNavigate }: Per
                             <div className="w-10 h-10 bg-heritage dark:bg-dark-heritage rounded-full flex items-center justify-center flex-shrink-0">
                                 <UserIcon className="h-5 w-5 text-cinnabar dark:text-dark-cinnabar" />
                             </div>
-                            <span className="flex-1 font-medium text-ink dark:text-dark-text group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span className="flex-1 font-medium text-ink dark:text-dark-text group-hover:text-cinnabar dark:group-hover:text-dark-cinnabar">
                                 {father.name}
                             </span>
                             <ChevronRightIcon className="h-4 w-4 text-border dark:text-dark-border" />
@@ -130,7 +130,7 @@ export default function PersonDetail({ data, personId, onBack, onNavigate }: Per
                                         <div className="w-10 h-10 bg-heritage-subtle dark:bg-dark-heritage-subtle rounded-full flex items-center justify-center flex-shrink-0">
                                             <UserIcon className="h-5 w-5 text-muted dark:text-dark-muted" />
                                         </div>
-                                        <span className="flex-1 font-medium text-ink dark:text-dark-text group-hover:text-blue-600 dark:group-hover:text-blue-400 text-sm">
+                                        <span className="flex-1 font-medium text-ink dark:text-dark-text group-hover:text-cinnabar dark:group-hover:text-dark-cinnabar text-sm">
                                             {s.name}
                                         </span>
                                         <ChevronRightIcon className="h-4 w-4 text-border dark:text-dark-border" />
@@ -163,7 +163,7 @@ export default function PersonDetail({ data, personId, onBack, onNavigate }: Per
                                             <UserIcon className="h-5 w-5 text-forest dark:text-dark-forest" />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <span className="font-medium text-ink dark:text-dark-text group-hover:text-blue-600 dark:group-hover:text-blue-400 text-sm block">
+                                            <span className="font-medium text-ink dark:text-dark-text group-hover:text-cinnabar dark:group-hover:text-dark-cinnabar text-sm block">
                                                 {c.name}
                                             </span>
                                             {c.info && (

@@ -35,7 +35,7 @@ function isYearInRange(year: number | undefined, start?: number, end?: number): 
 
 // 检查人员是否匹配搜索条件
 function matchesPerson(person: Person, searchTerm: string, filters: SearchFilters): SearchResult | null {
-    const { searchInInfo } = filters;
+    // searchInInfo removed, always search info
     
     if (!searchTerm) {
         return {
@@ -66,7 +66,7 @@ function matchesPerson(person: Person, searchTerm: string, filters: SearchFilter
     }
     
     // 个人信息匹配
-    if (searchInInfo && person.info && fuzzyMatch(person.info, searchTerm)) {
+    if (person.info && fuzzyMatch(person.info, searchTerm)) {
         // 找到匹配的片段
         const lowerInfo = person.info.toLowerCase();
         const lowerSearchTerm = searchTerm.toLowerCase();
