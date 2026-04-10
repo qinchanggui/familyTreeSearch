@@ -109,9 +109,9 @@ const PersonCard = ({
                         <span>父亲：</span>
                         <button 
                             onClick={() => {
-                                if (father.id && onPersonClick) onPersonClick(father.id);
+                                if (father.id) scrollToPerson(father.id);
                             }}
-                            className="text-cinnabar dark:text-dark-cinnabar hover:underline hover:underline font-medium"
+                            className="text-cinnabar dark:text-dark-cinnabar hover:underline font-medium"
                         >
                             {father.name}
                         </button>

@@ -1,7 +1,7 @@
 "use client";
 
 import { FamilyData, Person } from '@/types/family';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { ArrowLeftIcon, UserIcon, UserGroupIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 interface PersonDetailProps {
@@ -15,6 +15,10 @@ interface PersonDetailProps {
 export default function PersonDetail({ data, personId, onBack, onNavigate, onScrollToPerson }: PersonDetailProps) {
     const [showSiblings, setShowSiblings] = useState(false);
     const [showChildren, setShowChildren] = useState(false);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [personId]);
 
     const { person, generation, father, children, siblings } = useMemo(() => {
         const personMap = new Map<string, { person: Person; genIndex: number }>();
