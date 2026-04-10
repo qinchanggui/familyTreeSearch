@@ -70,20 +70,20 @@ export default function StatsPanel({ data }: StatsPanelProps) {
 
             {/* 核心数字 */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border">
-                    <p className="text-2xl sm:text-3xl font-bold text-cinnabar dark:text-dark-cinnabar">{stats.totalPeople}</p>
+                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border card-heritage">
+                    <p className="text-2xl sm:text-3xl font-bold font-serif text-cinnabar dark:text-dark-cinnabar">{stats.totalPeople}</p>
                     <p className="text-xs text-muted dark:text-dark-muted mt-1">总人数</p>
                 </div>
-                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border">
-                    <p className="text-2xl sm:text-3xl font-bold text-gold dark:text-dark-gold">{stats.maxGen}</p>
+                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border card-heritage">
+                    <p className="text-2xl sm:text-3xl font-bold font-serif text-gold dark:text-dark-gold">{stats.maxGen}</p>
                     <p className="text-xs text-muted dark:text-dark-muted mt-1">传承世代</p>
                 </div>
-                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border">
-                    <p className="text-2xl sm:text-3xl font-bold text-forest dark:text-dark-forest">{stats.withChildren}</p>
+                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border card-heritage">
+                    <p className="text-2xl sm:text-3xl font-bold font-serif text-forest dark:text-dark-forest">{stats.withChildren}</p>
                     <p className="text-xs text-muted dark:text-dark-muted mt-1">有后嗣</p>
                 </div>
-                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border">
-                    <p className="text-2xl sm:text-3xl font-bold text-muted dark:text-dark-muted">{stats.withoutChildren}</p>
+                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border card-heritage">
+                    <p className="text-2xl sm:text-3xl font-bold font-serif text-muted dark:text-dark-muted">{stats.withoutChildren}</p>
                     <p className="text-xs text-muted dark:text-dark-muted mt-1">无后嗣</p>
                 </div>
             </div>

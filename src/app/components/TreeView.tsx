@@ -19,7 +19,7 @@ function PersonNode({ data }: NodeProps) {
       style={{ borderColor: data.borderColor || '#D4A574' }}
     >
       <Handle type="target" position={Position.Top} className="!bg-cinnabar !w-3 !h-3" />
-      <p className="font-bold text-ink dark:text-dark-text text-lg whitespace-nowrap">{data.label}</p>
+      <p className="font-bold font-serif text-ink dark:text-dark-text text-lg whitespace-nowrap">{data.label}</p>
       <Handle type="source" position={Position.Bottom} className="!bg-cinnabar !w-3 !h-3" />
     </div>
   );

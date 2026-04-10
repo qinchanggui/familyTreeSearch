@@ -18,7 +18,7 @@ interface MemorialMapProps {
   places: Place[];
 }
 
-const MARKER_COLORS = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#e67e22', '#34495e'];
+
 
 export default function MemorialMap({ places }: MemorialMapProps) {
   const openNavigation = (place: Place) => {
@@ -44,8 +44,7 @@ export default function MemorialMap({ places }: MemorialMapProps) {
             className="flex items-center gap-3 p-3 bg-card dark:bg-dark-card rounded-xl border border-border dark:border-dark-border"
           >
             <div
-              className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-xs"
-              style={{ background: MARKER_COLORS[index % MARKER_COLORS.length] }}
+              className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-xs bg-cinnabar dark:bg-dark-cinnabar"
             >
               {index + 1}
             </div>

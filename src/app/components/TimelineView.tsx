@@ -9,11 +9,11 @@ interface TimelineViewProps {
 }
 
 const genColors = [
-    '#8B2500', '#A63200', '#7A2000', '#B54000', '#6B1C00',
-    '#9B3010', '#853010', '#AB3818', '#702808', '#C04420',
-    '#8B3015', '#9A3818', '#7B2810', '#B54525', '#6E2005',
-    '#A03518', '#883012', '#B84A28', '#752508', '#9B3E20',
-    '#8B2500',
+    '#8B2500', '#943A1A', '#6E1E00', '#A84E2A', '#5A1800',
+    '#B56038', '#4F2000', '#C47448', '#7A3520', '#D08858',
+    '#8C4030', '#9A5040', '#6B3525', '#B06848', '#5C2A18',
+    '#C08060', '#A07050', '#885838', '#704028', '#B89070',
+    '#A08060',
 ];
 
 interface GenBlockProps {
@@ -32,7 +32,7 @@ function GenBlock({ generation, index }: GenBlockProps) {
                 style={{ background: color }}
                 onClick={() => setExpanded(!expanded)}
             >
-                <span className="text-base font-bold">{generation.title}</span>
+                <span className="text-base font-bold font-serif">{generation.title}</span>
                 <span className="text-xs opacity-80 bg-white/20 px-2 py-0.5 rounded-full">
                     {generation.people.length}人
                 </span>

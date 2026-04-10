@@ -51,14 +51,7 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
         onSearch('', clearedFilters);
     }, [onSearch]);
 
-    const toggleGeneration = useCallback((generation: string) => {
-        const newSelectedGenerations = filters.selectedGenerations.includes(generation)
-            ? filters.selectedGenerations.filter(g => g !== generation)
-            : [...filters.selectedGenerations, generation];
-        handleSearch(undefined, { selectedGenerations: newSelectedGenerations });
-    }, [filters.selectedGenerations, handleSearch]);
-
-    return (
+      return (
         <div className="flex items-center gap-2">
             <div className="relative flex-1">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -84,23 +77,7 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
                 )}
             </div>
 
-            {generations.length > 0 && (
-                <div className="flex gap-1 overflow-x-auto scrollbar-hide">
-                    {generations.map((generation) => (
-                        <button
-                            key={generation}
-                            onClick={() => toggleGeneration(generation)}
-                            className={`flex-shrink-0 px-2 py-1.5 text-xs rounded-md border transition-colors whitespace-nowrap ${
-                                filters.selectedGenerations.includes(generation)
-                                    ? 'bg-cinnabar text-gold-pale border-gold-light'
-                                    : 'bg-card text-ink border-border hover:bg-heritage-hover'
-                            }`}
-                        >
-                            {generation}
-                        </button>
-                    ))}
-                </div>
-            )}
+
         </div>
     );
 }
