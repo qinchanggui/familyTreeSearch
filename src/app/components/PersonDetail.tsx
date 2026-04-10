@@ -9,9 +9,10 @@ interface PersonDetailProps {
     personId: string;
     onBack: () => void;
     onNavigate: (personId: string) => void;
+    onScrollToPerson: (personId: string) => void;
 }
 
-export default function PersonDetail({ data, personId, onBack, onNavigate }: PersonDetailProps) {
+export default function PersonDetail({ data, personId, onBack, onNavigate, onScrollToPerson }: PersonDetailProps) {
     const [showSiblings, setShowSiblings] = useState(false);
     const [showChildren, setShowChildren] = useState(false);
 
@@ -156,7 +157,7 @@ export default function PersonDetail({ data, personId, onBack, onNavigate }: Per
                                 {children.map((c, i) => (
                                     <button
                                         key={c.id || i}
-                                        onClick={() => onNavigate(c.id!)}
+                                        onClick={() => onScrollToPerson(c.id!)}
                                         className="flex items-center gap-3 w-full text-left group"
                                     >
                                         <div className="w-10 h-10 bg-heritage dark:bg-dark-heritage rounded-full flex items-center justify-center flex-shrink-0">

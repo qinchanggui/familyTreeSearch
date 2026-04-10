@@ -268,6 +268,22 @@ export default function Home() {
             personId={selectedPersonId}
             onBack={() => setSelectedPersonId(null)}
             onNavigate={(id) => setSelectedPersonId(id)}
+            onScrollToPerson={(id) => {
+              setSelectedPersonId(null);
+              setViewMode('list');
+              setTimeout(() => {
+                const el = document.getElementById(`person-${id}`);
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  el.classList.add('ring-2');
+                  el.style.boxShadow = '0 0 0 2px #B8860B';
+                  setTimeout(() => {
+                    el.classList.remove('ring-2');
+                    el.style.boxShadow = '';
+                  }, 2000);
+                }
+              }, 50);
+            }}
           />
         )}
 
@@ -285,7 +301,7 @@ export default function Home() {
                       const el = document.getElementById(`gen-${g.title}`);
                       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }}
-                    className="flex-shrink-0 px-4 py-1.5 text-xs font-medium font-serif border border-border dark:border-dark-border bg-card dark:bg-dark-card text-muted dark:text-dark-muted hover:text-gold-pale dark:hover:text-dark-gold-pale hover:border-gold-light dark:hover:border-dark-gold hover:bg-heritage-hover dark:hover:bg-dark-heritage-hover transition-colors whitespace-nowrap relative"
+                    className="flex-shrink-0 px-4 py-1.5 text-xs font-medium font-serif border border-border dark:border-dark-border bg-card dark:bg-dark-card text-ink dark:text-dark-text hover:text-gold-pale dark:hover:text-dark-gold-pale hover:border-gold-light dark:hover:border-dark-gold hover:bg-heritage-hover dark:hover:bg-dark-heritage-hover transition-colors whitespace-nowrap relative"
                   >
                     <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold-light to-transparent dark:via-dark-gold opacity-0 hover:opacity-100 transition-opacity"></span>
                     {g.title}
