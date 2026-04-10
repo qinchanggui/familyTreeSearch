@@ -84,7 +84,7 @@ function toEl(l: L): { nodes: Node[]; edges: Edge[] } {
 export default function TreeView({ data }: TreeViewProps) {
   const roots = data.generations[0]?.people || [];
 
-  const { initialNodes, initialEdges } = useMemo(() => {
+  const { initialNodes, initialEdges, initialViewport } = useMemo(() => {
     const ns: Node[] = [], es: Edge[] = [];
     for (const p of roots) {
       const { nodes, edges } = toEl(layout(p, 0, 0, 0));
@@ -95,7 +95,22 @@ export default function TreeView({ data }: TreeViewProps) {
       }
       ns.push(...nodes); es.push(...edges);
     }
-    return { initialNodes: ns, initialEdges: es };
+    // 计算初始视口：只聚焦前3世代，确保节点文字清晰可见
+    const earlyNodes = ns.filter(n => {
+      const y = n.position.y;
+      return y <= V_GAP * 2.5;
+    });
+    let vp = { x: 0, y: 0, zoom: 1 };
+    if (earlyNodes.length > 0) {
+      const minX = Math.min(...earlyNodes.map(n => n.position.x));
+      const maxX = Math.max(...earlyNodes.map(n => n.position.x));
+      const minY = Math.min(...earlyNodes.map(n => n.position.y));
+      const maxY = Math.max(...earlyNodes.map(n => n.position.y));
+      const centerX = (minX + maxX) / 2 + 70;
+      const centerY = (minY + maxY) / 2 + 30;
+      vp = { x: centerX, y: centerY, zoom: 1 };
+    }
+    return { initialNodes: ns, initialEdges: es, initialViewport: vp };
   }, [roots]);
 
   const [nodes] = useNodesState(initialNodes);
@@ -116,8 +131,7 @@ export default function TreeView({ data }: TreeViewProps) {
             nodes={nodes}
             edges={edges}
             nodeTypes={nodeTypes}
-            fitView
-            fitViewOptions={{ padding: 0.08 }}
+            defaultViewport={initialViewport}
             minZoom={0.05}
             maxZoom={4}
             proOptions={{ hideAttribution: true }}
