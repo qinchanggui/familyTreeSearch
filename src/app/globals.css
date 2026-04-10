@@ -7,6 +7,7 @@
   --color-foreground: #2C2C2C;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-noto-serif);
 
   /* 中式色系 - 浅色 */
   --color-parchment: #FAF6F1;

@@ -95,8 +95,8 @@ export default function Home() {
           const el = document.getElementById(`person-${firstPerson.person.id}`);
           if (el) {
             el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            el.classList.add('ring-2', 'ring-blue-500');
-            setTimeout(() => el.classList.remove('ring-2', 'ring-blue-500'), ANIMATION_DELAYS.HIGHLIGHT_DURATION);
+            el.classList.add('ring-2', 'ring-gold');
+            setTimeout(() => el.classList.remove('ring-2', 'ring-gold'), ANIMATION_DELAYS.HIGHLIGHT_DURATION);
           }
         });
       }
@@ -162,7 +162,7 @@ export default function Home() {
                   onClick={() => { setSelectedPersonId(null); setViewMode('list'); }}
                 >
                   <QueueListIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-1.5" />
-                  <span className="hidden sm:inline">列表</span>
+                  <span className="inline">列表</span>
                 </button>
                 <button
                   type="button"
@@ -174,7 +174,7 @@ export default function Home() {
                   onClick={() => { setSelectedPersonId(null); setViewMode('timeline'); }}
                 >
                   <ClockIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-1.5" />
-                  <span className="hidden sm:inline">时间线</span>
+                  <span className="inline">时间线</span>
                 </button>
                 <button
                   type="button"
@@ -186,7 +186,7 @@ export default function Home() {
                   onClick={() => { setSelectedPersonId(null); setViewMode('tree'); }}
                 >
                   <Squares2X2Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-1.5" />
-                  <span className="hidden sm:inline">树状</span>
+                  <span className="inline">树状</span>
                 </button>
                 <button
                   type="button"
@@ -198,7 +198,7 @@ export default function Home() {
                   onClick={() => { setSelectedPersonId(null); setViewMode('stats'); }}
                 >
                   <ChartBarIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-1.5" />
-                  <span className="hidden sm:inline">统计</span>
+                  <span className="inline">统计</span>
                 </button>
                 <button
                   type="button"
@@ -210,7 +210,7 @@ export default function Home() {
                   onClick={() => { setSelectedPersonId(null); setViewMode('memorial'); }}
                 >
                   <MapPinIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-1.5" />
-                  <span className="hidden sm:inline">祭祖</span>
+                  <span className="inline">祭祖</span>
                 </button>
               </div>
               <button
@@ -218,7 +218,7 @@ export default function Home() {
                   document.documentElement.classList.toggle('dark');
                   localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
                 }}
-                className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-muted hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center"
+                className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-border dark:border-dark-border bg-card dark:bg-dark-card text-muted dark:text-dark-muted hover:bg-heritage-hover dark:hover:bg-dark-heritage-hover flex items-center"
                 aria-label="切换深色模式"
               >
                 <MoonIcon className="h-4 w-4 dark:hidden" />
@@ -247,14 +247,14 @@ export default function Home() {
             </div>
 
             {searchResults.length === 0 && (searchTerm || searchFilters.selectedGenerations.length > 0) && (
-              <div className="text-center text-gray-500 dark:text-muted py-6 sm:py-8">
+              <div className="text-center text-muted dark:text-dark-muted py-6 sm:py-8">
                 <p className="text-base sm:text-lg">未找到匹配的家族成员</p>
                 <p className="text-xs sm:text-sm">请尝试修改搜索条件</p>
               </div>
             )}
 
             {searchResults.length > 0 && (
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-muted text-center mb-3 sm:mb-4">
+              <div className="text-xs sm:text-sm text-muted dark:text-dark-muted text-center mb-3 sm:mb-4">
                 找到 <span className="font-medium text-cinnabar">{searchResults.filter(r => r.matchType === 'name' || r.matchType === 'id').length}</span> 个匹配结果{searchResults.filter(r => r.matchType !== 'name' && r.matchType !== 'id').length > 0 && <span>，含 <span className="text-muted">{searchResults.filter(r => r.matchType !== 'name' && r.matchType !== 'id').length}</span> 个描述匹配</span>}
               </div>
             )}

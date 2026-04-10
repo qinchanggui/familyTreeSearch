@@ -9,7 +9,6 @@ interface FamilyTreeProps {
     familyData: FamilyData;
     fullFamilyData?: FamilyData;
     searchTerm?: string;
-    searchInInfo?: boolean;
     onPersonClick?: (personId: string) => void;
     matchedIds?: Set<string>;
 }
@@ -61,7 +60,6 @@ const PersonCard = ({
     sonsMap,
     scrollToPerson,
     searchTerm,
-    searchInInfo,
     onPersonClick,
     matchedIds,
 }: { 
@@ -70,7 +68,6 @@ const PersonCard = ({
     sonsMap: Map<string, Person[]>;
     scrollToPerson: (personId: string) => void;
     searchTerm?: string;
-    searchInInfo?: boolean;
     onPersonClick?: (personId: string) => void;
     matchedIds?: Set<string>;
 }) => {
@@ -142,7 +139,7 @@ const PersonCard = ({
                 )}
                 
                 <p className="text-desc dark:text-dark-desc text-sm leading-relaxed mb-3 line-clamp-2 sm:line-clamp-3">
-                    {(searchTerm && searchInInfo)
+                    {(searchTerm)
                         ? splitHighlightSegments(escapeHtml(person.info), searchTerm).map((seg, i) => (
                             seg.isMatch
                                 ? <mark key={i} className="bg-gold-highlight px-1 rounded">{seg.text}</mark>
@@ -151,7 +148,7 @@ const PersonCard = ({
                         : person.info}
                 </p>
                 {(person.birthYear || person.deathYear) && (
-                    <div className="flex items-center gap-2 text-gray-500 dark:text-muted text-sm mt-4 pt-4 border-t border-border dark:border-dark-border">
+                    <div className="flex items-center gap-2 text-muted dark:text-dark-muted text-sm mt-4 pt-4 border-t border-border dark:border-dark-border">
                         <CalendarIcon className="h-4 w-4" />
                         <span>
                             {person.birthYear}
@@ -172,7 +169,6 @@ const Generation = ({
     sonsMap,
     scrollToPerson,
     searchTerm,
-    searchInInfo,
     onPersonClick,
     matchedIds
 }: { 
@@ -182,7 +178,6 @@ const Generation = ({
     sonsMap: Map<string, Person[]>;
     scrollToPerson: (personId: string) => void;
     searchTerm?: string;
-    searchInInfo?: boolean;
     onPersonClick?: (personId: string) => void;
     matchedIds?: Set<string>;
 }) => {
@@ -203,8 +198,7 @@ const Generation = ({
                         sonsMap={sonsMap}
                         scrollToPerson={scrollToPerson}
                         searchTerm={searchTerm}
-                        searchInInfo={searchInInfo}
-                        onPersonClick={onPersonClick}
+                            onPersonClick={onPersonClick}
                         matchedIds={matchedIds}
                     />
                 ))}
@@ -213,7 +207,7 @@ const Generation = ({
     );
 };
 
-export default function FamilyTree({ familyData, fullFamilyData, searchTerm, searchInInfo, onPersonClick, matchedIds }: FamilyTreeProps) {
+export default function FamilyTree({ familyData, fullFamilyData, searchTerm, onPersonClick, matchedIds }: FamilyTreeProps) {
     const [personMap, setPersonMap] = useState<Map<string, Person>>(new Map());
     const [sonsMap, setSonsMap] = useState<Map<string, Person[]>>(new Map());
     
@@ -251,7 +245,6 @@ export default function FamilyTree({ familyData, fullFamilyData, searchTerm, sea
                     sonsMap={sonsMap}
                     scrollToPerson={scrollToPerson}
                     searchTerm={searchTerm}
-                    searchInInfo={searchInInfo}
                     onPersonClick={onPersonClick}
                 />
             ))}

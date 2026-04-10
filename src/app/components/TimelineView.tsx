@@ -2,18 +2,18 @@
 
 import { useState, useMemo } from 'react';
 import { FamilyData, Person } from '@/types/family';
-import { UserIcon, ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { UserIcon, ChevronDownIcon, ChevronRightIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 interface TimelineViewProps {
     data: FamilyData;
 }
 
 const genColors = [
-    '#8B2500', '#8B3000', '#8B3B00', '#8B4600', '#8B5100',
-    '#8B5C10', '#8B6720', '#8B7230', '#8B7D40', '#8B8850',
-    '#9B8840', '#A88730', '#B58620', '#C28510', '#B8860B',
-    '#C49520', '#D0A435', '#DCB34A', '#E8C25F', '#F4D174',
-    '#F5DEB3',
+    '#8B2500', '#A63200', '#7A2000', '#B54000', '#6B1C00',
+    '#9B3010', '#853010', '#AB3818', '#702808', '#C04420',
+    '#8B3015', '#9A3818', '#7B2810', '#B54525', '#6E2005',
+    '#A03518', '#883012', '#B84A28', '#752508', '#9B3E20',
+    '#8B2500',
 ];
 
 interface GenBlockProps {
@@ -76,14 +76,19 @@ export default function TimelineView({ data }: TimelineViewProps) {
     }
 
     return (
-        <div className="p-3 pt-6 max-w-2xl mx-auto">
-            <div className="flex items-center justify-between mb-3">
-                <h2 className="text-sm font-bold text-ink">族谱时间线</h2>
-            </div>
+        <div className="w-full">
+            <div className="bg-card dark:bg-dark-card shadow-sm overflow-hidden">
+                <div className="p-3 sm:p-6">
+                    <div className="flex items-center gap-2 mb-4">
+                        <ClockIcon className="h-5 w-5 text-cinnabar" />
+                        <h2 className="text-base sm:text-lg font-bold font-serif text-ink dark:text-dark-text">族谱时间线</h2>
+                    </div>
             <div>
                 {data.generations.map((generation, index) => (
                     <GenBlock key={generation.title} generation={generation} index={index} />
                 ))}
+                    </div>
+                </div>
             </div>
         </div>
     );

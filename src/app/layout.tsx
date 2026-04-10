@@ -20,6 +20,15 @@ const geistMono = localFont({
   display: "swap",
 });
 
+const notoSerifSC = localFont({
+  src: [
+    { path: "./fonts/NotoSerifSC-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/NotoSerifSC-Bold.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-noto-serif",
+  display: "swap",
+});
+
 // 从环境变量中获取姓氏
 const familyName = process.env.NEXT_PUBLIC_FAMILY_NAME || '姓氏';
 // 从环境变量中获取谷歌统计ID
@@ -47,7 +56,7 @@ export default function RootLayout({
     <html lang="zh-CN" suppressHydrationWarning>
       <head></head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoSerifSC.variable} antialiased`}
       >
         {/* 深色模式初始化：避免闪烁 */}
         <script

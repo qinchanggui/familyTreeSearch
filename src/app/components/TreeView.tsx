@@ -6,6 +6,7 @@ import ReactFlow, {
   useNodesState, useEdgesState,
   Position, NodeProps, Handle, BackgroundVariant,
 } from 'reactflow';
+import { Squares2X2Icon } from '@heroicons/react/24/outline';
 import 'reactflow/dist/style.css';
 import { FamilyData, Person } from '@/types/family';
 
@@ -106,7 +107,8 @@ export default function TreeView({ data }: TreeViewProps) {
     <div className="w-full">
       <div className="bg-card dark:bg-dark-card shadow-sm overflow-hidden">
         <div className="flex items-center justify-between px-3 sm:px-6 py-3 border-b border-border dark:border-dark-border">
-          <h2 className="text-base sm:text-lg font-bold font-serif text-ink dark:text-dark-text">家族树状图</h2>
+          <Squares2X2Icon className="h-5 w-5 text-cinnabar" />
+                  <h2 className="text-base sm:text-lg font-bold font-serif text-ink dark:text-dark-text">家族树状图</h2>
           <p className="text-[10px] sm:text-xs text-muted dark:text-dark-muted">双指缩放 · 拖拽移动</p>
         </div>
         <div className="w-full h-[70vh] sm:h-[80vh]">

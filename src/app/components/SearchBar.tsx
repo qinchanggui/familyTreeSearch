@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { MagnifyingGlassIcon, XMarkIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { UI_CONFIG, ANIMATION_DELAYS } from '@/utils/constants';
 
 interface SearchBarProps {
     onSearch: (searchTerm: string, filters: SearchFilters) => void;
     generations: string[];
 }
+
 export interface SearchFilters {
     searchTerm: string;
     selectedGenerations: string[];
@@ -16,13 +17,10 @@ export interface SearchFilters {
 export default function SearchBar({ onSearch, generations }: SearchBarProps) {
     const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const [showFilters, setShowFilters] = useState(false);
     const [filters, setFilters] = useState<SearchFilters>({
         searchTerm: '',
         selectedGenerations: [],
     });
-    
-    const filtersPanelRef = useRef<HTMLDivElement>(null);
 
     const handleSearch = useCallback((newSearchTerm?: string, newFilters?: Partial<SearchFilters>) => {
         const currentSearchTerm = newSearchTerm !== undefined ? newSearchTerm : searchTerm;
@@ -50,7 +48,6 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
             selectedGenerations: [],
         };
         setFilters(clearedFilters);
-        setShowFilters(false);
         onSearch('', clearedFilters);
     }, [onSearch]);
 
@@ -58,33 +55,12 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
         const newSelectedGenerations = filters.selectedGenerations.includes(generation)
             ? filters.selectedGenerations.filter(g => g !== generation)
             : [...filters.selectedGenerations, generation];
-        
         handleSearch(undefined, { selectedGenerations: newSelectedGenerations });
     }, [filters.selectedGenerations, handleSearch]);
 
-    const hasActiveFilters = useMemo(() => 
-        filters.selectedGenerations.length > 0
-    , [filters]);
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (filtersPanelRef.current && !filtersPanelRef.current.contains(event.target as Node)) {
-                setShowFilters(false);
-            }
-        };
-
-        if (showFilters) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [showFilters]);
-
     return (
-        <div className="relative flex items-center" ref={filtersPanelRef}>
-            <div className="relative">
+        <div className="flex items-center gap-2">
+            <div className="relative flex-1">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <MagnifyingGlassIcon className="h-4 w-4 text-gold" />
                 </div>
@@ -107,56 +83,22 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
                     </button>
                 )}
             </div>
-            
-            <button
-                onClick={() => setShowFilters(!showFilters)}
-                className={`ml-1 px-3 py-2 text-sm font-medium border rounded-md flex items-center shadow-sm transition-colors ${
-                    showFilters || hasActiveFilters
-                        ? 'bg-cinnabar text-gold-pale border-gold-light'
-                        : 'bg-card text-ink border-border hover:bg-heritage-hover'
-                }`}
-            >
-                <AdjustmentsHorizontalIcon className="h-4 w-4" />
-                {hasActiveFilters && (
-                    <div className="ml-1 w-1.5 h-1.5 bg-cinnabar rounded-full"></div>
-                )}
-            </button>
 
-            {showFilters && (
-                <div className={`absolute top-full left-0 mt-2 ${UI_CONFIG.FILTER_PANEL_WIDTH} bg-card dark:bg-dark-card rounded-lg shadow-lg border border-border z-50`}>
-                    <div className="p-4 space-y-3">
-                        {generations.length > 0 && (
-                            <div>
-                                <h4 className="text-sm font-medium text-ink mb-2">世代</h4>
-                                <div className="flex flex-wrap gap-1">
-                                    {generations.map((generation) => (
-                                        <button
-                                            key={generation}
-                                            onClick={() => toggleGeneration(generation)}
-                                            className={`px-2 py-1 rounded text-xs transition-colors ${
-                                                filters.selectedGenerations.includes(generation)
-                                                    ? 'bg-heritage-hover text-cinnabar'
-                                                    : 'bg-heritage-subtle dark:bg-dark-heritage-subtle text-muted hover:bg-heritage-hover dark:hover:bg-dark-heritage-hover'
-                                            }`}
-                                        >
-                                            {generation}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {hasActiveFilters && (
-                            <div className="pt-2 border-t border-border">
-                                <button
-                                    onClick={clearSearch}
-                                    className="text-xs text-desc hover:text-dark-desc underline"
-                                >
-                                    清除所有筛选
-                                </button>
-                            </div>
-                        )}
-                    </div>
+            {generations.length > 0 && (
+                <div className="flex gap-1 overflow-x-auto scrollbar-hide">
+                    {generations.map((generation) => (
+                        <button
+                            key={generation}
+                            onClick={() => toggleGeneration(generation)}
+                            className={`flex-shrink-0 px-2 py-1.5 text-xs rounded-md border transition-colors whitespace-nowrap ${
+                                filters.selectedGenerations.includes(generation)
+                                    ? 'bg-cinnabar text-gold-pale border-gold-light'
+                                    : 'bg-card text-ink border-border hover:bg-heritage-hover'
+                            }`}
+                        >
+                            {generation}
+                        </button>
+                    ))}
                 </div>
             )}
         </div>

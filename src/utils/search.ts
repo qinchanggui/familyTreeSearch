@@ -25,18 +25,9 @@ function fuzzyMatch(text: string, searchTerm: string): boolean {
     return searchWords.every(word => normalizedText.includes(word));
 }
 
-// 检查年份是否在范围内
-function isYearInRange(year: number | undefined, start?: number, end?: number): boolean {
-    if (!year) return false;
-    if (start && year < start) return false;
-    if (end && year > end) return false;
-    return true;
-}
-
 // 检查人员是否匹配搜索条件
 function matchesPerson(person: Person, searchTerm: string, filters: SearchFilters): SearchResult | null {
-    // searchInInfo removed, always search info
-    
+        
     if (!searchTerm) {
         return {
             person,

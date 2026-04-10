@@ -65,7 +65,7 @@ export default function StatsPanel({ data }: StatsPanelProps) {
         <div className="p-3 sm:p-4 max-w-4xl mx-auto">
             <div className="flex items-center gap-2 mb-4">
                 <ChartBarIcon className="h-5 w-5 text-cinnabar" />
-                <h2 className="text-base sm:text-lg font-bold text-ink dark:text-dark-text">全族概况</h2>
+                <h2 className="text-base sm:text-lg font-bold font-serif text-ink dark:text-dark-text">全族概况</h2>
             </div>
 
             {/* 核心数字 */}
@@ -75,22 +75,22 @@ export default function StatsPanel({ data }: StatsPanelProps) {
                     <p className="text-xs text-muted dark:text-dark-muted mt-1">总人数</p>
                 </div>
                 <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border">
-                    <p className="text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">{stats.maxGen}</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-gold dark:text-dark-gold">{stats.maxGen}</p>
                     <p className="text-xs text-muted dark:text-dark-muted mt-1">传承世代</p>
                 </div>
                 <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border">
-                    <p className="text-2xl sm:text-3xl font-bold text-violet-600 dark:text-violet-400">{stats.withChildren}</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-forest dark:text-dark-forest">{stats.withChildren}</p>
                     <p className="text-xs text-muted dark:text-dark-muted mt-1">有后嗣</p>
                 </div>
                 <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border">
-                    <p className="text-2xl sm:text-3xl font-bold text-orange-600 dark:text-orange-400">{stats.withoutChildren}</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-muted dark:text-dark-muted">{stats.withoutChildren}</p>
                     <p className="text-xs text-muted dark:text-dark-muted mt-1">无后嗣</p>
                 </div>
             </div>
 
             {/* 各代人数柱状图 */}
             <div className="bg-card dark:bg-dark-card rounded-xl p-4 border border-border dark:border-dark-border mb-6">
-                <h3 className="text-sm font-semibold text-ink mb-3">各代人数分布</h3>
+                <h3 className="text-sm font-semibold text-ink font-serif mb-3">各代人数分布</h3>
                 <div className="space-y-2">
                     {stats.genCounts.map((g, i) => (
                         <div key={g.title} className="flex items-center gap-2">
