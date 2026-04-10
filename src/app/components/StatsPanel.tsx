@@ -65,36 +65,36 @@ export default function StatsPanel({ data }: StatsPanelProps) {
         <div className="p-3 sm:p-4 max-w-4xl mx-auto">
             <div className="flex items-center gap-2 mb-4">
                 <ChartBarIcon className="h-5 w-5 text-blue-500" />
-                <h2 className="text-base sm:text-lg font-bold text-gray-800 dark:text-gray-100">全族概况</h2>
+                <h2 className="text-base sm:text-lg font-bold text-ink dark:text-dark-text">全族概况</h2>
             </div>
 
             {/* 核心数字 */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-                <div className="bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-4 border border-gray-100 dark:border-gray-700">
-                    <p className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400">{stats.totalPeople}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">总人数</p>
+                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border">
+                    <p className="text-2xl sm:text-3xl font-bold text-cinnabar dark:text-dark-cinnabar">{stats.totalPeople}</p>
+                    <p className="text-xs text-muted dark:text-dark-muted mt-1">总人数</p>
                 </div>
-                <div className="bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-4 border border-gray-100 dark:border-gray-700">
+                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border">
                     <p className="text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">{stats.maxGen}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">传承世代</p>
+                    <p className="text-xs text-muted dark:text-dark-muted mt-1">传承世代</p>
                 </div>
-                <div className="bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-4 border border-gray-100 dark:border-gray-700">
+                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border">
                     <p className="text-2xl sm:text-3xl font-bold text-violet-600 dark:text-violet-400">{stats.withChildren}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">有后嗣</p>
+                    <p className="text-xs text-muted dark:text-dark-muted mt-1">有后嗣</p>
                 </div>
-                <div className="bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-4 border border-gray-100 dark:border-gray-700">
+                <div className="bg-card dark:bg-dark-card rounded-xl p-3 sm:p-4 border border-border dark:border-dark-border">
                     <p className="text-2xl sm:text-3xl font-bold text-orange-600 dark:text-orange-400">{stats.withoutChildren}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">无后嗣</p>
+                    <p className="text-xs text-muted dark:text-dark-muted mt-1">无后嗣</p>
                 </div>
             </div>
 
             {/* 各代人数柱状图 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700 mb-6">
+            <div className="bg-card dark:bg-dark-card rounded-xl p-4 border border-border dark:border-dark-border mb-6">
                 <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">各代人数分布</h3>
                 <div className="space-y-2">
                     {stats.genCounts.map((g, i) => (
                         <div key={g.title} className="flex items-center gap-2">
-                            <span className="text-xs text-gray-500 dark:text-gray-400 w-14 sm:w-16 flex-shrink-0 text-right truncate">{g.title}</span>
+                            <span className="text-xs text-muted dark:text-dark-muted w-14 sm:w-16 flex-shrink-0 text-right truncate">{g.title}</span>
                             <div className="flex-1 bg-gray-100 dark:bg-gray-700 rounded-full h-5 sm:h-6 overflow-hidden">
                                 <div
                                     className="h-full bg-gradient-to-r from-blue-400 to-blue-600 dark:from-blue-500 dark:to-blue-700 rounded-full flex items-center justify-end pr-2 transition-all duration-500"

@@ -18,9 +18,9 @@ function PersonNode({ data }: NodeProps) {
       className="px-5 py-2.5 rounded-xl bg-white border-2 shadow-md hover:shadow-lg transition-shadow"
       style={{ borderColor: data.borderColor || '#93c5fd' }}
     >
-      <Handle type="target" position={Position.Top} className="!bg-blue-400 !w-3 !h-3" />
-      <p className="font-bold text-gray-800 text-lg whitespace-nowrap">{data.label}</p>
-      <Handle type="source" position={Position.Bottom} className="!bg-blue-400 !w-3 !h-3" />
+      <Handle type="target" position={Position.Top} className="!bg-cinnabar !w-3 !h-3" />
+      <p className="font-bold text-ink dark:text-dark-text text-lg whitespace-nowrap">{data.label}</p>
+      <Handle type="source" position={Position.Bottom} className="!bg-cinnabar !w-3 !h-3" />
     </div>
   );
 }
@@ -93,14 +93,14 @@ export default function TreeView({ data }: TreeViewProps) {
   const [nodes] = useNodesState(initialNodes);
   const [edges] = useEdgesState(initialEdges);
 
-  if (!roots.length) return <div className="w-full bg-white shadow-sm p-6 text-center text-gray-400 text-sm">暂无数据</div>;
+  if (!roots.length) return <div className="w-full bg-white shadow-sm p-6 text-center text-muted dark:text-dark-muted text-sm">暂无数据</div>;
 
   return (
     <div className="w-full">
       <div className="bg-white shadow-sm overflow-hidden">
         <div className="flex items-center justify-between px-3 sm:px-6 py-3 border-b border-gray-100">
-          <h2 className="text-base sm:text-lg font-bold text-gray-800">家族树状图</h2>
-          <p className="text-[10px] sm:text-xs text-gray-400">双指缩放 · 拖拽移动</p>
+          <h2 className="text-base sm:text-lg font-bold text-ink dark:text-dark-text">家族树状图</h2>
+          <p className="text-[10px] sm:text-xs text-muted dark:text-dark-muted">双指缩放 · 拖拽移动</p>
         </div>
         <div className="w-full h-[70vh] sm:h-[80vh]">
           <ReactFlow

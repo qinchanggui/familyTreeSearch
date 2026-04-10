@@ -103,11 +103,11 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
             {/* 与按钮组统一风格的搜索框 */}
             <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
+                    <MagnifyingGlassIcon className="h-4 w-4 text-gold" />
                 </div>
                 <input
                     type="text"
-                    className={`${UI_CONFIG.SEARCH_INPUT_WIDTH} pl-9 pr-8 py-2 bg-white border border-gray-200 rounded-md text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:border-blue-200 shadow-sm transition-colors`}
+                    className={`${UI_CONFIG.SEARCH_INPUT_WIDTH} pl-9 pr-8 py-2 bg-card border border-border rounded-md text-sm text-ink placeholder-gold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold shadow-sm transition-colors`}
                     placeholder="搜索"
                     value={searchTerm}
                     onChange={(e) => {
@@ -118,7 +118,7 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
                 {searchTerm && (
                     <button
                         onClick={clearSearch}
-                        className="absolute inset-y-0 right-0 pr-2 flex items-center text-gray-400 hover:text-gray-600"
+                        className="absolute inset-y-0 right-0 pr-2 flex items-center text-gold hover:text-gray-600"
                     >
                         <XMarkIcon className="h-4 w-4" />
                     </button>
@@ -130,8 +130,8 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
                 onClick={() => setShowFilters(!showFilters)}
                 className={`ml-1 px-3 py-2 text-sm font-medium border rounded-md flex items-center shadow-sm transition-colors ${
                     showFilters || hasActiveFilters
-                        ? 'bg-blue-50 text-blue-700 border-blue-200'
-                        : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
+                        ? 'bg-cinnabar text-gold-pale border-gold-light'
+                        : 'bg-card text-ink border-border hover:bg-heritage-hover'
                 }`}
             >
                 <AdjustmentsHorizontalIcon className="h-4 w-4" />
@@ -142,23 +142,23 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
 
             {/* 筛选面板 */}
             {showFilters && (
-                <div className={`absolute top-full left-0 mt-2 ${UI_CONFIG.FILTER_PANEL_WIDTH} bg-white rounded-lg shadow-lg border border-gray-200 z-10`}>
+                <div className={`absolute top-full left-0 mt-2 ${UI_CONFIG.FILTER_PANEL_WIDTH} bg-white rounded-lg shadow-lg border border-border z-10`}>
                     <div className="p-4 space-y-3">
                         {/* 搜索选项 */}
                         <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-700">包含详细信息</span>
+                            <span className="text-ink">包含详细信息</span>
                             <input
                                 type="checkbox"
                                 checked={filters.searchInInfo}
                                 onChange={(e) => handleSearch(undefined, { searchInInfo: e.target.checked })}
-                                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                className="rounded border-border text-cinnabar focus:ring-gold"
                             />
                         </div>
 
                         {/* 世代筛选 */}
                         {generations.length > 0 && (
                             <div>
-                                <h4 className="text-sm font-medium text-gray-700 mb-2">世代</h4>
+                                <h4 className="text-sm font-medium text-ink mb-2">世代</h4>
                                 <div className="flex flex-wrap gap-1">
                                     {generations.map((generation) => (
                                         <button
@@ -166,7 +166,7 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
                                             onClick={() => toggleGeneration(generation)}
                                             className={`px-2 py-1 rounded text-xs transition-colors ${
                                                 filters.selectedGenerations.includes(generation)
-                                                    ? 'bg-blue-100 text-blue-700'
+                                                    ? 'bg-heritage-hover text-cinnabar'
                                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                             }`}
                                         >
@@ -179,22 +179,22 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
 
                         {/* 年份范围 */}
                         <div>
-                            <h4 className="text-sm font-medium text-gray-700 mb-2">年份</h4>
+                            <h4 className="text-sm font-medium text-ink mb-2">年份</h4>
                             <div className="flex items-center gap-2">
                                 <input
                                     type="number"
                                     placeholder="起始"
-                                    className="flex-1 px-2 py-1 border border-gray-200 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                    className="flex-1 px-2 py-1 border border-border rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-300"
                                     value={filters.yearRange.start || ''}
                                     onChange={(e) => handleSearch(undefined, { 
                                         yearRange: { ...filters.yearRange, start: e.target.value ? parseInt(e.target.value) : undefined }
                                     })}
                                 />
-                                <span className="text-gray-400 text-xs">-</span>
+                                <span className="text-gold text-xs">-</span>
                                 <input
                                     type="number"
                                     placeholder="结束"
-                                    className="flex-1 px-2 py-1 border border-gray-200 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                    className="flex-1 px-2 py-1 border border-border rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-300"
                                     value={filters.yearRange.end || ''}
                                     onChange={(e) => handleSearch(undefined, { 
                                         yearRange: { ...filters.yearRange, end: e.target.value ? parseInt(e.target.value) : undefined }
@@ -204,10 +204,10 @@ export default function SearchBar({ onSearch, generations }: SearchBarProps) {
                         </div>
 
                         {hasActiveFilters && (
-                            <div className="pt-2 border-t border-gray-100">
+                            <div className="pt-2 border-t border-border">
                                 <button
                                     onClick={clearSearch}
-                                    className="text-xs text-gray-600 hover:text-gray-800 underline"
+                                    className="text-xs text-desc hover:text-dark-desc underline"
                                 >
                                     清除所有筛选
                                 </button>

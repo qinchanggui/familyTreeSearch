@@ -36,7 +36,7 @@ export default function MemorialMap({ places }: MemorialMapProps) {
         {places.map((place, index) => (
           <div
             key={place.id}
-            className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700"
+            className="flex items-center gap-3 p-3 bg-card dark:bg-dark-card rounded-xl border border-border dark:border-dark-border"
           >
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-xs"
@@ -45,8 +45,8 @@ export default function MemorialMap({ places }: MemorialMapProps) {
               {index + 1}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-medium text-gray-800 dark:text-gray-100 text-sm">{place.name}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{place.address}</p>
+              <p className="font-medium text-ink dark:text-dark-text text-sm">{place.name}</p>
+              <p className="text-xs text-muted dark:text-dark-muted truncate">{place.address}</p>
             </div>
             <button
               onClick={() => openNavigation(place)}

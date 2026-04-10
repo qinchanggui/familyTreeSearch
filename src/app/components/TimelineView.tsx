@@ -9,12 +9,11 @@ interface TimelineViewProps {
 }
 
 const genColors = [
-    'bg-blue-500', 'bg-emerald-500', 'bg-violet-500', 'bg-orange-500',
-    'bg-pink-500', 'bg-cyan-500', 'bg-amber-500', 'bg-indigo-500',
-    'bg-teal-500', 'bg-rose-500', 'bg-sky-500', 'bg-lime-500',
-    'bg-fuchsia-500', 'bg-red-500', 'bg-green-500', 'bg-purple-500',
-    'bg-yellow-500', 'bg-blue-700', 'bg-emerald-700', 'bg-violet-700',
-    'bg-orange-700',
+    '#8B2500', '#7A2E00', '#6B3500', '#5C3C00', '#4D4300',
+    '#8B3520', '#7A3A2A', '#6B4034', '#5C463E', '#4D4C48',
+    '#8B4535', '#7A4A3D', '#6B5045', '#5C564D', '#4D5C55',
+    '#8B554A', '#7A5A50', '#6B6055', '#5C665A', '#4D6C5F',
+    '#8B655F',
 ];
 
 interface GenBlockProps {
@@ -43,19 +42,19 @@ function GenBlock({ generation, index }: GenBlockProps) {
                 </span>
             </div>
             {expanded && (
-                <div className="mt-1 ml-2 border-l-2 border-gray-200 dark:border-gray-600 pl-3 space-y-1.5 pb-2">
+                <div className="mt-1 ml-2 border-l-2 border-border dark:border-dark-border pl-3 space-y-1.5 pb-2">
                     {generation.people.map((person, i) => (
                         <div
                             key={person.id || i}
-                            className="flex items-start gap-2 py-2 px-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm"
+                            className="flex items-start gap-2 py-2 px-3 bg-card dark:bg-dark-card rounded-lg shadow-sm"
                         >
                             <div className={`${color} rounded-full p-1 mt-0.5 flex-shrink-0`}>
                                 <UserIcon className="h-3 w-3 text-white" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="font-medium text-gray-800 dark:text-gray-100 text-sm">{person.name}</p>
+                                <p className="font-medium text-ink dark:text-dark-text text-sm">{person.name}</p>
                                 {person.info && (
-                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">{person.info}</p>
+                                    <p className="text-xs text-muted dark:text-dark-muted mt-0.5 line-clamp-2">{person.info}</p>
                                 )}
                             </div>
                         </div>
@@ -69,7 +68,7 @@ function GenBlock({ generation, index }: GenBlockProps) {
 export default function TimelineView({ data }: TimelineViewProps) {
     if (!data.generations.length) {
         return (
-            <div className="p-6 text-center text-gray-400 text-sm">
+            <div className="p-6 text-center text-muted text-sm">
                 暂无数据
             </div>
         );

@@ -107,31 +107,31 @@ export default function Home() {
 
   if (dataLoading) {
     return (
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-950">
-        <header className="bg-white dark:bg-gray-900 shadow-sm mb-4 sm:mb-6">
+      <main className="min-h-screen bg-parchment dark:bg-dark-bg">
+        <header className="bg-gradient-to-b from-cinnabar-dark to-cinnabar shadow-sm mb-4 sm:mb-6 header-ornament">
           <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-6">
-            <div className="animate-pulse h-8 w-40 bg-gray-200 dark:bg-gray-700 rounded mx-auto mb-2" />
-            <div className="animate-pulse h-4 w-28 bg-gray-200 dark:bg-gray-700 rounded mx-auto" />
+            <div className="animate-pulse h-8 w-40 bg-white/20 rounded mx-auto mb-2" />
+            <div className="animate-pulse h-4 w-28 bg-gold/30 rounded mx-auto" />
             <div className="mt-4 flex justify-center gap-3">
               {[1,2,3,4,5].map(i => (
-                <div key={i} className="animate-pulse h-9 w-16 bg-gray-200 dark:bg-gray-700 rounded" />
+                <div key={i} className="animate-pulse h-9 w-16 bg-border dark:bg-dark-border rounded" />
               ))}
             </div>
           </div>
         </header>
         <div className="max-w-7xl mx-auto px-3 sm:px-4">
-          <div className="animate-pulse h-10 w-full bg-gray-200 dark:bg-gray-700 rounded mb-6" />
+          <div className="animate-pulse h-10 w-full bg-border dark:bg-dark-border rounded mb-6" />
           <div className="flex gap-2 mb-6 overflow-hidden">
             {[1,2,3,4,5,6,7,8].map(i => (
-              <div key={i} className="animate-pulse h-8 w-20 bg-gray-200 dark:bg-gray-700 rounded-full flex-shrink-0" />
+              <div key={i} className="animate-pulse h-8 w-20 bg-border dark:bg-dark-border rounded-full flex-shrink-0" />
             ))}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {[1,2,3,4,5,6].map(i => (
-              <div key={i} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 p-6">
-                <div className="animate-pulse h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded mb-3" />
-                <div className="animate-pulse h-4 w-full bg-gray-200 dark:bg-gray-700 rounded mb-2" />
-                <div className="animate-pulse h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded" />
+              <div key={i} className="bg-card dark:bg-dark-card rounded-xl border border-border p-6">
+                <div className="animate-pulse h-6 w-24 bg-border dark:bg-dark-border rounded mb-3" />
+                <div className="animate-pulse h-4 w-full bg-border dark:bg-dark-border rounded mb-2" />
+                <div className="animate-pulse h-4 w-3/4 bg-border dark:bg-dark-border rounded" />
               </div>
             ))}
           </div>
@@ -141,13 +141,13 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
-      <header className="bg-white dark:bg-gray-900 shadow-sm mb-4 sm:mb-6">
+    <main className="min-h-screen bg-parchment dark:bg-dark-bg flex flex-col">
+      <header className="bg-gradient-to-b from-cinnabar-dark to-cinnabar shadow-sm mb-4 sm:mb-6 header-ornament">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-6">
-          <h1 className="text-xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 text-center">
+          <h1 className="text-xl sm:text-3xl font-bold text-gold-pale dark:text-dark-gold-pale text-center font-serif">
             {familyFullName}族谱
           </h1>
-          <p className="mt-0.5 sm:mt-2 text-gray-500 dark:text-gray-400 text-center text-[10px] sm:text-sm tracking-wide">
+          <p className="mt-0.5 sm:mt-2 text-gold-light dark:text-dark-gold text-center text-[10px] sm:text-sm tracking-widest">
             传承历史 · 延续文化
           </p>
           <div className="mt-3 sm:mt-6 flex justify-center gap-3">
@@ -158,8 +158,8 @@ export default function Home() {
                   type="button"
                   className={`px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-l-md flex items-center ${
                     viewMode === 'list'
-                      ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                      ? 'text-gold-pale dark:text-dark-gold-pale border border-gold-light dark:border-dark-gold'
+                      : 'text-gold-light dark:text-dark-gold border border-transparent hover:border-gold-light/50 dark:hover:border-dark-gold/50'
                   }`}
                   onClick={() => { setSelectedPersonId(null); setViewMode('list'); }}
                 >
@@ -170,8 +170,8 @@ export default function Home() {
                   type="button"
                   className={`px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium flex items-center ${
                     viewMode === 'timeline'
-                      ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                      ? 'text-gold-pale dark:text-dark-gold-pale border border-gold-light dark:border-dark-gold'
+                      : 'text-gold-light dark:text-dark-gold border border-transparent hover:border-gold-light/50 dark:hover:border-dark-gold/50'
                   }`}
                   onClick={() => { setSelectedPersonId(null); setViewMode('timeline'); }}
                 >
@@ -182,8 +182,8 @@ export default function Home() {
                   type="button"
                   className={`px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium flex items-center ${
                     viewMode === 'tree'
-                      ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                      ? 'text-gold-pale dark:text-dark-gold-pale border border-gold-light dark:border-dark-gold'
+                      : 'text-gold-light dark:text-dark-gold border border-transparent hover:border-gold-light/50 dark:hover:border-dark-gold/50'
                   }`}
                   onClick={() => { setSelectedPersonId(null); setViewMode('tree'); }}
                 >
@@ -194,8 +194,8 @@ export default function Home() {
                   type="button"
                   className={`px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium flex items-center ${
                     viewMode === 'stats'
-                      ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                      ? 'text-gold-pale dark:text-dark-gold-pale border border-gold-light dark:border-dark-gold'
+                      : 'text-gold-light dark:text-dark-gold border border-transparent hover:border-gold-light/50 dark:hover:border-dark-gold/50'
                   }`}
                   onClick={() => { setSelectedPersonId(null); setViewMode('stats'); }}
                 >
@@ -206,8 +206,8 @@ export default function Home() {
                   type="button"
                   className={`px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-r-md flex items-center ${
                     viewMode === 'memorial'
-                      ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                      ? 'text-gold-pale dark:text-dark-gold-pale border border-gold-light dark:border-dark-gold'
+                      : 'text-gold-light dark:text-dark-gold border border-transparent hover:border-gold-light/50 dark:hover:border-dark-gold/50'
                   }`}
                   onClick={() => { setSelectedPersonId(null); setViewMode('memorial'); }}
                 >
@@ -220,7 +220,7 @@ export default function Home() {
                   document.documentElement.classList.toggle('dark');
                   localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
                 }}
-                className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center"
+                className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-muted hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center"
                 aria-label="切换深色模式"
               >
                 <MoonIcon className="h-4 w-4 dark:hidden" />
@@ -250,15 +250,15 @@ export default function Home() {
 
             {searchResults.length === 0 && (searchTerm || searchFilters.selectedGenerations.length > 0 ||
              searchFilters.yearRange.start || searchFilters.yearRange.end) && (
-              <div className="text-center text-gray-500 dark:text-gray-400 py-6 sm:py-8">
+              <div className="text-center text-gray-500 dark:text-muted py-6 sm:py-8">
                 <p className="text-base sm:text-lg">未找到匹配的家族成员</p>
                 <p className="text-xs sm:text-sm">请尝试修改搜索条件</p>
               </div>
             )}
 
             {searchResults.length > 0 && (
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 text-center mb-3 sm:mb-4">
-                找到 <span className="font-medium text-blue-600">{searchResults.filter(r => r.matchType === 'name' || r.matchType === 'id').length}</span> 个匹配结果{searchResults.filter(r => r.matchType !== 'name' && r.matchType !== 'id').length > 0 && <span>，含 <span className="text-gray-400">{searchResults.filter(r => r.matchType !== 'name' && r.matchType !== 'id').length}</span> 个描述匹配</span>}
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-muted text-center mb-3 sm:mb-4">
+                找到 <span className="font-medium text-cinnabar">{searchResults.filter(r => r.matchType === 'name' || r.matchType === 'id').length}</span> 个匹配结果{searchResults.filter(r => r.matchType !== 'name' && r.matchType !== 'id').length > 0 && <span>，含 <span className="text-muted">{searchResults.filter(r => r.matchType !== 'name' && r.matchType !== 'id').length}</span> 个描述匹配</span>}
               </div>
             )}
           </div>
@@ -278,7 +278,7 @@ export default function Home() {
           <>
             {/* 世代快速跳转导航条：仅列表视图，sticky 吸顶 */}
             {viewMode === 'list' && (
-              <div className="sticky top-0 z-20 bg-gray-50 dark:bg-gray-950 pb-2 mb-4">
+              <div className="sticky top-0 z-20 bg-parchment dark:bg-dark-bg pb-2 mb-4">
               <div className="max-w-7xl mx-auto px-3 sm:px-4">
               <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-1 px-1">
                 {familyData.generations.map((g, i) => (
@@ -288,7 +288,7 @@ export default function Home() {
                       const el = document.getElementById(`gen-${g.title}`);
                       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }}
-                    className="flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-300 hover:border-blue-200 dark:hover:border-blue-700 transition-colors whitespace-nowrap"
+                    className="flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-muted hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-300 hover:border-blue-200 dark:hover:border-blue-700 transition-colors whitespace-nowrap"
                   >
                     {g.title}
                     <span className="ml-1 text-[10px] opacity-60">{g.people.length}</span>
@@ -343,7 +343,7 @@ function BackToTop() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="fixed bottom-20 right-4 z-50 w-10 h-10 bg-blue-500 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-600 active:scale-95 transition-all"
+      className="fixed bottom-20 right-4 z-50 w-10 h-10 bg-cinnabar text-white rounded-full shadow-lg flex items-center justify-center hover:bg-cinnabar-light active:scale-95 transition-all"
       aria-label="回到顶部"
     >
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
