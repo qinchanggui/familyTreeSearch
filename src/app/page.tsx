@@ -12,6 +12,7 @@ const TreeView = dynamic(() => import('./components/TreeView'), { ssr: false });
 import Footer from './components/Footer';
 import SearchBar, { SearchFilters } from './components/SearchBar';
 import { useFamilyData } from '../data/familyDataWithIds';
+import { ANIMATION_DELAYS } from '@/utils/constants';
 import { QueueListIcon, Squares2X2Icon, ClockIcon, SunIcon, MoonIcon, ChartBarIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import { getFamilyFullName } from '@/utils/config';
 import { searchFamilyData, createFilteredFamilyData, SearchResult } from '@/utils/search';
@@ -93,7 +94,7 @@ export default function Home() {
           if (el) {
             el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             el.classList.add('ring-2', 'ring-blue-500');
-            setTimeout(() => el.classList.remove('ring-2', 'ring-blue-500'), 2000);
+            setTimeout(() => el.classList.remove('ring-2', 'ring-blue-500'), ANIMATION_DELAYS.HIGHLIGHT_DURATION);
           }
         });
       }

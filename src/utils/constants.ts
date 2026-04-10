@@ -12,23 +12,3 @@ export const UI_CONFIG = {
   MAX_SEARCH_RESULTS_DISPLAY: 50, // 最多显示的搜索结果数量
 } as const;
 
-// 搜索相关常量
-export const SEARCH_CONFIG = {
-  MIN_SEARCH_LENGTH: 1, // 最小搜索长度
-  MAX_SEARCH_RESULTS: 100, // 最大搜索结果数量
-  SEARCH_FIELDS: {
-    NAME: 'name',
-    INFO: 'info',
-    YEAR: 'year',
-  },
-} as const;
-
-// CSS类名常量
-export const CSS_CLASSES = {
-  HIGHLIGHT: {
-    RING: 'ring-2',
-    RING_COLOR: 'ring-blue-400',
-    BACKGROUND: 'bg-blue-50',
-  },
-  SEARCH_HIGHLIGHT: 'bg-yellow-200 px-1 rounded',
-} as const;

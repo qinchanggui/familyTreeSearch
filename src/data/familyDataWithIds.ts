@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FamilyData } from '../types/family';
 
-// 默认的空数据结构
+// 默认空数据（仅供 useFamilyData 内部使用）
 const defaultFamilyData: FamilyData = {
   generations: []
 };
@@ -47,6 +47,3 @@ export function useFamilyData(): {
 
   return { data, loading, error };
 }
-
-// 导出默认数据，以便在需要时使用
-export const familyDataWithIds = defaultFamilyData;
