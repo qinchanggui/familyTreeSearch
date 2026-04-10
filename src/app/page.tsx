@@ -302,7 +302,6 @@ export default function Home() {
                 searchTerm={searchTerm}
                 searchInInfo={searchFilters.searchInInfo}
                 onPersonClick={(id) => setSelectedPersonId(id)}
-                onClearSearch={() => { setSearchTerm(''); setSearchFilters({ searchTerm: '', selectedGenerations: [], yearRange: { start: undefined, end: undefined }, searchInInfo: false }); }}
               />
             ) : viewMode === 'timeline' ? (
               <TimelineView data={familyData} />

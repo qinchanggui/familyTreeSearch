@@ -11,7 +11,6 @@ interface FamilyTreeProps {
     searchTerm?: string;
     searchInInfo?: boolean;
     onPersonClick?: (personId: string) => void;
-    onClearSearch?: () => void;
 }
 
 // 创建一个映射，用于快速查找人物
@@ -63,7 +62,6 @@ const PersonCard = ({
     searchTerm,
     searchInInfo,
     onPersonClick,
-    onClearSearch,
 }: { 
     person: Person; 
     personMap: Map<string, Person>;
@@ -72,7 +70,6 @@ const PersonCard = ({
     searchTerm?: string;
     searchInInfo?: boolean;
     onPersonClick?: (personId: string) => void;
-    onClearSearch?: () => void;
 }) => {
     const father = person.fatherId ? personMap.get(person.fatherId) : undefined;
     const sons = person.id ? sonsMap.get(person.id) || [] : [];
@@ -110,10 +107,7 @@ const PersonCard = ({
                         <span>父亲：</span>
                         <button 
                             onClick={() => {
-                                if (onClearSearch) onClearSearch();
-                                setTimeout(() => {
-                                    if (father.id) scrollToPerson(father.id);
-                                }, 50);
+                                if (father.id && onPersonClick) onPersonClick(father.id);
                             }}
                             className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline font-medium"
                         >
@@ -130,10 +124,7 @@ const PersonCard = ({
                             <span key={son.id || index}>
                                 <button 
                                     onClick={() => {
-                                        if (onClearSearch) onClearSearch();
-                                        setTimeout(() => {
-                                            if (son.id) scrollToPerson(son.id);
-                                        }, 50);
+                                        if (son.id && onPersonClick) onPersonClick(son.id);
                                     }}
                                     className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 hover:underline font-medium"
                                 >
@@ -177,8 +168,7 @@ const Generation = ({
     scrollToPerson,
     searchTerm,
     searchInInfo,
-    onPersonClick,
-    onClearSearch
+    onPersonClick
 }: { 
     title: string; 
     people: Person[]; 
@@ -188,7 +178,6 @@ const Generation = ({
     searchTerm?: string;
     searchInInfo?: boolean;
     onPersonClick?: (personId: string) => void;
-    onClearSearch?: () => void;
 }) => {
     return (
         <div className="mb-10" id={`gen-${title}`}>
@@ -209,7 +198,6 @@ const Generation = ({
                         searchTerm={searchTerm}
                         searchInInfo={searchInInfo}
                         onPersonClick={onPersonClick}
-                    onClearSearch={onClearSearch}
                     />
                 ))}
             </div>
@@ -217,7 +205,7 @@ const Generation = ({
     );
 };
 
-export default function FamilyTree({ familyData, fullFamilyData, searchTerm, searchInInfo, onPersonClick, onClearSearch }: FamilyTreeProps) {
+export default function FamilyTree({ familyData, fullFamilyData, searchTerm, searchInInfo, onPersonClick }: FamilyTreeProps) {
     const [personMap, setPersonMap] = useState<Map<string, Person>>(new Map());
     const [sonsMap, setSonsMap] = useState<Map<string, Person[]>>(new Map());
     

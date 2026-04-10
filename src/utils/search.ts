@@ -213,15 +213,51 @@ export function createFilteredFamilyData(familyData: FamilyData, searchResults: 
         return { generations: [] };
     }
     
-    // 按世代分组搜索结果
+    // 收集所有匹配人物的 ID
+    const matchedIds = new Set(searchResults.map(r => r.person.id).filter(Boolean));
+    
+    // 收集需要显示的人物 ID（匹配人物 + 其父亲和子嗣）
+    const displayIds = new Set<string>();
+    const allPeopleMap = new Map<string, { person: Person; generation: string }>();
+    
+    // 建立全量人物索引
+    familyData.generations.forEach(generation => {
+        generation.people.forEach(person => {
+            if (person.id) {
+                allPeopleMap.set(person.id, { person, generation: generation.title });
+            }
+        });
+    });
+    
+    // 添加匹配人物及其父亲和子嗣
+    matchedIds.forEach(id => {
+        displayIds.add(id);
+        const entry = allPeopleMap.get(id);
+        if (entry) {
+            // 添加父亲
+            if (entry.person.fatherId) {
+                displayIds.add(entry.person.fatherId);
+            }
+            // 添加子嗣（通过遍历全量数据查找 children）
+            allPeopleMap.forEach((p) => {
+                if (p.person.fatherId === id) {
+                    displayIds.add(p.person.id!);
+                }
+            });
+        }
+    });
+    
+    // 按世代分组
     const generationMap = new Map<string, Person[]>();
     
-    searchResults.forEach(result => {
-        const generationTitle = result.generation;
-        if (!generationMap.has(generationTitle)) {
-            generationMap.set(generationTitle, []);
+    displayIds.forEach(id => {
+        const entry = allPeopleMap.get(id);
+        if (entry) {
+            if (!generationMap.has(entry.generation)) {
+                generationMap.set(entry.generation, []);
+            }
+            generationMap.get(entry.generation)!.push(entry.person);
         }
-        generationMap.get(generationTitle)!.push(result.person);
     });
     
     // 创建过滤后的世代数据
