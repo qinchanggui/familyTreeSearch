@@ -66,7 +66,7 @@ function toEl(l: L): { nodes: Node[]; edges: Edge[] } {
   (function w(n: L) {
     nodes.push({ id: n.id, type: 'person', position: { x: n.x - hw, y: n.y }, data: { label: n.name, borderColor: n.bc } });
     for (const c of n.ch) {
-      edges.push({ id: `${n.id}-${c.id}`, source: n.id, target: c.id, type: 'smoothstep', style: { stroke: '#93c5fd', strokeWidth: 2 } });
+      edges.push({ id: `${n.id}-${c.id}`, source: n.id, target: c.id, type: 'smoothstep', style: { stroke: '#3b82f6', strokeWidth: 2 } });
       w(c);
     }
   })(l);
