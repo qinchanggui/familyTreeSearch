@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { FamilyData, Person } from '@/types/family';
-import { UserIcon, CalendarIcon, UserGroupIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import { UserIcon, CalendarIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 import { escapeHtml, splitHighlightSegments } from '@/utils/search';
 
 interface FamilyTreeProps {
@@ -71,54 +71,34 @@ const PersonCard = ({
     searchInInfo?: boolean;
     onPersonClick?: (personId: string) => void;
 }) => {
-    const [expanded, setExpanded] = useState(false);
     const father = person.fatherId ? personMap.get(person.fatherId) : undefined;
     const sons = person.id ? sonsMap.get(person.id) || [] : [];
-
-    const toggleExpand = (e: React.MouseEvent) => {
-        // 防止点击按钮时触发卡片展开
-        if ((e.target as HTMLElement).tagName === 'BUTTON' || 
-            (e.target as HTMLElement).closest('button')) {
-            return;
-        }
-        setExpanded(!expanded);
-    };
 
     return (
         <div 
             id={`person-${person.id}`} 
-            className={`group bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-blue-100 dark:hover:border-blue-800 relative overflow-hidden cursor-pointer ${expanded ? 'ring-1 ring-blue-300' : ''}`}
-            onClick={toggleExpand}
+            className="group bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-blue-100 dark:hover:border-blue-800 relative overflow-hidden"
         >
             <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative">
-                <div className="flex items-center justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-3">
-                        <div className="bg-blue-50 p-2 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
-                            <UserIcon className="h-5 w-5 text-blue-600" />
-                        </div>
-                        <h3
-                            className="text-xl font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 cursor-pointer"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                if (onPersonClick && person.id) onPersonClick(person.id);
-                            }}
-                        >
-                            {searchTerm
-                                ? splitHighlightSegments(escapeHtml(person.name), searchTerm).map((seg, i) => (
-                                    seg.isMatch
-                                        ? <mark key={i} className="bg-yellow-200 px-1 rounded">{seg.text}</mark>
-                                        : <span key={i}>{seg.text}</span>
-                                ))
-                                : person.name}
-                        </h3>
+                <div className="flex items-center gap-3 mb-3">
+                    <div className="bg-blue-50 p-2 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
+                        <UserIcon className="h-5 w-5 text-blue-600" />
                     </div>
-                    <div className="text-gray-400">
-                        {expanded ? 
-                            <ChevronUpIcon className="h-5 w-5" /> : 
-                            <ChevronDownIcon className="h-5 w-5" />
-                        }
-                    </div>
+                    <h3
+                        className="text-xl font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 cursor-pointer"
+                        onClick={() => {
+                            if (onPersonClick && person.id) onPersonClick(person.id);
+                        }}
+                    >
+                        {searchTerm
+                            ? splitHighlightSegments(escapeHtml(person.name), searchTerm).map((seg, i) => (
+                                seg.isMatch
+                                    ? <mark key={i} className="bg-yellow-200 px-1 rounded">{seg.text}</mark>
+                                    : <span key={i}>{seg.text}</span>
+                            ))
+                            : person.name}
+                    </h3>
                 </div>
                 
                 {father && (
@@ -126,8 +106,7 @@ const PersonCard = ({
                         <UserGroupIcon className="h-4 w-4 text-blue-500" />
                         <span>父亲：</span>
                         <button 
-                            onClick={(e) => {
-                                e.stopPropagation();
+                            onClick={() => {
                                 if (father.id) {
                                     scrollToPerson(father.id);
                                 }
@@ -146,8 +125,7 @@ const PersonCard = ({
                         {sons.map((son, index) => (
                             <span key={son.id || index}>
                                 <button 
-                                    onClick={(e) => {
-                                        e.stopPropagation();
+                                    onClick={() => {
                                         if (son.id) {
                                             scrollToPerson(son.id);
                                         }
@@ -162,7 +140,7 @@ const PersonCard = ({
                     </div>
                 )}
                 
-                <p className={`text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-3 ${expanded ? '' : 'line-clamp-2 sm:line-clamp-3'}`}>
+                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-3 line-clamp-2 sm:line-clamp-3">
                     {(searchTerm && searchInInfo)
                         ? splitHighlightSegments(escapeHtml(person.info), searchTerm).map((seg, i) => (
                             seg.isMatch
