@@ -20,6 +20,7 @@ import { buildFamilyTree } from '@/utils/familyTree';
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<'list' | 'timeline' | 'tree' | 'stats' | 'memorial'>('list');
+  const [activeGen, setActiveGen] = useState<string | null>(null);
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
   const [memorialPlaces, setMemorialPlaces] = useState<any[]>([]);
   const { data: familyData, loading: dataLoading, error: dataError } = useFamilyData();
@@ -218,7 +219,7 @@ export default function Home() {
                   document.documentElement.classList.toggle('dark');
                   localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
                 }}
-                className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-border dark:border-dark-border bg-card dark:bg-dark-card text-muted dark:text-dark-muted hover:bg-heritage-hover dark:hover:bg-dark-heritage-hover flex items-center"
+                className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-gold-light/40 dark:border-dark-gold/40 bg-white/10 dark:bg-black/10 text-gold-light dark:text-dark-gold hover:bg-white/20 dark:hover:bg-black/20 hover:border-gold-light/70 dark:hover:border-dark-gold/70 flex items-center backdrop-blur-sm transition-all"
                 aria-label="切换深色模式"
               >
                 <MoonIcon className="h-4 w-4 dark:hidden" />
@@ -298,10 +299,16 @@ export default function Home() {
                   <button
                     key={g.title}
                     onClick={() => {
+                      setActiveGen(g.title);
                       const el = document.getElementById(`gen-${g.title}`);
                       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      setTimeout(() => setActiveGen(null), 2000);
                     }}
-                    className="flex-shrink-0 px-4 py-1.5 text-xs font-medium font-serif border border-border dark:border-dark-border bg-card dark:bg-dark-card text-ink dark:text-dark-text hover:text-gold-pale dark:hover:text-dark-gold-pale hover:border-gold-light dark:hover:border-dark-gold hover:bg-heritage-hover dark:hover:bg-dark-heritage-hover transition-colors whitespace-nowrap relative"
+                    className={`flex-shrink-0 px-4 py-1.5 text-xs font-medium font-serif border transition-colors whitespace-nowrap relative ${
+                      activeGen === g.title
+                        ? 'border-cinnabar dark:border-dark-cinnabar bg-cinnabar/10 dark:bg-dark-cinnabar/20 text-cinnabar dark:text-dark-cinnabar'
+                        : 'border-border dark:border-dark-border bg-card dark:bg-dark-card text-ink dark:text-dark-text hover:text-cinnabar dark:hover:text-dark-cinnabar hover:border-gold-light dark:hover:border-dark-gold hover:bg-heritage-hover dark:hover:bg-dark-heritage-hover'
+                    }`}
                   >
                     <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold-light to-transparent dark:via-dark-gold opacity-0 hover:opacity-100 transition-opacity"></span>
                     {g.title}

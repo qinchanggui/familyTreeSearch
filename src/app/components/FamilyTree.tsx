@@ -126,7 +126,7 @@ const PersonCard = ({
                             <span key={son.id || index}>
                                 <button 
                                     onClick={() => {
-                                        if (son.id && onPersonClick) onPersonClick(son.id);
+                                        if (son.id) scrollToPerson(son.id);
                                     }}
                                     className="text-forest dark:text-dark-forest hover:underline font-medium"
                                 >
