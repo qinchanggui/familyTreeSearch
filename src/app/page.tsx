@@ -42,6 +42,10 @@ export default function Home() {
     return buildFamilyTree(familyData);
   }, [familyData, dataLoading, dataError]);
 
+  const matchedIds = useMemo(() => {
+    return new Set(searchResults.filter(r => r.person.id).map(r => r.person.id!));
+  }, [searchResults]);
+
   const filteredFamilyData = useMemo(() => {
     if (searchResults.length > 0) {
       return createFilteredFamilyData(familyData, searchResults);
@@ -302,6 +306,7 @@ export default function Home() {
                 searchTerm={searchTerm}
                 searchInInfo={searchFilters.searchInInfo}
                 onPersonClick={(id) => setSelectedPersonId(id)}
+                matchedIds={matchedIds}
               />
             ) : viewMode === 'timeline' ? (
               <TimelineView data={familyData} />
