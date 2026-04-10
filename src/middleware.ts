@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 const rateLimit = new Map<string, number[]>();
-const RATE_LIMIT = 100;
+const RATE_LIMIT = 60; // 降低到每分钟60次（更严格）
 const WINDOW_MS = 60 * 1000;
-const CLEANUP_INTERVAL = 500; // 每500次请求清理一次
+const CLEANUP_INTERVAL = 500;
 
 let requestCount = 0;
 
@@ -34,7 +34,10 @@ export function middleware(request: NextRequest) {
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('X-XSS-Protection', '1; mode=block');
-  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
+  response.headers.set('X-DNS-Prefetch-Control', 'on');
+  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  response.headers.set('X-Download-Options', 'noopen');
 
   // API 路由额外处理
   if (request.nextUrl.pathname.startsWith('/api/')) {
