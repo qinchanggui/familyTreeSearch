@@ -28,7 +28,8 @@ function GenBlock({ generation, index }: GenBlockProps) {
     return (
         <div className="mb-2">
             <div
-                className={`flex items-center gap-3 px-4 py-3 ${color} text-white rounded-xl cursor-pointer shadow-sm active:scale-[0.98] transition-transform`}
+                className="flex items-center gap-3 px-4 py-3 text-white rounded-xl cursor-pointer shadow-sm active:scale-[0.98] transition-transform"
+                style={{ background: color }}
                 onClick={() => setExpanded(!expanded)}
             >
                 <span className="text-base font-bold">{generation.title}</span>
