@@ -35,31 +35,10 @@ function isYearInRange(year: number | undefined, start?: number, end?: number): 
 
 // 检查人员是否匹配搜索条件
 function matchesPerson(person: Person, searchTerm: string, filters: SearchFilters): SearchResult | null {
-    const { searchInInfo, yearRange } = filters;
+    const { searchInInfo } = filters;
     
-    // 如果有年份范围过滤，检查是否匹配
-    if (yearRange.start || yearRange.end) {
-        const birthMatch = isYearInRange(person.birthYear, yearRange.start, yearRange.end);
-        const deathMatch = isYearInRange(person.deathYear, yearRange.start, yearRange.end);
-        
-        if (!birthMatch && !deathMatch) {
-            return null;
-        }
-        
-        // 如果只是年份匹配且没有搜索词，返回年份匹配
-        if (!searchTerm) {
-            return {
-                person,
-                generation: '',
-                matchType: 'year',
-                matchText: `${person.birthYear || ''}-${person.deathYear || ''}`
-            };
-        }
-    }
-    
-    // 如果没有搜索词但有年份过滤，在上面已经处理了
     if (!searchTerm) {
-        return yearRange.start || yearRange.end ? null : {
+        return {
             person,
             generation: '',
             matchType: 'name'

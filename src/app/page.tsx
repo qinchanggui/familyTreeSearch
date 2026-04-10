@@ -29,7 +29,6 @@ export default function Home() {
     searchTerm: '',
     searchInInfo: true,
     selectedGenerations: [],
-    yearRange: {}
   });
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
@@ -78,7 +77,7 @@ export default function Home() {
   useEffect(() => {
     if (!dataLoading && !dataError && familyData.generations.length) {
       if (searchTerm || searchFilters.selectedGenerations.length > 0 ||
-          searchFilters.yearRange.start || searchFilters.yearRange.end) {
+          !searchFilters.searchInInfo) {
         const results = searchFamilyData(familyData, searchTerm, searchFilters);
         setSearchResults(results);
       } else {
@@ -249,7 +248,7 @@ export default function Home() {
             </div>
 
             {searchResults.length === 0 && (searchTerm || searchFilters.selectedGenerations.length > 0 ||
-             searchFilters.yearRange.start || searchFilters.yearRange.end) && (
+             !searchFilters.searchInInfo) && (
               <div className="text-center text-gray-500 dark:text-muted py-6 sm:py-8">
                 <p className="text-base sm:text-lg">未找到匹配的家族成员</p>
                 <p className="text-xs sm:text-sm">请尝试修改搜索条件</p>
