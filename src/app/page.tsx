@@ -157,7 +157,7 @@ export default function Home() {
                       ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
                       : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
-                  onClick={() => setViewMode('list')}
+                  onClick={() => { setSelectedPersonId(null); setViewMode('list'); }}
                 >
                   <QueueListIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
                   <span className="inline">列表</span>
@@ -169,7 +169,7 @@ export default function Home() {
                       ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
                       : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
-                  onClick={() => setViewMode('timeline')}
+                  onClick={() => { setSelectedPersonId(null); setViewMode('timeline'); }}
                 >
                   <ClockIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
                   <span className="inline">时间线</span>
@@ -181,7 +181,7 @@ export default function Home() {
                       ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
                       : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
-                  onClick={() => setViewMode('tree')}
+                  onClick={() => { setSelectedPersonId(null); setViewMode('tree'); }}
                 >
                   <Squares2X2Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
                   <span className="inline">树状</span>
@@ -193,7 +193,7 @@ export default function Home() {
                       ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
                       : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
-                  onClick={() => setViewMode('stats')}
+                  onClick={() => { setSelectedPersonId(null); setViewMode('stats'); }}
                 >
                   <ChartBarIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
                   <span className="inline">统计</span>
@@ -205,7 +205,7 @@ export default function Home() {
                       ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
                       : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
-                  onClick={() => setViewMode('memorial')}
+                  onClick={() => { setSelectedPersonId(null); setViewMode('memorial'); }}
                 >
                   <MapPinIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 sm:mr-0.5 sm:mr-2" />
                   <span className="inline">祭祖</span>
