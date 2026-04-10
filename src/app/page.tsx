@@ -288,10 +288,11 @@ export default function Home() {
                       const el = document.getElementById(`gen-${g.title}`);
                       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }}
-                    className="flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-muted hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-300 hover:border-blue-200 dark:hover:border-blue-700 transition-colors whitespace-nowrap"
+                    className="flex-shrink-0 px-4 py-1.5 text-xs font-medium font-serif border border-border dark:border-dark-border bg-card dark:bg-dark-card text-muted dark:text-dark-muted hover:text-gold-pale dark:hover:text-dark-gold-pale hover:border-gold-light dark:hover:border-dark-gold hover:bg-heritage-hover dark:hover:bg-dark-heritage-hover transition-colors whitespace-nowrap relative"
                   >
+                    <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold-light to-transparent dark:via-dark-gold opacity-0 hover:opacity-100 transition-opacity"></span>
                     {g.title}
-                    <span className="ml-1 text-[10px] opacity-60">{g.people.length}</span>
+                    <span className="ml-1.5 text-[10px] opacity-50">{g.people.length}</span>
                   </button>
                 ))}
               </div>

@@ -81,7 +81,7 @@ const PersonCard = ({
     return (
         <div 
             id={`person-${person.id}`} 
-            className={`group bg-card dark:bg-dark-card p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border ${isRelated ? 'border-l-4 border-l-gold-light dark:border-l-dark-gold border-t-border dark:border-t-dark-border border-r-border dark:border-r-dark-border border-b-border dark:border-b-dark-border' : 'border-border dark:border-dark-border hover:border-gold-light dark:hover:border-dark-gold'} relative overflow-hidden`}
+            className={`group bg-card dark:bg-dark-card p-6 rounded-xl shadow-sm border card-heritage ${isRelated ? 'border-l-4 border-l-gold-light dark:border-l-dark-gold border-t-border dark:border-t-dark-border border-r-border dark:border-r-dark-border border-b-border dark:border-b-dark-border' : 'border-border dark:border-dark-border hover:border-gold-light dark:hover:border-dark-gold'} relative overflow-hidden`}
         >
             <div className="absolute top-0 right-0 w-24 h-24 bg-heritage rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative">

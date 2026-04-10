@@ -131,3 +131,15 @@ body {
 .dark .gen-divider::before {
   color: #D4A574;
 }
+
+/* 卡片动效 */
+.card-heritage {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-heritage:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -5px rgba(139, 37, 0, 0.1), 0 4px 10px -5px rgba(184, 134, 11, 0.08);
+}
+.dark .card-heritage:hover {
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.4), 0 4px 10px -5px rgba(212, 165, 116, 0.1);
+}
