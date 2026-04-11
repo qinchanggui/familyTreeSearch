@@ -285,17 +285,17 @@
           "deathYear": null
         },
         {
-          "id": "g5-12",
-          "name": "庆遅公",
-          "info": "覃绢公行七，守业传名",
+          "id": "g5-13",
+          "name": "妙遅公",
+          "info": "覃绢公行六，谨厚自持",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
         },
         {
-          "id": "g5-13",
-          "name": "妙遅公",
-          "info": "覃绢公行六，谨厚自持",
+          "id": "g5-12",
+          "name": "庆遅公",
+          "info": "覃绢公行七，守业传名",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
