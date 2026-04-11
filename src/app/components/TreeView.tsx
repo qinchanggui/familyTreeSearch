@@ -25,6 +25,9 @@ const H_GAP = 180;
 const V_GAP = 100;
 const DEFAULT_EXPAND_DEPTH = 2;
 
+/* ---------- 全局 toggle 回调（解决 nodeTypes 闭包问题） ---------- */
+let globalToggleFn: ((nodeId: string) => void) | null = null;
+
 /* ---------- 数据结构 ---------- */
 interface TreeNode {
   id: string;
@@ -131,8 +134,9 @@ function PersonNode({ data }: any) {
   const handleClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    // 通过 window 事件通知父组件
-    window.dispatchEvent(new CustomEvent('tree-node-toggle', { detail: { nodeId } }));
+    if (globalToggleFn) {
+      globalToggleFn(nodeId);
+    }
   }, [nodeId]);
 
   return (
@@ -186,6 +190,35 @@ function TreeViewInner({ data }: TreeViewProps) {
     return s;
   });
 
+  // 注册全局 toggle 回调
+  const toggleRef = useRef<(nodeId: string) => void>(undefined);
+  toggleRef.current = useCallback((nodeId: string) => {
+    setCollapsedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(nodeId)) {
+        next.delete(nodeId);
+      } else {
+        next.add(nodeId);
+        const node = treeMap.get(nodeId);
+        if (node) {
+          const stack = [...node.childIds];
+          while (stack.length) {
+            const cid = stack.pop()!;
+            next.add(cid);
+            const child = treeMap.get(cid);
+            if (child) stack.push(...child.childIds);
+          }
+        }
+      }
+      return next;
+    });
+  }, [treeMap]);
+
+  useEffect(() => {
+    globalToggleFn = toggleRef.current!;
+    return () => { globalToggleFn = null; };
+  }, [toggleRef]);
+
   // 初始化时居中
   const nodesInitialized = useNodesInitialized();
   const fittedRef = useRef(false);
@@ -196,34 +229,6 @@ function TreeViewInner({ data }: TreeViewProps) {
       return () => clearTimeout(timer);
     }
   }, [nodesInitialized, fitView]);
-
-  // 监听折叠/展开事件
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const { nodeId } = (e as CustomEvent).detail;
-      setCollapsedIds(prev => {
-        const next = new Set(prev);
-        if (next.has(nodeId)) {
-          next.delete(nodeId);
-        } else {
-          next.add(nodeId);
-          const node = treeMap.get(nodeId);
-          if (node) {
-            const stack = [...node.childIds];
-            while (stack.length) {
-              const cid = stack.pop()!;
-              next.add(cid);
-              const child = treeMap.get(cid);
-              if (child) stack.push(...child.childIds);
-            }
-          }
-        }
-        return next;
-      });
-    };
-    window.addEventListener('tree-node-toggle', handler);
-    return () => window.removeEventListener('tree-node-toggle', handler);
-  }, [treeMap]);
 
   // 折叠变化后重新居中
   const prevKeyRef = useRef('');
@@ -257,7 +262,7 @@ function TreeViewInner({ data }: TreeViewProps) {
             nodes={nodes}
             edges={edges}
             nodeTypes={nodeTypes}
-            defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
+            defaultViewport={{ x: 0, y: 0, zoom: 0.6 }}
             minZoom={0.05}
             maxZoom={4}
             proOptions={{ hideAttribution: true }}

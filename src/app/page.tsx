@@ -294,7 +294,7 @@ export default function Home() {
             {viewMode === 'list' && (
               <div className="sticky top-0 z-20 bg-parchment dark:bg-dark-bg pb-2 mb-4">
               <div className="max-w-7xl mx-auto px-3 sm:px-4">
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-1 px-1">
+              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin -mx-1 px-1">
                 {familyData.generations.map((g, i) => (
                   <button
                     key={g.title}

@@ -79,6 +79,14 @@ body {
   border-radius: 3px;
 }
 
+/* 胶囊栏细滚动条 */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 4px;
+}
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
 /* 头部装饰纹样 */
 .header-ornament {
   position: relative;
