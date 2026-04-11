@@ -1163,7 +1163,7 @@
         {
           "id": "g17-11",
           "name": "肇记",
-          "info": "瑞山次子，诞育一嗣，宗祧有托",
+          "info": "瑞山次子，谨守家业",
           "fatherId": "g16-4",
           "birthYear": null,
           "deathYear": null
@@ -1219,7 +1219,7 @@
         {
           "id": "g17-18",
           "name": "肇东",
-          "info": "瑞文次子，诞育一嗣，宗祧有托",
+          "info": "瑞文次子，谨守家业",
           "fatherId": "g16-7",
           "birthYear": null,
           "deathYear": null
@@ -1649,15 +1649,15 @@
         {
           "id": "g18-15",
           "name": "兴佳",
-          "info": "肇记公子，端方持重",
-          "fatherId": "g17-11",
+          "info": "肇汉长子，气度雍容",
+          "fatherId": "g17-12",
           "birthYear": null,
           "deathYear": null
         },
         {
           "id": "g18-16",
           "name": "乐佳",
-          "info": "肇汉公子，守祧传名",
+          "info": "肇汉次子，诞有一嗣，血脉绵延",
           "fatherId": "g17-12",
           "birthYear": null,
           "deathYear": null
@@ -1681,8 +1681,8 @@
         {
           "id": "g18-19",
           "name": "炎佳",
-          "info": "肇新长子，名垂族史",
-          "fatherId": "g17-14",
+          "info": "肇凤行三，名垂族史",
+          "fatherId": "g17-13",
           "birthYear": null,
           "deathYear": null
         },
@@ -1745,8 +1745,8 @@
         {
           "id": "g18-27",
           "name": "见佳",
-          "info": "肇东公子，德冠一族",
-          "fatherId": "g17-18",
+          "info": "肇源行三，行谊可风",
+          "fatherId": "g17-17",
           "birthYear": null,
           "deathYear": null
         },
