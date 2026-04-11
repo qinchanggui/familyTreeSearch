@@ -768,7 +768,7 @@
         },
         {
           "id": "g15-13",
-          "name": "骥才",
+          "name": "骏才",
           "info": "业书长子，毓生2脉，门祚以兴",
           "fatherId": "g14-10",
           "birthYear": null,
@@ -776,7 +776,7 @@
         },
         {
           "id": "g15-14",
-          "name": "汉才",
+          "name": "漢才",
           "info": "业书公次子，诞育3嗣，血脉绵延",
           "fatherId": "g14-10",
           "birthYear": null,
@@ -982,7 +982,7 @@
         {
           "id": "g16-20",
           "name": "瑞廷",
-          "info": "骥才长子，清风亮节",
+          "info": "骏才长子，清风亮节",
           "fatherId": "g15-13",
           "birthYear": null,
           "deathYear": null
@@ -990,7 +990,7 @@
         {
           "id": "g16-21",
           "name": "瑞熙",
-          "info": "骥才公次子，生育2脉，蔚为大族",
+          "info": "骏才公次子，生育2脉，蔚为大族",
           "fatherId": "g15-13",
           "birthYear": null,
           "deathYear": null
@@ -998,7 +998,7 @@
         {
           "id": "g16-22",
           "name": "瑞徵",
-          "info": "汉才公长子，诞育2嗣，兰桂齐芳",
+          "info": "漢才公长子，诞育2嗣，兰桂齐芳",
           "fatherId": "g15-14",
           "birthYear": null,
           "deathYear": null
@@ -1006,7 +1006,7 @@
         {
           "id": "g16-30",
           "name": "瑞相",
-          "info": "汉才公次子，谨守家业",
+          "info": "漢才公次子，谨守家业",
           "fatherId": "g15-14",
           "birthYear": null,
           "deathYear": null
@@ -1014,7 +1014,7 @@
         {
           "id": "g16-31",
           "name": "瑞贡",
-          "info": "汉才公行三，端方持重",
+          "info": "漢才公行三，端方持重",
           "fatherId": "g15-14",
           "birthYear": null,
           "deathYear": null
