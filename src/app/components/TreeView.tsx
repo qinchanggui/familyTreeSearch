@@ -4,9 +4,8 @@ import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import ReactFlow, {
   Node, Edge, Background, Controls,
   Position, Handle, BackgroundVariant,
-  useNodesState, useEdgesState,
 } from 'reactflow';
-import { ReactFlowProvider, useReactFlow } from 'reactflow';
+import { ReactFlowProvider, useReactFlow, useNodesInitialized } from 'reactflow';
 import { Squares2X2Icon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import 'reactflow/dist/style.css';
 import { FamilyData } from '@/types/family';
@@ -24,7 +23,7 @@ const generationColors = [
 
 const H_GAP = 180;
 const V_GAP = 100;
-const DEFAULT_EXPAND_DEPTH = 2; // 展开到第3代（0/1/2）
+const DEFAULT_EXPAND_DEPTH = 2;
 
 /* ---------- 数据结构 ---------- */
 interface TreeNode {
@@ -39,24 +38,19 @@ interface TreeNode {
 /* ---------- 从 FamilyData 构建树 ---------- */
 function buildTree(data: FamilyData): Map<string, TreeNode> {
   const map = new Map<string, TreeNode>();
-
-  // 先建所有节点
   data.generations.forEach((gen, gi) => {
     gen.people.forEach(p => {
       if (!p.id) return;
-      const borderColor = generationColors[gi % generationColors.length];
       map.set(p.id, {
         id: p.id,
         name: p.name,
         depth: gi,
-        borderColor,
+        borderColor: generationColors[gi % generationColors.length],
         childCount: 0,
         childIds: [],
       });
     });
   });
-
-  // 建立父子关系
   data.generations.forEach(gen => {
     gen.people.forEach(p => {
       if (!p.id || !p.fatherId) return;
@@ -67,17 +61,16 @@ function buildTree(data: FamilyData): Map<string, TreeNode> {
       }
     });
   });
-
   return map;
 }
 
 /* ---------- 子树宽度计算 ---------- */
-function getSubtreeWidth(nodeMap: Map<string, TreeNode>, id: string, collapsedIds: Set<string>): number {
+function getSubtreeWidth(nodeMap: Map<string, TreeNode>, id: string, collapsedSet: Set<string>): number {
   const node = nodeMap.get(id);
-  if (!node || node.childCount === 0 || collapsedIds.has(id)) return 1;
+  if (!node || node.childCount === 0 || collapsedSet.has(id)) return 1;
   let total = 0;
   for (const cid of node.childIds) {
-    total += getSubtreeWidth(nodeMap, cid, collapsedIds);
+    total += getSubtreeWidth(nodeMap, cid, collapsedSet);
   }
   return Math.max(total, 1);
 }
@@ -85,62 +78,47 @@ function getSubtreeWidth(nodeMap: Map<string, TreeNode>, id: string, collapsedId
 /* ---------- 布局引擎 ---------- */
 interface LayoutResult { nodes: Node[]; edges: Edge[] }
 
-function layoutVisible(nodeMap: Map<string, TreeNode>, rootIds: string[], collapsedIds: Set<string>): LayoutResult {
+function layoutTree(nodeMap: Map<string, TreeNode>, rootIds: string[], collapsedSet: Set<string>): LayoutResult {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
-  const NODE_HW = 70; // 节点半宽
+  const NODE_HW = 70;
 
-  // 布局实现
-  function layNode(id: string, centerX: number, y: number) {
+  function lay(id: string, cx: number, y: number) {
     const node = nodeMap.get(id);
     if (!node) return;
-
-    const children = collapsedIds.has(id) ? [] : node.childIds;
+    const children = collapsedSet.has(id) ? [] : node.childIds;
 
     nodes.push({
       id,
       type: 'personNode',
-      position: { x: centerX - NODE_HW, y },
+      position: { x: cx - NODE_HW, y },
       data: {
         label: node.name,
         borderColor: node.borderColor,
         childCount: node.childCount,
-        collapsed: collapsedIds.has(id),
+        collapsed: collapsedSet.has(id),
         nodeId: id,
       },
     });
 
     if (children.length === 0) return;
-
-    const ws = children.map(cid => getSubtreeWidth(nodeMap, cid, collapsedIds));
+    const ws = children.map(cid => getSubtreeWidth(nodeMap, cid, collapsedSet));
     const totalW = ws.reduce((a, b) => a + b, 0) * H_GAP;
-    let startX = centerX - totalW / 2;
-
+    let sx = cx - totalW / 2;
     for (let i = 0; i < children.length; i++) {
-      const childCenter = startX + ws[i] * H_GAP / 2;
-      layNode(children[i], childCenter, y + V_GAP);
-
-      edges.push({
-        id: `${id}-${children[i]}`,
-        source: id,
-        target: children[i],
-        type: 'default',
-        style: { stroke: '#D4A574', strokeWidth: 2 },
-      });
-
-      startX += ws[i] * H_GAP;
+      const ccx = sx + ws[i] * H_GAP / 2;
+      lay(children[i], ccx, y + V_GAP);
+      edges.push({ id: `${id}-${children[i]}`, source: id, target: children[i], style: { stroke: '#D4A574', strokeWidth: 2 } });
+      sx += ws[i] * H_GAP;
     }
   }
 
-  // 多个根节点：从正坐标开始布局，居中由 fitView 处理
-  const rootWidths = rootIds.map(rid => getSubtreeWidth(nodeMap, rid, collapsedIds));
-  const totalRootW = rootWidths.reduce((a, b) => a + b, 0) * H_GAP;
-  let startX = 0;
-
+  const rws = rootIds.map(rid => getSubtreeWidth(nodeMap, rid, collapsedSet));
+  const totalW = rws.reduce((a, b) => a + b, 0) * H_GAP;
+  let sx = -totalW / 2;
   for (let i = 0; i < rootIds.length; i++) {
-    const center = startX + rootWidths[i] * H_GAP / 2;
-    layNode(rootIds[i], center, 0);
-    startX += rootWidths[i] * H_GAP;
+    lay(rootIds[i], sx + rws[i] * H_GAP / 2, 0);
+    sx += rws[i] * H_GAP;
   }
 
   return { nodes, edges };
@@ -148,13 +126,14 @@ function layoutVisible(nodeMap: Map<string, TreeNode>, rootIds: string[], collap
 
 /* ---------- 自定义节点组件 ---------- */
 function PersonNode({ data }: any) {
-  const { label, borderColor, childCount, collapsed, nodeId, onToggle } = data;
+  const { label, borderColor, childCount, collapsed, nodeId } = data;
 
-  const handleToggle = useCallback((e: React.MouseEvent) => {
+  const handleClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    if (onToggle) onToggle(nodeId);
-  }, [nodeId, onToggle]);
+    // 通过 window 事件通知父组件
+    window.dispatchEvent(new CustomEvent('tree-node-toggle', { detail: { nodeId } }));
+  }, [nodeId]);
 
   return (
     <div className="relative">
@@ -169,7 +148,7 @@ function PersonNode({ data }: any) {
       </div>
       {childCount > 0 && (
         <button
-          onClick={handleToggle}
+          onClick={handleClick}
           className="absolute -bottom-3 left-1/2 -translate-x-1/2 z-10 px-2 py-0.5 rounded-full text-[10px] font-medium border shadow-sm transition-all
             bg-cinnabar/10 dark:bg-cinnabar/20 border-cinnabar/40 dark:border-cinnabar/60 text-cinnabar dark:text-dark-cinnabar
             hover:bg-cinnabar/20 dark:hover:bg-cinnabar/30 active:scale-95 whitespace-nowrap cursor-pointer"
@@ -199,7 +178,6 @@ function TreeViewInner({ data }: TreeViewProps) {
   const treeMap = useMemo(() => buildTree(data), [data]);
   const rootIds = useMemo(() => (data.generations[0]?.people || []).map(p => p.id!).filter(Boolean), [data]);
 
-  // collapsedIds: 当前折叠的节点集合（默认第3代及以后折叠）
   const [collapsedIds, setCollapsedIds] = useState<Set<string>>(() => {
     const s = new Set<string>();
     treeMap.forEach((node) => {
@@ -208,55 +186,59 @@ function TreeViewInner({ data }: TreeViewProps) {
     return s;
   });
 
-  // 折叠/展开回调，通过 node data 传递
-  const handleToggle = useCallback((nodeId: string) => {
-    setCollapsedIds(prev => {
-      const next = new Set(prev);
-      if (next.has(nodeId)) {
-        // 展开：移除自身的折叠状态
-        next.delete(nodeId);
-      } else {
-        // 折叠：把自身和所有后代加入折叠
-        next.add(nodeId);
-        const node = treeMap.get(nodeId);
-        if (node) {
-          const stack = [...node.childIds];
-          while (stack.length) {
-            const cid = stack.pop()!;
-            next.add(cid);
-            const child = treeMap.get(cid);
-            if (child) stack.push(...child.childIds);
+  // 初始化时居中
+  const nodesInitialized = useNodesInitialized();
+  const fittedRef = useRef(false);
+  useEffect(() => {
+    if (nodesInitialized && !fittedRef.current) {
+      fittedRef.current = true;
+      const timer = setTimeout(() => fitView({ padding: 0.15, duration: 500 }), 100);
+      return () => clearTimeout(timer);
+    }
+  }, [nodesInitialized, fitView]);
+
+  // 监听折叠/展开事件
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const { nodeId } = (e as CustomEvent).detail;
+      setCollapsedIds(prev => {
+        const next = new Set(prev);
+        if (next.has(nodeId)) {
+          next.delete(nodeId);
+        } else {
+          next.add(nodeId);
+          const node = treeMap.get(nodeId);
+          if (node) {
+            const stack = [...node.childIds];
+            while (stack.length) {
+              const cid = stack.pop()!;
+              next.add(cid);
+              const child = treeMap.get(cid);
+              if (child) stack.push(...child.childIds);
+            }
           }
         }
-      }
-      return next;
-    });
+        return next;
+      });
+    };
+    window.addEventListener('tree-node-toggle', handler);
+    return () => window.removeEventListener('tree-node-toggle', handler);
   }, [treeMap]);
 
-  const { nodes, edges } = useMemo(() => {
-    return layoutVisible(treeMap, rootIds, collapsedIds);
-  }, [treeMap, rootIds, collapsedIds]);
-
-  // 初始居中 + 每次布局变化后重新 fitView
-  const prevCollapsedRef = useRef<string>('');
+  // 折叠变化后重新居中
+  const prevKeyRef = useRef('');
   useEffect(() => {
     const key = [...collapsedIds].sort().join(',');
-    if (key !== prevCollapsedRef.current) {
-      prevCollapsedRef.current = key;
-      // 延迟一帧让 ReactFlow 先渲染新节点
-      requestAnimationFrame(() => {
-        fitView({ padding: 0.1, duration: 300 });
-      });
+    if (key !== prevKeyRef.current) {
+      prevKeyRef.current = key;
+      const timer = setTimeout(() => fitView({ padding: 0.15, duration: 300 }), 50);
+      return () => clearTimeout(timer);
     }
   }, [collapsedIds, fitView]);
 
-  // 注入 onToggle 到每个节点的 data
-  const nodesWithToggle = useMemo(() => {
-    return nodes.map(n => ({
-      ...n,
-      data: { ...n.data, onToggle: handleToggle },
-    }));
-  }, [nodes, handleToggle]);
+  const { nodes, edges } = useMemo(() => {
+    return layoutTree(treeMap, rootIds, collapsedIds);
+  }, [treeMap, rootIds, collapsedIds]);
 
   if (!rootIds.length) {
     return <div className="w-full bg-card dark:bg-dark-card shadow-sm p-6 text-center text-muted dark:text-dark-muted text-sm">暂无数据</div>;
@@ -272,13 +254,14 @@ function TreeViewInner({ data }: TreeViewProps) {
         </div>
         <div className="w-full h-[70vh] sm:h-[80vh]">
           <ReactFlow
-            nodes={nodesWithToggle}
+            nodes={nodes}
             edges={edges}
             nodeTypes={nodeTypes}
-            defaultViewport={{ x: 0, y: 0, zoom: 1 }}
+            defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
             minZoom={0.05}
             maxZoom={4}
             proOptions={{ hideAttribution: true }}
+            nodesDraggable={false}
           >
             <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#E8D5B7" />
             <Controls showInteractive={false} position="bottom-right" className="!bg-card dark:!bg-dark-card !rounded-lg !shadow-md !border !border-border" />
