@@ -287,7 +287,7 @@
         {
           "id": "g5-12",
           "name": "庆遅公",
-          "info": "覃绢公六子，守业传名",
+          "info": "覃绢公七子，守业传名",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -295,7 +295,7 @@
         {
           "id": "g5-13",
           "name": "妙遅公",
-          "info": "覃绢公七子，谨厚自持",
+          "info": "覃绢公六子，谨厚自持",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -400,7 +400,7 @@
         {
           "id": "g10-2",
           "name": "朝聖公",
-          "info": "振萱公之子，毓生2嗣，瓜瓞绵绵",
+          "info": "振萱公次子，毓生2嗣，瓜瓞绵绵",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -408,7 +408,7 @@
         {
           "id": "g10-3",
           "name": "朝相公",
-          "info": "振萱公之子，品端行正",
+          "info": "振萱公三子，品端行正",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -416,7 +416,7 @@
         {
           "id": "g10-4",
           "name": "朝护公",
-          "info": "振萱公之子，德行端方",
+          "info": "振萱公四子，德行端方",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -424,7 +424,7 @@
         {
           "id": "g10-5",
           "name": "朝元公",
-          "info": "振萱公之子，宅心仁厚",
+          "info": "振萱公五子，宅心仁厚",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
