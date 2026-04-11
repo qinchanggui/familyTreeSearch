@@ -1115,7 +1115,7 @@
         {
           "id": "g17-5",
           "name": "肇恒",
-          "info": "瑞堂长子，诞育3嗣，继志述事",
+          "info": "瑞堂长子，诞育2嗣，继志述事",
           "fatherId": "g16-2",
           "birthYear": null,
           "deathYear": null
@@ -1123,7 +1123,7 @@
         {
           "id": "g17-6",
           "name": "肇芬",
-          "info": "瑞堂次子，谨守家业",
+          "info": "瑞堂次子，育有一嗣，传家有道",
           "fatherId": "g16-2",
           "birthYear": null,
           "deathYear": null
@@ -1569,15 +1569,15 @@
         {
           "id": "g18-7",
           "name": "佳燕",
-          "info": "肇恒长子，生育一嗣，血脉绵延",
-          "fatherId": "g17-5",
+          "info": "肇芬长子，诞育一嗣，继志述事",
+          "fatherId": "g17-6",
           "birthYear": null,
           "deathYear": null
         },
         {
           "id": "g18-6",
           "name": "佳能",
-          "info": "肇恒次子，诞育一嗣，宗祧有托",
+          "info": "肇恒长子，诞育一嗣，宗祧有托",
           "fatherId": "g17-5",
           "birthYear": null,
           "deathYear": null
@@ -1585,7 +1585,7 @@
         {
           "id": "g18-5",
           "name": "青佳",
-          "info": "肇恒行三，诞育一嗣，继志述事",
+          "info": "肇恒次子，诞育一嗣，继志述事",
           "fatherId": "g17-5",
           "birthYear": null,
           "deathYear": null
@@ -1800,7 +1800,7 @@
         },
         {
           "id": "g18-34",
-          "name": "可佳",
+          "name": "水佳",
           "info": "肇来公子，名垂族史",
           "fatherId": "g17-26",
           "birthYear": null,
@@ -1808,7 +1808,7 @@
         },
         {
           "id": "g18-35",
-          "name": "水佳",
+          "name": "谊佳",
           "info": "肇富公子，品端行正",
           "fatherId": "g17-27",
           "birthYear": null,
