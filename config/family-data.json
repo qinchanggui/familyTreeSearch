@@ -135,7 +135,7 @@
         },
         {
           "id": "g2-6",
-          "name": "演慝公",
+          "name": "演僊公",
           "info": "宗海公六子，德行端方",
           "fatherId": "g1-1",
           "birthYear": null,
@@ -294,7 +294,7 @@
         },
         {
           "id": "g5-13",
-          "name": "长妙遅公",
+          "name": "妙遅公",
           "info": "覃绢公七子，谨厚自持",
           "fatherId": "g4-2",
           "birthYear": null,
@@ -357,7 +357,7 @@
       "people": [
         {
           "id": "g8-1",
-          "name": "郧帥公",
+          "name": "邓帥公",
           "info": "学全公子，育有2嗣，衍为盛脉",
           "fatherId": "g7-2",
           "birthYear": null,
@@ -371,7 +371,7 @@
         {
           "id": "g9-1",
           "name": "社萱公",
-          "info": "郧帥公长子，淳厚传家",
+          "info": "邓帥公长子，淳厚传家",
           "fatherId": "g8-1",
           "birthYear": null,
           "deathYear": null
@@ -379,7 +379,7 @@
         {
           "id": "g9-2",
           "name": "振萱公",
-          "info": "郧帥公次子，毓生5杰，门祚以兴",
+          "info": "邓帥公次子，毓生5杰，门祚以兴",
           "fatherId": "g8-1",
           "birthYear": null,
           "deathYear": null
@@ -399,7 +399,7 @@
         },
         {
           "id": "g10-2",
-          "name": "朝圣公",
+          "name": "朝聖公",
           "info": "振萱公之子，毓生2嗣，瓜瓞绵绵",
           "fatherId": "g9-2",
           "birthYear": null,
@@ -437,7 +437,7 @@
         {
           "id": "g11-1",
           "name": "覃璜",
-          "info": "朝圣长子，毓生2胤，枝繁叶茂",
+          "info": "朝聖长子，毓生2胤，枝繁叶茂",
           "fatherId": "g10-2",
           "birthYear": null,
           "deathYear": null
@@ -445,7 +445,7 @@
         {
           "id": "g11-2",
           "name": "覃琗",
-          "info": "朝圣次子，诞育3胤，蔚为大族",
+          "info": "朝聖次子，诞育3胤，蔚为大族",
           "fatherId": "g10-2",
           "birthYear": null,
           "deathYear": null
@@ -1568,7 +1568,7 @@
         },
         {
           "id": "g18-7",
-          "name": "佳寅",
+          "name": "佳燕",
           "info": "肇芬公子，育有一嗣，后继有人",
           "fatherId": "g17-6",
           "birthYear": null,
@@ -1688,7 +1688,7 @@
         },
         {
           "id": "g18-22",
-          "name": "棋佳",
+          "name": "奇佳",
           "info": "肇锦次子，毓生一嗣，血脉绵延",
           "fatherId": "g17-15",
           "birthYear": null,
@@ -2010,7 +2010,7 @@
         },
         {
           "id": "g18-62",
-          "name": "航佳",
+          "name": "杭佳",
           "info": "肇刚公子，守祧传名",
           "fatherId": "g17-47",
           "birthYear": null,
@@ -2192,7 +2192,7 @@
         {
           "id": "g19-5",
           "name": "洛平",
-          "info": "佳寅公子，行谊可风",
+          "info": "佳燕公子，行谊可风",
           "fatherId": "g18-7",
           "birthYear": null,
           "deathYear": null
@@ -2304,7 +2304,7 @@
         {
           "id": "g19-19",
           "name": "曦平",
-          "info": "棋佳公子，清风亮节",
+          "info": "奇佳公子，清风亮节",
           "fatherId": "g18-22",
           "birthYear": null,
           "deathYear": null
@@ -2644,7 +2644,7 @@
         },
         {
           "id": "g20-3",
-          "name": "远哲",
+          "name": "远晢",
           "info": "建平公子，守祧传名",
           "fatherId": "g19-34",
           "birthYear": null,
