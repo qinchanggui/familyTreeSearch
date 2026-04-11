@@ -1022,7 +1022,7 @@
         {
           "id": "g16-26",
           "name": "瑞华",
-          "info": "敏才次子，诞育一嗣，传家有道",
+          "info": "敏才次子，谨守家业",
           "fatherId": "g15-17",
           "birthYear": null,
           "deathYear": null
@@ -1460,8 +1460,8 @@
         {
           "id": "g17-50",
           "name": "肇宽",
-          "info": "瑞华公子，诞育2胤，瓜瓞绵绵",
-          "fatherId": "g16-26",
+          "info": "瑞珍公子，诞育2胤，瓜瓞绵绵",
+          "fatherId": "g16-25",
           "birthYear": null,
           "deathYear": null
         },
@@ -1784,7 +1784,7 @@
         },
         {
           "id": "g18-34",
-          "name": "水佳",
+          "name": "可佳",
           "info": "肇来公子，名垂族史",
           "fatherId": "g17-26",
           "birthYear": null,
@@ -1792,7 +1792,7 @@
         },
         {
           "id": "g18-35",
-          "name": "谊佳",
+          "name": "水佳",
           "info": "肇富公子，品端行正",
           "fatherId": "g17-27",
           "birthYear": null,
