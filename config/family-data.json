@@ -19,7 +19,7 @@
         {
           "id": "g1-1",
           "name": "宗海公",
-          "info": "太始祖长子，诞育七俊，开枝散叶",
+          "info": "太始祖承宗之嫡，诞育七俊，开枝散叶",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -35,7 +35,7 @@
         {
           "id": "g1-3",
           "name": "宗正公",
-          "info": "太始祖三子，守业传名",
+          "info": "太始祖行三，守业传名",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -43,7 +43,7 @@
         {
           "id": "g1-4",
           "name": "宗兴公",
-          "info": "太始祖四子，风骨清正",
+          "info": "太始祖行四，风骨清正",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -51,7 +51,7 @@
         {
           "id": "g1-5",
           "name": "宗枝公",
-          "info": "太始祖五子，懿行嘉言",
+          "info": "太始祖行五，懿行嘉言",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -59,7 +59,7 @@
         {
           "id": "g1-6",
           "name": "宗现公",
-          "info": "太始祖六子，德冠一族",
+          "info": "太始祖行六，德冠一族",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -67,7 +67,7 @@
         {
           "id": "g1-7",
           "name": "宗厚公",
-          "info": "太始祖七子，清风亮节",
+          "info": "太始祖行七，清风亮节",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -75,7 +75,7 @@
         {
           "id": "g1-8",
           "name": "宗宽公",
-          "info": "太始祖八子，名垂族史",
+          "info": "太始祖行八，名垂族史",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -83,7 +83,7 @@
         {
           "id": "g1-9",
           "name": "宗规公",
-          "info": "太始祖九子，淳厚传家",
+          "info": "太始祖行九，淳厚传家",
           "fatherId": "g0-1",
           "birthYear": null,
           "deathYear": null
@@ -96,7 +96,7 @@
         {
           "id": "g2-1",
           "name": "演绍公",
-          "info": "宗海公长子，育有一嗣，承先启后",
+          "info": "宗海公之承宗之嫡，育有一嗣，承先启后",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -104,7 +104,7 @@
         {
           "id": "g2-2",
           "name": "演济公",
-          "info": "宗海公次子，谨厚自持",
+          "info": "宗海公之次嗣，谨厚自持",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -112,7 +112,7 @@
         {
           "id": "g2-3",
           "name": "演清公",
-          "info": "宗海公三子，德馨一方",
+          "info": "宗海公之行三，德馨一方",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -120,7 +120,7 @@
         {
           "id": "g2-4",
           "name": "演平公",
-          "info": "宗海公四子，诞育一嗣，承其宗祧",
+          "info": "宗海公之行四，诞育一嗣，承其宗祧",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -128,7 +128,7 @@
         {
           "id": "g2-5",
           "name": "演明公",
-          "info": "宗海公五子，行谊可风",
+          "info": "宗海公之行五，行谊可风",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -136,7 +136,7 @@
         {
           "id": "g2-6",
           "name": "演僊公",
-          "info": "宗海公六子，德行端方",
+          "info": "宗海公之行六，德行端方",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -144,7 +144,7 @@
         {
           "id": "g2-7",
           "name": "演祥公",
-          "info": "宗海公七子，品端行正",
+          "info": "宗海公之行七，品端行正",
           "fatherId": "g1-1",
           "birthYear": null,
           "deathYear": null
@@ -199,7 +199,7 @@
         {
           "id": "g5-1",
           "name": "贵哥公",
-          "info": "帝球公长子，生育2脉，族大蕃昌",
+          "info": "帝球公之承宗之嫡，生育2脉，族大蕃昌",
           "fatherId": "g4-1",
           "birthYear": null,
           "deathYear": null
@@ -207,7 +207,7 @@
         {
           "id": "g5-2",
           "name": "音贵公",
-          "info": "帝球公次子，毓生一嗣，传家有道",
+          "info": "帝球公之次嗣，毓生一嗣，传家有道",
           "fatherId": "g4-1",
           "birthYear": null,
           "deathYear": null
@@ -215,7 +215,7 @@
         {
           "id": "g5-3",
           "name": "云峰公",
-          "info": "帝球公三子，气度雍容",
+          "info": "帝球公之行三，气度雍容",
           "fatherId": "g4-1",
           "birthYear": null,
           "deathYear": null
@@ -223,7 +223,7 @@
         {
           "id": "g5-4",
           "name": "李福公",
-          "info": "帝球公四子，宅心仁厚",
+          "info": "帝球公之行四，宅心仁厚",
           "fatherId": "g4-1",
           "birthYear": null,
           "deathYear": null
@@ -231,7 +231,7 @@
         {
           "id": "g5-5",
           "name": "胜聪公",
-          "info": "帝球公五子，端方持重",
+          "info": "帝球公之行五，端方持重",
           "fatherId": "g4-1",
           "birthYear": null,
           "deathYear": null
@@ -239,7 +239,7 @@
         {
           "id": "g5-6",
           "name": "胜教公",
-          "info": "帝球公六子，气度雍容",
+          "info": "帝球公之行六，气度雍容",
           "fatherId": "g4-1",
           "birthYear": null,
           "deathYear": null
@@ -247,7 +247,7 @@
         {
           "id": "g5-7",
           "name": "能富公",
-          "info": "覃绢公长子，德馨一方",
+          "info": "覃绢公之承宗之嫡，德馨一方",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -255,7 +255,7 @@
         {
           "id": "g5-8",
           "name": "福遇公",
-          "info": "覃绢公次子，懿行嘉言",
+          "info": "覃绢公之次嗣，懿行嘉言",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -263,7 +263,7 @@
         {
           "id": "g5-9",
           "name": "福印公",
-          "info": "覃绢公三子，清风亮节",
+          "info": "覃绢公之行三，清风亮节",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -271,7 +271,7 @@
         {
           "id": "g5-10",
           "name": "道暹公",
-          "info": "覃绢公四子，风骨清正",
+          "info": "覃绢公之行四，风骨清正",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -279,7 +279,7 @@
         {
           "id": "g5-11",
           "name": "妙法公",
-          "info": "覃绢公五子，德冠一族",
+          "info": "覃绢公之行五，德冠一族",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -287,7 +287,7 @@
         {
           "id": "g5-12",
           "name": "庆遅公",
-          "info": "覃绢公七子，守业传名",
+          "info": "覃绢公之行七，守业传名",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -295,7 +295,7 @@
         {
           "id": "g5-13",
           "name": "妙遅公",
-          "info": "覃绢公六子，谨厚自持",
+          "info": "覃绢公之行六，谨厚自持",
           "fatherId": "g4-2",
           "birthYear": null,
           "deathYear": null
@@ -308,7 +308,7 @@
         {
           "id": "g6-1",
           "name": "曰广公",
-          "info": "贵哥公长子，守祧传名",
+          "info": "贵哥公之承宗之嫡，守祧传名",
           "fatherId": "g5-1",
           "birthYear": null,
           "deathYear": null
@@ -316,7 +316,7 @@
         {
           "id": "g6-2",
           "name": "曰林公",
-          "info": "贵哥公次子，行谊可风",
+          "info": "贵哥公之次嗣，行谊可风",
           "fatherId": "g5-1",
           "birthYear": null,
           "deathYear": null
@@ -337,7 +337,7 @@
         {
           "id": "g7-1",
           "name": "学训公",
-          "info": "明甚公长子，端方持重",
+          "info": "明甚公之承宗之嫡，端方持重",
           "fatherId": "g6-3",
           "birthYear": null,
           "deathYear": null
@@ -345,7 +345,7 @@
         {
           "id": "g7-2",
           "name": "学全公",
-          "info": "明甚公次子，育有一嗣，宗祧有托",
+          "info": "明甚公之次嗣，育有一嗣，宗祧有托",
           "fatherId": "g6-3",
           "birthYear": null,
           "deathYear": null
@@ -371,7 +371,7 @@
         {
           "id": "g9-1",
           "name": "社萱公",
-          "info": "邓帥公长子，淳厚传家",
+          "info": "邓帥公之承宗之嫡，淳厚传家",
           "fatherId": "g8-1",
           "birthYear": null,
           "deathYear": null
@@ -379,7 +379,7 @@
         {
           "id": "g9-2",
           "name": "振萱公",
-          "info": "邓帥公次子，毓生5杰，门祚以兴",
+          "info": "邓帥公之次嗣，毓生5杰，门祚以兴",
           "fatherId": "g8-1",
           "birthYear": null,
           "deathYear": null
@@ -392,7 +392,7 @@
         {
           "id": "g10-1",
           "name": "朝茂公",
-          "info": "振萱公承宗之嫡，谨守家业",
+          "info": "振萱公之承宗之嫡，谨守家业",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -400,7 +400,7 @@
         {
           "id": "g10-2",
           "name": "朝聖公",
-          "info": "振萱公次子，毓生2嗣，瓜瓞绵绵",
+          "info": "振萱公之次嗣，毓生2嗣，瓜瓞绵绵",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -408,7 +408,7 @@
         {
           "id": "g10-3",
           "name": "朝相公",
-          "info": "振萱公三子，品端行正",
+          "info": "振萱公之行三，品端行正",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -416,7 +416,7 @@
         {
           "id": "g10-4",
           "name": "朝护公",
-          "info": "振萱公四子，德行端方",
+          "info": "振萱公之行四，德行端方",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -424,7 +424,7 @@
         {
           "id": "g10-5",
           "name": "朝元公",
-          "info": "振萱公五子，宅心仁厚",
+          "info": "振萱公之行五，宅心仁厚",
           "fatherId": "g9-2",
           "birthYear": null,
           "deathYear": null
@@ -437,7 +437,7 @@
         {
           "id": "g11-1",
           "name": "覃璜",
-          "info": "朝聖长子，毓生2胤，枝繁叶茂",
+          "info": "朝聖承宗之嫡，毓生2胤，枝繁叶茂",
           "fatherId": "g10-2",
           "birthYear": null,
           "deathYear": null
@@ -445,7 +445,7 @@
         {
           "id": "g11-2",
           "name": "覃琗",
-          "info": "朝聖次子，诞育3胤，蔚为大族",
+          "info": "朝聖公之次嗣，诞育3胤，蔚为大族",
           "fatherId": "g10-2",
           "birthYear": null,
           "deathYear": null
@@ -458,7 +458,7 @@
         {
           "id": "g12-1",
           "name": "维宁",
-          "info": "覃璜长子，育有4胤，门祚以兴",
+          "info": "覃璜承宗之嫡，育有4胤，门祚以兴",
           "fatherId": "g11-1",
           "birthYear": null,
           "deathYear": null
@@ -466,7 +466,7 @@
         {
           "id": "g12-2",
           "name": "维德",
-          "info": "覃璜次子，毓生一嗣，血脉绵延",
+          "info": "覃璜公之次嗣，毓生一嗣，血脉绵延",
           "fatherId": "g11-1",
           "birthYear": null,
           "deathYear": null
@@ -474,7 +474,7 @@
         {
           "id": "g12-3",
           "name": "维雅",
-          "info": "覃翠长子，生育一嗣，继志述事",
+          "info": "覃翠承宗之嫡，生育一嗣，继志述事",
           "fatherId": "g11-2",
           "birthYear": null,
           "deathYear": null
@@ -482,7 +482,7 @@
         {
           "id": "g12-4",
           "name": "维昭",
-          "info": "覃翠次子，育有2嗣，兰桂齐芳",
+          "info": "覃翠公之次嗣，育有2嗣，兰桂齐芳",
           "fatherId": "g11-2",
           "birthYear": null,
           "deathYear": null
@@ -490,7 +490,7 @@
         {
           "id": "g12-5",
           "name": "维文",
-          "info": "覃翠三子，诞有一嗣，承其宗祧",
+          "info": "覃翠行三，诞有一嗣，承其宗祧",
           "fatherId": "g11-2",
           "birthYear": null,
           "deathYear": null
@@ -503,7 +503,7 @@
         {
           "id": "g13-1",
           "name": "志胡",
-          "info": "维宁长子，毓生一嗣，血脉绵延",
+          "info": "维宁承宗之嫡，毓生一嗣，血脉绵延",
           "fatherId": "g12-1",
           "birthYear": null,
           "deathYear": null
@@ -511,7 +511,7 @@
         {
           "id": "g13-2",
           "name": "志信",
-          "info": "维宁次子，诞育一嗣，克绍箕裘",
+          "info": "维宁公之次嗣，诞育一嗣，克绍箕裘",
           "fatherId": "g12-1",
           "birthYear": null,
           "deathYear": null
@@ -519,7 +519,7 @@
         {
           "id": "g13-3",
           "name": "志明",
-          "info": "维宁三子，生育一嗣，传家有道",
+          "info": "维宁行三，生育一嗣，传家有道",
           "fatherId": "g12-1",
           "birthYear": null,
           "deathYear": null
@@ -527,7 +527,7 @@
         {
           "id": "g13-4",
           "name": "志亮",
-          "info": "维宁四子，名垂族史",
+          "info": "维宁行四，名垂族史",
           "fatherId": "g12-1",
           "birthYear": null,
           "deathYear": null
@@ -551,7 +551,7 @@
         {
           "id": "g13-7",
           "name": "志美",
-          "info": "维昭长子，宅心仁厚",
+          "info": "维昭承宗之嫡，宅心仁厚",
           "fatherId": "g12-4",
           "birthYear": null,
           "deathYear": null
@@ -559,7 +559,7 @@
         {
           "id": "g13-8",
           "name": "志兴",
-          "info": "维昭次子，生育5哲，宗风远振",
+          "info": "维昭公之次嗣，生育5哲，宗风远振",
           "fatherId": "g12-4",
           "birthYear": null,
           "deathYear": null
@@ -612,7 +612,7 @@
         {
           "id": "g14-5",
           "name": "业情",
-          "info": "志兴长子，育有5哲，百世其昌",
+          "info": "志兴承宗之嫡，育有5哲，百世其昌",
           "fatherId": "g13-8",
           "birthYear": null,
           "deathYear": null
@@ -620,7 +620,7 @@
         {
           "id": "g14-6",
           "name": "业勤",
-          "info": "志兴次子，生育一嗣，后继有人",
+          "info": "志兴公之次嗣，生育一嗣，后继有人",
           "fatherId": "g13-8",
           "birthYear": null,
           "deathYear": null
@@ -628,7 +628,7 @@
         {
           "id": "g14-7",
           "name": "业光",
-          "info": "志兴三子，毓生一嗣，承先启后",
+          "info": "志兴行三，毓生一嗣，承先启后",
           "fatherId": "g13-8",
           "birthYear": null,
           "deathYear": null
@@ -636,7 +636,7 @@
         {
           "id": "g14-8",
           "name": "业纯",
-          "info": "志兴四子，育有3脉，衍为盛脉",
+          "info": "志兴行四，育有3脉，衍为盛脉",
           "fatherId": "g13-8",
           "birthYear": null,
           "deathYear": null
@@ -644,7 +644,7 @@
         {
           "id": "g14-9",
           "name": "业儒",
-          "info": "志兴五子，诞育一嗣，承先启后",
+          "info": "志兴行五，诞育一嗣，承先启后",
           "fatherId": "g13-8",
           "birthYear": null,
           "deathYear": null
@@ -652,7 +652,7 @@
         {
           "id": "g14-10",
           "name": "业书",
-          "info": "志昌长子，毓生3胤，开枝散叶",
+          "info": "志昌承宗之嫡，毓生3胤，开枝散叶",
           "fatherId": "g13-9",
           "birthYear": null,
           "deathYear": null
@@ -660,7 +660,7 @@
         {
           "id": "g14-11",
           "name": "业精",
-          "info": "志昌次子，生育4胤，枝繁叶茂",
+          "info": "志昌公之次嗣，生育4胤，枝繁叶茂",
           "fatherId": "g13-9",
           "birthYear": null,
           "deathYear": null
@@ -681,7 +681,7 @@
         {
           "id": "g15-2",
           "name": "鸿才",
-          "info": "业情长子，生育2胤，瓜瓞绵绵",
+          "info": "业情承宗之嫡，生育2胤，瓜瓞绵绵",
           "fatherId": "g14-5",
           "birthYear": null,
           "deathYear": null
@@ -689,7 +689,7 @@
         {
           "id": "g15-3",
           "name": "周才",
-          "info": "业情次子，育有2脉，衍为盛脉",
+          "info": "业情公之次嗣，育有2脉，衍为盛脉",
           "fatherId": "g14-5",
           "birthYear": null,
           "deathYear": null
@@ -697,7 +697,7 @@
         {
           "id": "g15-4",
           "name": "颖才",
-          "info": "业情三子，诞育3胤，枝繁叶茂",
+          "info": "业情行三，诞育3胤，枝繁叶茂",
           "fatherId": "g14-5",
           "birthYear": null,
           "deathYear": null
@@ -705,7 +705,7 @@
         {
           "id": "g15-5",
           "name": "世才",
-          "info": "业情四子，德冠一族",
+          "info": "业情行四，德冠一族",
           "fatherId": "g14-5",
           "birthYear": null,
           "deathYear": null
@@ -713,7 +713,7 @@
         {
           "id": "g15-6",
           "name": "贤才",
-          "info": "业情五子，诞有一嗣，承其宗祧",
+          "info": "业情行五，诞有一嗣，承其宗祧",
           "fatherId": "g14-5",
           "birthYear": null,
           "deathYear": null
@@ -737,7 +737,7 @@
         {
           "id": "g15-9",
           "name": "其才",
-          "info": "业纯长子，诞有5男，开枝散叶",
+          "info": "业纯承宗之嫡，诞有5男，开枝散叶",
           "fatherId": "g14-8",
           "birthYear": null,
           "deathYear": null
@@ -745,7 +745,7 @@
         {
           "id": "g15-10",
           "name": "鹏才",
-          "info": "业纯次子，端方持重",
+          "info": "业纯公之次嗣，端方持重",
           "fatherId": "g14-8",
           "birthYear": null,
           "deathYear": null
@@ -753,7 +753,7 @@
         {
           "id": "g15-11",
           "name": "颜才",
-          "info": "业纯三子，德馨一方",
+          "info": "业纯行三，德馨一方",
           "fatherId": "g14-8",
           "birthYear": null,
           "deathYear": null
@@ -769,7 +769,7 @@
         {
           "id": "g15-13",
           "name": "骥才",
-          "info": "业书长子，毓生2脉，门祚以兴",
+          "info": "业书承宗之嫡，毓生2脉，门祚以兴",
           "fatherId": "g14-10",
           "birthYear": null,
           "deathYear": null
@@ -777,7 +777,7 @@
         {
           "id": "g15-14",
           "name": "汉才",
-          "info": "业书次子，育有一嗣，血脉绵延",
+          "info": "业书公之次嗣，育有一嗣，血脉绵延",
           "fatherId": "g14-10",
           "birthYear": null,
           "deathYear": null
@@ -785,7 +785,7 @@
         {
           "id": "g15-15",
           "name": "佐才",
-          "info": "业书三子，诞育一嗣，宗祧有托",
+          "info": "业书行三，诞育一嗣，宗祧有托",
           "fatherId": "g14-10",
           "birthYear": null,
           "deathYear": null
@@ -793,7 +793,7 @@
         {
           "id": "g15-16",
           "name": "翰才",
-          "info": "业精长子，生育一嗣，克绍箕裘",
+          "info": "业精承宗之嫡，生育一嗣，克绍箕裘",
           "fatherId": "g14-11",
           "birthYear": null,
           "deathYear": null
@@ -801,7 +801,7 @@
         {
           "id": "g15-17",
           "name": "敏才",
-          "info": "业精次子，诞育4脉，兰桂齐芳",
+          "info": "业精公之次嗣，诞育4脉，兰桂齐芳",
           "fatherId": "g14-11",
           "birthYear": null,
           "deathYear": null
@@ -809,7 +809,7 @@
         {
           "id": "g15-18",
           "name": "经才",
-          "info": "业精三子，淳厚传家",
+          "info": "业精行三，淳厚传家",
           "fatherId": "g14-11",
           "birthYear": null,
           "deathYear": null
@@ -817,7 +817,7 @@
         {
           "id": "g15-19",
           "name": "济才",
-          "info": "业精四子，诞育一嗣，传家有道",
+          "info": "业精行四，诞育一嗣，传家有道",
           "fatherId": "g14-11",
           "birthYear": null,
           "deathYear": null
@@ -830,7 +830,7 @@
         {
           "id": "g16-1",
           "name": "瑞云",
-          "info": "鸿才长子，育有4嗣，瓜瓞绵绵",
+          "info": "鸿才承宗之嫡，育有4嗣，瓜瓞绵绵",
           "fatherId": "g15-2",
           "birthYear": null,
           "deathYear": null
@@ -838,7 +838,7 @@
         {
           "id": "g16-2",
           "name": "瑞堂",
-          "info": "鸿才次子，生育3嗣，蔚为大族",
+          "info": "鸿才公之次嗣，生育3嗣，蔚为大族",
           "fatherId": "g15-2",
           "birthYear": null,
           "deathYear": null
@@ -846,7 +846,7 @@
         {
           "id": "g16-3",
           "name": "瑞寿",
-          "info": "周才长子，毓生2胤，开枝散叶",
+          "info": "周才承宗之嫡，毓生2胤，开枝散叶",
           "fatherId": "g15-3",
           "birthYear": null,
           "deathYear": null
@@ -854,7 +854,7 @@
         {
           "id": "g16-4",
           "name": "瑞山",
-          "info": "周才次子，育有3嗣，族大蕃昌",
+          "info": "周才公之次嗣，育有3嗣，族大蕃昌",
           "fatherId": "g15-3",
           "birthYear": null,
           "deathYear": null
@@ -862,7 +862,7 @@
         {
           "id": "g16-5",
           "name": "瑞章",
-          "info": "颖才长子，育有一嗣，后继有人",
+          "info": "颖才承宗之嫡，育有一嗣，后继有人",
           "fatherId": "g15-4",
           "birthYear": null,
           "deathYear": null
@@ -870,7 +870,7 @@
         {
           "id": "g16-6",
           "name": "瑞年",
-          "info": "颖才次子，毓生3胤，门祚以兴",
+          "info": "颖才公之次嗣，毓生3胤，门祚以兴",
           "fatherId": "g15-4",
           "birthYear": null,
           "deathYear": null
@@ -878,7 +878,7 @@
         {
           "id": "g16-7",
           "name": "瑞文",
-          "info": "颖才三子，诞有2脉，瓜瓞绵绵",
+          "info": "颖才行三，诞有2脉，瓜瓞绵绵",
           "fatherId": "g15-4",
           "birthYear": null,
           "deathYear": null
@@ -894,7 +894,7 @@
         {
           "id": "g16-9",
           "name": "瑞光",
-          "info": "育才长子，诞育一嗣，克绍箕裘",
+          "info": "育才承宗之嫡，诞育一嗣，克绍箕裘",
           "fatherId": "g15-7",
           "birthYear": null,
           "deathYear": null
@@ -902,7 +902,7 @@
         {
           "id": "g16-10",
           "name": "中各",
-          "info": "育才次子，毓生2嗣，兰桂齐芳",
+          "info": "育才公之次嗣，毓生2嗣，兰桂齐芳",
           "fatherId": "g15-7",
           "birthYear": null,
           "deathYear": null
@@ -910,7 +910,7 @@
         {
           "id": "g16-11",
           "name": "瑞强",
-          "info": "育才三子，诞育2胤，衍为盛脉",
+          "info": "育才行三，诞育2胤，衍为盛脉",
           "fatherId": "g15-7",
           "birthYear": null,
           "deathYear": null
@@ -926,7 +926,7 @@
         {
           "id": "g16-13",
           "name": "瑞深",
-          "info": "其才长子，诞育一嗣，后继有人",
+          "info": "其才承宗之嫡，诞育一嗣，后继有人",
           "fatherId": "g15-9",
           "birthYear": null,
           "deathYear": null
@@ -934,7 +934,7 @@
         {
           "id": "g16-14",
           "name": "瑞波",
-          "info": "其才次子，诞育2嗣，门祚以兴",
+          "info": "其才公之次嗣，诞育2嗣，门祚以兴",
           "fatherId": "g15-9",
           "birthYear": null,
           "deathYear": null
@@ -942,7 +942,7 @@
         {
           "id": "g16-15",
           "name": "瑞海",
-          "info": "其才三子，守业传名",
+          "info": "其才行三，守业传名",
           "fatherId": "g15-9",
           "birthYear": null,
           "deathYear": null
@@ -950,7 +950,7 @@
         {
           "id": "g16-16",
           "name": "瑞洲",
-          "info": "其才四子，诞有2嗣，瓜瓞绵绵",
+          "info": "其才行四，诞有2嗣，瓜瓞绵绵",
           "fatherId": "g15-9",
           "birthYear": null,
           "deathYear": null
@@ -958,7 +958,7 @@
         {
           "id": "g16-17",
           "name": "瑞湖",
-          "info": "其才五子，毓生2脉，枝繁叶茂",
+          "info": "其才行五，毓生2脉，枝繁叶茂",
           "fatherId": "g15-9",
           "birthYear": null,
           "deathYear": null
@@ -966,7 +966,7 @@
         {
           "id": "g16-18",
           "name": "瑞声",
-          "info": "伊才长子，毓生3胤，族大蕃昌",
+          "info": "伊才承宗之嫡，毓生3胤，族大蕃昌",
           "fatherId": "g15-12",
           "birthYear": null,
           "deathYear": null
@@ -974,7 +974,7 @@
         {
           "id": "g16-19",
           "name": "瑞良",
-          "info": "伊才次子，育有2胤，开枝散叶",
+          "info": "伊才公之次嗣，育有2胤，开枝散叶",
           "fatherId": "g15-12",
           "birthYear": null,
           "deathYear": null
@@ -982,7 +982,7 @@
         {
           "id": "g16-20",
           "name": "瑞廷",
-          "info": "骥才长子，清风亮节",
+          "info": "骥才承宗之嫡，清风亮节",
           "fatherId": "g15-13",
           "birthYear": null,
           "deathYear": null
@@ -990,7 +990,7 @@
         {
           "id": "g16-21",
           "name": "瑞熙",
-          "info": "骥才次子，生育2脉，蔚为大族",
+          "info": "骥才公之次嗣，生育2脉，蔚为大族",
           "fatherId": "g15-13",
           "birthYear": null,
           "deathYear": null
@@ -1022,7 +1022,7 @@
         {
           "id": "g16-26",
           "name": "瑞华",
-          "info": "敏才次子，谨守家业",
+          "info": "敏才公之次嗣，谨守家业",
           "fatherId": "g15-17",
           "birthYear": null,
           "deathYear": null
@@ -1030,7 +1030,7 @@
         {
           "id": "g16-25",
           "name": "瑞珍",
-          "info": "敏才长子，名垂族史",
+          "info": "敏才承宗之嫡，名垂族史",
           "fatherId": "g15-17",
           "birthYear": null,
           "deathYear": null
@@ -1038,7 +1038,7 @@
         {
           "id": "g16-27",
           "name": "瑞俊",
-          "info": "敏才三子，诞有3嗣，蔚为大族",
+          "info": "敏才行三，诞有3嗣，蔚为大族",
           "fatherId": "g15-17",
           "birthYear": null,
           "deathYear": null
@@ -1046,7 +1046,7 @@
         {
           "id": "g16-28",
           "name": "瑞林",
-          "info": "敏才四子，毓生3嗣，兰桂齐芳",
+          "info": "敏才行四，毓生3嗣，兰桂齐芳",
           "fatherId": "g15-17",
           "birthYear": null,
           "deathYear": null
@@ -1067,7 +1067,7 @@
         {
           "id": "g17-1",
           "name": "肇端",
-          "info": "瑞云长子，行谊可风",
+          "info": "瑞云承宗之嫡，行谊可风",
           "fatherId": "g16-1",
           "birthYear": null,
           "deathYear": null
@@ -1075,7 +1075,7 @@
         {
           "id": "g17-2",
           "name": "肇杰",
-          "info": "瑞云次子，生育一嗣，承先启后",
+          "info": "瑞云公之次嗣，生育一嗣，承先启后",
           "fatherId": "g16-1",
           "birthYear": null,
           "deathYear": null
@@ -1083,7 +1083,7 @@
         {
           "id": "g17-3",
           "name": "肇礼",
-          "info": "瑞云三子，诞有2脉，族大蕃昌",
+          "info": "瑞云行三，诞有2脉，族大蕃昌",
           "fatherId": "g16-1",
           "birthYear": null,
           "deathYear": null
@@ -1091,7 +1091,7 @@
         {
           "id": "g17-4",
           "name": "肇伟",
-          "info": "瑞云四子，诞育2脉，枝繁叶茂",
+          "info": "瑞云行四，诞育2脉，枝繁叶茂",
           "fatherId": "g16-1",
           "birthYear": null,
           "deathYear": null
@@ -1099,7 +1099,7 @@
         {
           "id": "g17-5",
           "name": "肇恒",
-          "info": "瑞堂长子，诞育一嗣，承其宗祧",
+          "info": "瑞堂承宗之嫡，诞育一嗣，承其宗祧",
           "fatherId": "g16-2",
           "birthYear": null,
           "deathYear": null
@@ -1107,7 +1107,7 @@
         {
           "id": "g17-6",
           "name": "肇芬",
-          "info": "瑞堂次子，育有一嗣，继志述事",
+          "info": "瑞堂公之次嗣，育有一嗣，继志述事",
           "fatherId": "g16-2",
           "birthYear": null,
           "deathYear": null
@@ -1115,7 +1115,7 @@
         {
           "id": "g17-7",
           "name": "肇锋",
-          "info": "瑞堂三子，诞育2嗣，门祚以兴",
+          "info": "瑞堂行三，诞育2嗣，门祚以兴",
           "fatherId": "g16-2",
           "birthYear": null,
           "deathYear": null
@@ -1123,7 +1123,7 @@
         {
           "id": "g17-8",
           "name": "肇权",
-          "info": "瑞寿长子，生育一嗣，血脉绵延",
+          "info": "瑞寿承宗之嫡，生育一嗣，血脉绵延",
           "fatherId": "g16-3",
           "birthYear": null,
           "deathYear": null
@@ -1131,7 +1131,7 @@
         {
           "id": "g17-9",
           "name": "肇双",
-          "info": "瑞寿次子，生育2嗣，开枝散叶",
+          "info": "瑞寿公之次嗣，生育2嗣，开枝散叶",
           "fatherId": "g16-3",
           "birthYear": null,
           "deathYear": null
@@ -1139,7 +1139,7 @@
         {
           "id": "g17-10",
           "name": "肇应",
-          "info": "瑞山长子，诞育2嗣，瓜瓞绵绵",
+          "info": "瑞山承宗之嫡，诞育2嗣，瓜瓞绵绵",
           "fatherId": "g16-4",
           "birthYear": null,
           "deathYear": null
@@ -1147,7 +1147,7 @@
         {
           "id": "g17-11",
           "name": "肇记",
-          "info": "瑞山次子，诞育一嗣，宗祧有托",
+          "info": "瑞山公之次嗣，诞育一嗣，宗祧有托",
           "fatherId": "g16-4",
           "birthYear": null,
           "deathYear": null
@@ -1155,7 +1155,7 @@
         {
           "id": "g17-12",
           "name": "肇汉",
-          "info": "瑞山三子，诞有一嗣，血脉绵延",
+          "info": "瑞山行三，诞有一嗣，血脉绵延",
           "fatherId": "g16-4",
           "birthYear": null,
           "deathYear": null
@@ -1171,7 +1171,7 @@
         {
           "id": "g17-14",
           "name": "肇新",
-          "info": "瑞年长子，育有2胤，兰桂齐芳",
+          "info": "瑞年承宗之嫡，育有2胤，兰桂齐芳",
           "fatherId": "g16-6",
           "birthYear": null,
           "deathYear": null
@@ -1179,7 +1179,7 @@
         {
           "id": "g17-15",
           "name": "肇锦",
-          "info": "瑞年次子，生育2嗣，门祚以兴",
+          "info": "瑞年公之次嗣，生育2嗣，门祚以兴",
           "fatherId": "g16-6",
           "birthYear": null,
           "deathYear": null
@@ -1187,7 +1187,7 @@
         {
           "id": "g17-16",
           "name": "肇荣",
-          "info": "瑞年三子，诞有2嗣，衍为盛脉",
+          "info": "瑞年行三，诞有2嗣，衍为盛脉",
           "fatherId": "g16-6",
           "birthYear": null,
           "deathYear": null
@@ -1195,7 +1195,7 @@
         {
           "id": "g17-17",
           "name": "肇源",
-          "info": "瑞文长子，育有2胤，开枝散叶",
+          "info": "瑞文承宗之嫡，育有2胤，开枝散叶",
           "fatherId": "g16-7",
           "birthYear": null,
           "deathYear": null
@@ -1203,7 +1203,7 @@
         {
           "id": "g17-18",
           "name": "肇东",
-          "info": "瑞文次子，诞育一嗣，宗祧有托",
+          "info": "瑞文公之次嗣，诞育一嗣，宗祧有托",
           "fatherId": "g16-7",
           "birthYear": null,
           "deathYear": null
@@ -1211,7 +1211,7 @@
         {
           "id": "g17-19",
           "name": "肇轻",
-          "info": "瑞忠长子，诞有一嗣，承其宗祧",
+          "info": "瑞忠承宗之嫡，诞有一嗣，承其宗祧",
           "fatherId": "g16-8",
           "birthYear": null,
           "deathYear": null
@@ -1219,7 +1219,7 @@
         {
           "id": "g17-20",
           "name": "肇艺",
-          "info": "瑞忠次子，诞育一嗣，后继有人",
+          "info": "瑞忠公之次嗣，诞育一嗣，后继有人",
           "fatherId": "g16-8",
           "birthYear": null,
           "deathYear": null
@@ -1235,7 +1235,7 @@
         {
           "id": "g17-22",
           "name": "肇志",
-          "info": "中各长子，诞育一嗣，传家有道",
+          "info": "中各承宗之嫡，诞育一嗣，传家有道",
           "fatherId": "g16-10",
           "birthYear": null,
           "deathYear": null
@@ -1243,7 +1243,7 @@
         {
           "id": "g17-23",
           "name": "肇贵",
-          "info": "中各次子，风骨清正",
+          "info": "中各公之次嗣，风骨清正",
           "fatherId": "g16-10",
           "birthYear": null,
           "deathYear": null
@@ -1251,7 +1251,7 @@
         {
           "id": "g17-24",
           "name": "肇能",
-          "info": "瑞强长子，毓生一嗣，承先启后",
+          "info": "瑞强承宗之嫡，毓生一嗣，承先启后",
           "fatherId": "g16-11",
           "birthYear": null,
           "deathYear": null
@@ -1259,7 +1259,7 @@
         {
           "id": "g17-25",
           "name": "肇干",
-          "info": "瑞强次子，育有一嗣，克绍箕裘",
+          "info": "瑞强公之次嗣，育有一嗣，克绍箕裘",
           "fatherId": "g16-11",
           "birthYear": null,
           "deathYear": null
@@ -1267,7 +1267,7 @@
         {
           "id": "g17-26",
           "name": "肇来",
-          "info": "瑞其长子，毓生一嗣，后继有人",
+          "info": "瑞其承宗之嫡，毓生一嗣，后继有人",
           "fatherId": "g16-12",
           "birthYear": null,
           "deathYear": null
@@ -1275,7 +1275,7 @@
         {
           "id": "g17-27",
           "name": "肇富",
-          "info": "瑞其次子，诞育一嗣，传家有道",
+          "info": "瑞其公之次嗣，诞育一嗣，传家有道",
           "fatherId": "g16-12",
           "birthYear": null,
           "deathYear": null
@@ -1283,7 +1283,7 @@
         {
           "id": "g17-28",
           "name": "肇勇",
-          "info": "瑞其三子，毓生2胤，蔚为大族",
+          "info": "瑞其行三，毓生2胤，蔚为大族",
           "fatherId": "g16-12",
           "birthYear": null,
           "deathYear": null,
@@ -1300,7 +1300,7 @@
         {
           "id": "g17-30",
           "name": "肇静",
-          "info": "瑞波长子，育有一嗣，宗祧有托",
+          "info": "瑞波承宗之嫡，育有一嗣，宗祧有托",
           "fatherId": "g16-14",
           "birthYear": null,
           "deathYear": null
@@ -1308,7 +1308,7 @@
         {
           "id": "g17-31",
           "name": "肇宁",
-          "info": "瑞波次子，德行端方",
+          "info": "瑞波公之次嗣，德行端方",
           "fatherId": "g16-14",
           "birthYear": null,
           "deathYear": null
@@ -1316,7 +1316,7 @@
         {
           "id": "g17-32",
           "name": "肇杨",
-          "info": "瑞洲长子，诞有一嗣，承先启后",
+          "info": "瑞洲承宗之嫡，诞有一嗣，承先启后",
           "fatherId": "g16-16",
           "birthYear": null,
           "deathYear": null
@@ -1324,7 +1324,7 @@
         {
           "id": "g17-33",
           "name": "肇钦",
-          "info": "瑞洲次子，宅心仁厚",
+          "info": "瑞洲公之次嗣，宅心仁厚",
           "fatherId": "g16-16",
           "birthYear": null,
           "deathYear": null
@@ -1332,7 +1332,7 @@
         {
           "id": "g17-34",
           "name": "肇斌",
-          "info": "瑞湖长子，诞有2嗣，开枝散叶",
+          "info": "瑞湖承宗之嫡，诞有2嗣，开枝散叶",
           "fatherId": "g16-17",
           "birthYear": null,
           "deathYear": null
@@ -1340,7 +1340,7 @@
         {
           "id": "g17-35",
           "name": "肇涌",
-          "info": "瑞湖次子，懿行嘉言",
+          "info": "瑞湖公之次嗣，懿行嘉言",
           "fatherId": "g16-17",
           "birthYear": null,
           "deathYear": null
@@ -1348,7 +1348,7 @@
         {
           "id": "g17-36",
           "name": "肇盛",
-          "info": "瑞声长子，毓生一嗣，克绍箕裘",
+          "info": "瑞声承宗之嫡，毓生一嗣，克绍箕裘",
           "fatherId": "g16-18",
           "birthYear": null,
           "deathYear": null
@@ -1356,7 +1356,7 @@
         {
           "id": "g17-37",
           "name": "肇有",
-          "info": "瑞声次子，生育一嗣，继志述事",
+          "info": "瑞声公之次嗣，生育一嗣，继志述事",
           "fatherId": "g16-18",
           "birthYear": null,
           "deathYear": null
@@ -1364,7 +1364,7 @@
         {
           "id": "g17-38",
           "name": "肇范",
-          "info": "瑞声三子，诞育一嗣，承其宗祧",
+          "info": "瑞声行三，诞育一嗣，承其宗祧",
           "fatherId": "g16-18",
           "birthYear": null,
           "deathYear": null
@@ -1372,7 +1372,7 @@
         {
           "id": "g17-39",
           "name": "肇升",
-          "info": "瑞良长子，生育一嗣，血脉绵延",
+          "info": "瑞良承宗之嫡，生育一嗣，血脉绵延",
           "fatherId": "g16-19",
           "birthYear": null,
           "deathYear": null
@@ -1380,7 +1380,7 @@
         {
           "id": "g17-40",
           "name": "肇德",
-          "info": "瑞良次子，德馨一方",
+          "info": "瑞良公之次嗣，德馨一方",
           "fatherId": "g16-19",
           "birthYear": null,
           "deathYear": null
@@ -1388,7 +1388,7 @@
         {
           "id": "g17-41",
           "name": "肇尤",
-          "info": "瑞熙长子，育有3嗣，枝繁叶茂",
+          "info": "瑞熙承宗之嫡，育有3嗣，枝繁叶茂",
           "fatherId": "g16-21",
           "birthYear": null,
           "deathYear": null
@@ -1396,7 +1396,7 @@
         {
           "id": "g17-42",
           "name": "肇仁",
-          "info": "瑞熙次子，诞有3嗣，蔚为大族",
+          "info": "瑞熙公之次嗣，诞有3嗣，蔚为大族",
           "fatherId": "g16-21",
           "birthYear": null,
           "deathYear": null
@@ -1404,7 +1404,7 @@
         {
           "id": "g17-43",
           "name": "肇基",
-          "info": "瑞徵长子，诞育2嗣，族大蕃昌",
+          "info": "瑞徵承宗之嫡，诞育2嗣，族大蕃昌",
           "fatherId": "g16-22",
           "birthYear": null,
           "deathYear": null
@@ -1412,7 +1412,7 @@
         {
           "id": "g17-44",
           "name": "肇钧",
-          "info": "瑞徵次子，诞有2嗣，兰桂齐芳",
+          "info": "瑞徵公之次嗣，诞有2嗣，兰桂齐芳",
           "fatherId": "g16-22",
           "birthYear": null,
           "deathYear": null
@@ -1420,7 +1420,7 @@
         {
           "id": "g17-45",
           "name": "肇仍",
-          "info": "瑞献长子，育有2胤，门祚以兴",
+          "info": "瑞献承宗之嫡，育有2胤，门祚以兴",
           "fatherId": "g16-23",
           "birthYear": null,
           "deathYear": null
@@ -1428,7 +1428,7 @@
         {
           "id": "g17-46",
           "name": "肇锐",
-          "info": "瑞献次子，育有2胤，衍为盛脉",
+          "info": "瑞献公之次嗣，育有2胤，衍为盛脉",
           "fatherId": "g16-23",
           "birthYear": null,
           "deathYear": null
@@ -1436,7 +1436,7 @@
         {
           "id": "g17-47",
           "name": "肇刚",
-          "info": "瑞献三子，育有一嗣，传家有道",
+          "info": "瑞献行三，育有一嗣，传家有道",
           "fatherId": "g16-23",
           "birthYear": null,
           "deathYear": null
@@ -1444,7 +1444,7 @@
         {
           "id": "g17-48",
           "name": "肇榕",
-          "info": "瑞发长子，德配黄氏，诞育一嗣，承先启后",
+          "info": "瑞发承宗之嫡，德配黄氏，诞育一嗣，承先启后",
           "fatherId": "g16-24",
           "birthYear": null,
           "deathYear": null
@@ -1452,7 +1452,7 @@
         {
           "id": "g17-49",
           "name": "肇飞",
-          "info": "瑞发次子，诞有一嗣，承其宗祧",
+          "info": "瑞发公之次嗣，诞有一嗣，承其宗祧",
           "fatherId": "g16-24",
           "birthYear": null,
           "deathYear": null
@@ -1468,7 +1468,7 @@
         {
           "id": "g17-51",
           "name": "肇其",
-          "info": "瑞俊长子，诞有2脉，族大蕃昌",
+          "info": "瑞俊承宗之嫡，诞有2脉，族大蕃昌",
           "fatherId": "g16-27",
           "birthYear": null,
           "deathYear": null
@@ -1476,7 +1476,7 @@
         {
           "id": "g17-52",
           "name": "肇怀",
-          "info": "瑞俊次子，诞有3嗣，瓜瓞绵绵",
+          "info": "瑞俊公之次嗣，诞有3嗣，瓜瓞绵绵",
           "fatherId": "g16-27",
           "birthYear": null,
           "deathYear": null
@@ -1492,7 +1492,7 @@
         {
           "id": "g17-54",
           "name": "肇广",
-          "info": "瑞林长子，诞有3嗣，衍为盛脉",
+          "info": "瑞林承宗之嫡，诞有3嗣，衍为盛脉",
           "fatherId": "g16-28",
           "birthYear": null,
           "deathYear": null
@@ -1500,7 +1500,7 @@
         {
           "id": "g17-55",
           "name": "肇全",
-          "info": "瑞林次子，生育2脉，门祚以兴",
+          "info": "瑞林公之次嗣，生育2脉，门祚以兴",
           "fatherId": "g16-28",
           "birthYear": null,
           "deathYear": null
@@ -1508,7 +1508,7 @@
         {
           "id": "g17-56",
           "name": "肇耿",
-          "info": "瑞林三子，诞育2脉，蔚为大族",
+          "info": "瑞林行三，诞育2脉，蔚为大族",
           "fatherId": "g16-28",
           "birthYear": null,
           "deathYear": null
@@ -1529,7 +1529,7 @@
         {
           "id": "g18-2",
           "name": "昌佳",
-          "info": "肇礼长子，诞有一嗣，克绍箕裘",
+          "info": "肇礼承宗之嫡，诞有一嗣，克绍箕裘",
           "fatherId": "g17-3",
           "birthYear": null,
           "deathYear": null
@@ -1537,7 +1537,7 @@
         {
           "id": "g18-3",
           "name": "燕佳",
-          "info": "肇礼次子，生育一嗣，血脉绵延",
+          "info": "肇礼公之次嗣，生育一嗣，血脉绵延",
           "fatherId": "g17-3",
           "birthYear": null,
           "deathYear": null
@@ -1545,7 +1545,7 @@
         {
           "id": "g18-4",
           "name": "喜佳",
-          "info": "肇伟长子，气度雍容",
+          "info": "肇伟承宗之嫡，气度雍容",
           "fatherId": "g17-4",
           "birthYear": null,
           "deathYear": null
@@ -1553,7 +1553,7 @@
         {
           "id": "g18-5",
           "name": "青佳",
-          "info": "肇伟次子，诞育一嗣，继志述事",
+          "info": "肇伟公之次嗣，诞育一嗣，继志述事",
           "fatherId": "g17-4",
           "birthYear": null,
           "deathYear": null
@@ -1577,7 +1577,7 @@
         {
           "id": "g18-8",
           "name": "耀佳",
-          "info": "肇锋长子，诞有一嗣，继志述事",
+          "info": "肇锋承宗之嫡，诞有一嗣，继志述事",
           "fatherId": "g17-7",
           "birthYear": null,
           "deathYear": null
@@ -1585,7 +1585,7 @@
         {
           "id": "g18-9",
           "name": "宇佳",
-          "info": "肇锋次子，生育一嗣，承先启后",
+          "info": "肇锋公之次嗣，生育一嗣，承先启后",
           "fatherId": "g17-7",
           "birthYear": null,
           "deathYear": null
@@ -1601,7 +1601,7 @@
         {
           "id": "g18-11",
           "name": "志佳",
-          "info": "肇双长子，诞育一嗣，传家有道",
+          "info": "肇双承宗之嫡，诞育一嗣，传家有道",
           "fatherId": "g17-9",
           "birthYear": null,
           "deathYear": null
@@ -1609,7 +1609,7 @@
         {
           "id": "g18-12",
           "name": "江佳",
-          "info": "肇双次子，毓生一嗣，克绍箕裘",
+          "info": "肇双公之次嗣，毓生一嗣，克绍箕裘",
           "fatherId": "g17-9",
           "birthYear": null,
           "deathYear": null
@@ -1617,7 +1617,7 @@
         {
           "id": "g18-13",
           "name": "业佳",
-          "info": "肇应长子，诞育一嗣，后继有人",
+          "info": "肇应承宗之嫡，诞育一嗣，后继有人",
           "fatherId": "g17-10",
           "birthYear": null,
           "deathYear": null
@@ -1625,7 +1625,7 @@
         {
           "id": "g18-14",
           "name": "泽佳",
-          "info": "肇应次子，育有一嗣，宗祧有托",
+          "info": "肇应公之次嗣，育有一嗣，宗祧有托",
           "fatherId": "g17-10",
           "birthYear": null,
           "deathYear": null
@@ -1649,7 +1649,7 @@
         {
           "id": "g18-17",
           "name": "健佳",
-          "info": "肇凤长子，毓生2嗣，枝繁叶茂",
+          "info": "肇凤承宗之嫡，毓生2嗣，枝繁叶茂",
           "fatherId": "g17-13",
           "birthYear": null,
           "deathYear": null
@@ -1657,7 +1657,7 @@
         {
           "id": "g18-18",
           "name": "彬佳",
-          "info": "肇凤次子，生育一嗣，承其宗祧",
+          "info": "肇凤公之次嗣，生育一嗣，承其宗祧",
           "fatherId": "g17-13",
           "birthYear": null,
           "deathYear": null
@@ -1665,7 +1665,7 @@
         {
           "id": "g18-19",
           "name": "炎佳",
-          "info": "肇新长子，名垂族史",
+          "info": "肇新承宗之嫡，名垂族史",
           "fatherId": "g17-14",
           "birthYear": null,
           "deathYear": null
@@ -1673,7 +1673,7 @@
         {
           "id": "g18-20",
           "name": "栋佳",
-          "info": "肇新次子，诞有一嗣，血脉绵延",
+          "info": "肇新公之次嗣，诞有一嗣，血脉绵延",
           "fatherId": "g17-14",
           "birthYear": null,
           "deathYear": null
@@ -1681,7 +1681,7 @@
         {
           "id": "g18-21",
           "name": "艺佳",
-          "info": "肇锦长子，毓生一嗣，传家有道",
+          "info": "肇锦承宗之嫡，毓生一嗣，传家有道",
           "fatherId": "g17-15",
           "birthYear": null,
           "deathYear": null
@@ -1689,7 +1689,7 @@
         {
           "id": "g18-22",
           "name": "奇佳",
-          "info": "肇锦次子，毓生一嗣，血脉绵延",
+          "info": "肇锦公之次嗣，毓生一嗣，血脉绵延",
           "fatherId": "g17-15",
           "birthYear": null,
           "deathYear": null
@@ -1697,7 +1697,7 @@
         {
           "id": "g18-23",
           "name": "鑫佳",
-          "info": "肇荣长子，行谊可风",
+          "info": "肇荣承宗之嫡，行谊可风",
           "fatherId": "g17-16",
           "birthYear": null,
           "deathYear": null
@@ -1705,7 +1705,7 @@
         {
           "id": "g18-24",
           "name": "逸佳",
-          "info": "肇荣次子，守业传名",
+          "info": "肇荣公之次嗣，守业传名",
           "fatherId": "g17-16",
           "birthYear": null,
           "deathYear": null
@@ -1713,7 +1713,7 @@
         {
           "id": "g18-25",
           "name": "秋佳",
-          "info": "肇源长子，品端行正",
+          "info": "肇源承宗之嫡，品端行正",
           "fatherId": "g17-17",
           "birthYear": null,
           "deathYear": null
@@ -1721,7 +1721,7 @@
         {
           "id": "g18-26",
           "name": "卓佳",
-          "info": "肇源次子，诞育一嗣，克绍箕裘",
+          "info": "肇源公之次嗣，诞育一嗣，克绍箕裘",
           "fatherId": "g17-17",
           "birthYear": null,
           "deathYear": null
@@ -1801,7 +1801,7 @@
         {
           "id": "g18-36",
           "name": "昱佳",
-          "info": "肇勇2长子，清风亮节",
+          "info": "肇勇承宗之嫡，清风亮节",
           "fatherId": "g17-28",
           "birthYear": null,
           "deathYear": null,
@@ -1810,7 +1810,7 @@
         {
           "id": "g18-37",
           "name": "汇佳",
-          "info": "肇勇2次子，懿行嘉言",
+          "info": "肇勇公之次嗣，懿行嘉言",
           "fatherId": "g17-28",
           "birthYear": null,
           "deathYear": null,
@@ -1819,7 +1819,7 @@
         {
           "id": "g18-38",
           "name": "迎佳",
-          "info": "肇敏长子，淳厚传家",
+          "info": "肇敏承宗之嫡，淳厚传家",
           "fatherId": "g17-29",
           "birthYear": null,
           "deathYear": null
@@ -1827,7 +1827,7 @@
         {
           "id": "g18-39",
           "name": "信佳",
-          "info": "肇敏次子，德行端方",
+          "info": "肇敏公之次嗣，德行端方",
           "fatherId": "g17-29",
           "birthYear": null,
           "deathYear": null
@@ -1851,7 +1851,7 @@
         {
           "id": "g18-42",
           "name": "烨佳",
-          "info": "肇斌长子，气度雍容",
+          "info": "肇斌承宗之嫡，气度雍容",
           "fatherId": "g17-34",
           "birthYear": null,
           "deathYear": null
@@ -1859,7 +1859,7 @@
         {
           "id": "g18-43",
           "name": "炼佳",
-          "info": "肇斌次子，行谊可风",
+          "info": "肇斌公之次嗣，行谊可风",
           "fatherId": "g17-34",
           "birthYear": null,
           "deathYear": null
@@ -1899,7 +1899,7 @@
         {
           "id": "g18-48",
           "name": "佳龙",
-          "info": "肇尤长子，诞育一嗣，宗祧有托",
+          "info": "肇尤承宗之嫡，诞育一嗣，宗祧有托",
           "fatherId": "g17-41",
           "birthYear": null,
           "deathYear": null
@@ -1907,7 +1907,7 @@
         {
           "id": "g18-49",
           "name": "富佳",
-          "info": "肇尤次子，端方持重",
+          "info": "肇尤公之次嗣，端方持重",
           "fatherId": "g17-41",
           "birthYear": null,
           "deathYear": null
@@ -1915,7 +1915,7 @@
         {
           "id": "g18-50",
           "name": "亮佳",
-          "info": "肇尤三子，诞有一嗣，宗祧有托",
+          "info": "肇尤行三，诞有一嗣，宗祧有托",
           "fatherId": "g17-41",
           "birthYear": null,
           "deathYear": null
@@ -1923,7 +1923,7 @@
         {
           "id": "g18-51",
           "name": "静佳",
-          "info": "肇仁长子，生育一嗣，传家有道",
+          "info": "肇仁承宗之嫡，生育一嗣，传家有道",
           "fatherId": "g17-42",
           "birthYear": null,
           "deathYear": null
@@ -1931,7 +1931,7 @@
         {
           "id": "g18-52",
           "name": "善佳",
-          "info": "肇仁次子，育有一嗣，承其宗祧",
+          "info": "肇仁公之次嗣，育有一嗣，承其宗祧",
           "fatherId": "g17-42",
           "birthYear": null,
           "deathYear": null
@@ -1939,7 +1939,7 @@
         {
           "id": "g18-53",
           "name": "旺佳",
-          "info": "肇仁三子，生育2胤，门祚以兴",
+          "info": "肇仁行三，生育2胤，门祚以兴",
           "fatherId": "g17-42",
           "birthYear": null,
           "deathYear": null
@@ -1947,7 +1947,7 @@
         {
           "id": "g18-54",
           "name": "佳生",
-          "info": "肇基长子，诞有一嗣，承先启后",
+          "info": "肇基承宗之嫡，诞有一嗣，承先启后",
           "fatherId": "g17-43",
           "birthYear": null,
           "deathYear": null
@@ -1955,7 +1955,7 @@
         {
           "id": "g18-55",
           "name": "福佳",
-          "info": "肇基次子，生育2嗣，瓜瓞绵绵",
+          "info": "肇基公之次嗣，生育2嗣，瓜瓞绵绵",
           "fatherId": "g17-43",
           "birthYear": null,
           "deathYear": null
@@ -1963,7 +1963,7 @@
         {
           "id": "g18-56",
           "name": "昆佳",
-          "info": "肇钧长子，育有3胤，蔚为大族",
+          "info": "肇钧承宗之嫡，育有3胤，蔚为大族",
           "fatherId": "g17-44",
           "birthYear": null,
           "deathYear": null
@@ -1971,7 +1971,7 @@
         {
           "id": "g18-57",
           "name": "永佳",
-          "info": "肇钧次子，诞有3脉，衍为盛脉",
+          "info": "肇钧公之次嗣，诞有3脉，衍为盛脉",
           "fatherId": "g17-44",
           "birthYear": null,
           "deathYear": null
@@ -1979,7 +1979,7 @@
         {
           "id": "g18-58",
           "name": "国佳",
-          "info": "肇仍长子，诞有一嗣，后继有人",
+          "info": "肇仍承宗之嫡，诞有一嗣，后继有人",
           "fatherId": "g17-45",
           "birthYear": null,
           "deathYear": null
@@ -1987,7 +1987,7 @@
         {
           "id": "g18-59",
           "name": "满佳",
-          "info": "肇仍次子，德冠一族",
+          "info": "肇仍公之次嗣，德冠一族",
           "fatherId": "g17-45",
           "birthYear": null,
           "deathYear": null
@@ -1995,7 +1995,7 @@
         {
           "id": "g18-60",
           "name": "德佳",
-          "info": "肇锐长子，德馨一方",
+          "info": "肇锐承宗之嫡，德馨一方",
           "fatherId": "g17-46",
           "birthYear": null,
           "deathYear": null
@@ -2003,7 +2003,7 @@
         {
           "id": "g18-61",
           "name": "育佳",
-          "info": "肇锐次子，诞有一嗣，血脉绵延",
+          "info": "肇锐公之次嗣，诞有一嗣，血脉绵延",
           "fatherId": "g17-46",
           "birthYear": null,
           "deathYear": null
@@ -2035,7 +2035,7 @@
         {
           "id": "g18-65",
           "name": "佳裕",
-          "info": "肇宽长子，诞有2胤，族大蕃昌",
+          "info": "肇宽承宗之嫡，诞有2胤，族大蕃昌",
           "fatherId": "g17-50",
           "birthYear": null,
           "deathYear": null
@@ -2043,7 +2043,7 @@
         {
           "id": "g18-66",
           "name": "佳勇",
-          "info": "肇宽次子，毓生3脉，兰桂齐芳",
+          "info": "肇宽公之次嗣，毓生3脉，兰桂齐芳",
           "fatherId": "g17-50",
           "birthYear": null,
           "deathYear": null
@@ -2051,7 +2051,7 @@
         {
           "id": "g18-67",
           "name": "旅佳",
-          "info": "肇其长子，毓生一嗣，继志述事",
+          "info": "肇其承宗之嫡，毓生一嗣，继志述事",
           "fatherId": "g17-51",
           "birthYear": null,
           "deathYear": null
@@ -2059,7 +2059,7 @@
         {
           "id": "g18-68",
           "name": "洪佳",
-          "info": "肇其次子，懿行嘉言",
+          "info": "肇其公之次嗣，懿行嘉言",
           "fatherId": "g17-51",
           "birthYear": null,
           "deathYear": null
@@ -2067,7 +2067,7 @@
         {
           "id": "g18-69",
           "name": "延佳",
-          "info": "肇怀长子，毓生一嗣",
+          "info": "肇怀承宗之嫡，毓生一嗣",
           "fatherId": "g17-52",
           "birthYear": null,
           "deathYear": null
@@ -2075,7 +2075,7 @@
         {
           "id": "g18-71",
           "name": "超佳",
-          "info": "肇怀次子，谨守家业",
+          "info": "肇怀公之次嗣，谨守家业",
           "fatherId": "g17-52",
           "birthYear": null,
           "deathYear": null
@@ -2083,7 +2083,7 @@
         {
           "id": "g18-70",
           "name": "廷佳",
-          "info": "肇怀三子，谨守家业",
+          "info": "肇怀行三，谨守家业",
           "fatherId": "g17-52",
           "birthYear": null,
           "deathYear": null
@@ -2091,7 +2091,7 @@
         {
           "id": "g18-72",
           "name": "春佳",
-          "info": "肇庆长子，毓生一嗣",
+          "info": "肇庆承宗之嫡，毓生一嗣",
           "fatherId": "g17-53",
           "birthYear": null,
           "deathYear": null
@@ -2099,7 +2099,7 @@
         {
           "id": "g18-73",
           "name": "胜佳",
-          "info": "肇广长子，谨守家业",
+          "info": "肇广承宗之嫡，谨守家业",
           "fatherId": "g17-54",
           "birthYear": null,
           "deathYear": null
@@ -2107,7 +2107,7 @@
         {
           "id": "g18-74",
           "name": "坚佳",
-          "info": "肇广次子，谨守家业",
+          "info": "肇广公之次嗣，谨守家业",
           "fatherId": "g17-54",
           "birthYear": null,
           "deathYear": null
@@ -2115,7 +2115,7 @@
         {
           "id": "g18-75",
           "name": "朝佳",
-          "info": "肇广三子，生育一嗣，血脉绵延",
+          "info": "肇广行三，生育一嗣，血脉绵延",
           "fatherId": "g17-54",
           "birthYear": null,
           "deathYear": null
@@ -2123,7 +2123,7 @@
         {
           "id": "g18-76",
           "name": "运佳",
-          "info": "肇全长子，毓生2胤，开枝散叶",
+          "info": "肇全承宗之嫡，毓生2胤，开枝散叶",
           "fatherId": "g17-55",
           "birthYear": null,
           "deathYear": null
@@ -2131,7 +2131,7 @@
         {
           "id": "g18-77",
           "name": "万佳",
-          "info": "肇全次子，端方持重",
+          "info": "肇全公之次嗣，端方持重",
           "fatherId": "g17-55",
           "birthYear": null,
           "deathYear": null
@@ -2139,7 +2139,7 @@
         {
           "id": "g18-78",
           "name": "锡佳",
-          "info": "肇耿长子，淳厚传家",
+          "info": "肇耿承宗之嫡，淳厚传家",
           "fatherId": "g17-56",
           "birthYear": null,
           "deathYear": null
@@ -2147,7 +2147,7 @@
         {
           "id": "g18-79",
           "name": "玉佳",
-          "info": "肇耿次子，德馨一方",
+          "info": "肇耿公之次嗣，德馨一方",
           "fatherId": "g17-56",
           "birthYear": null,
           "deathYear": null
@@ -2216,7 +2216,7 @@
         {
           "id": "g19-8",
           "name": "铧平",
-          "info": "世佳长子，风骨清正",
+          "info": "世佳承宗之嫡，风骨清正",
           "fatherId": "g18-10",
           "birthYear": null,
           "deathYear": null
@@ -2224,7 +2224,7 @@
         {
           "id": "g19-9",
           "name": "译平",
-          "info": "世佳次子，谨厚自持",
+          "info": "世佳公之次嗣，谨厚自持",
           "fatherId": "g18-10",
           "birthYear": null,
           "deathYear": null
@@ -2264,7 +2264,7 @@
         {
           "id": "g19-14",
           "name": "钊平",
-          "info": "健佳长子，淳厚传家",
+          "info": "健佳承宗之嫡，淳厚传家",
           "fatherId": "g18-17",
           "birthYear": null,
           "deathYear": null
@@ -2272,7 +2272,7 @@
         {
           "id": "g19-15",
           "name": "锐平",
-          "info": "健佳次子，宅心仁厚",
+          "info": "健佳公之次嗣，宅心仁厚",
           "fatherId": "g18-17",
           "birthYear": null,
           "deathYear": null
@@ -2320,7 +2320,7 @@
         {
           "id": "g19-21",
           "name": "康平",
-          "info": "以佳长子，守祧传名",
+          "info": "以佳承宗之嫡，守祧传名",
           "fatherId": "g18-28",
           "birthYear": null,
           "deathYear": null
@@ -2328,7 +2328,7 @@
         {
           "id": "g19-22",
           "name": "舒平",
-          "info": "以佳次子，德冠一族",
+          "info": "以佳公之次嗣，德冠一族",
           "fatherId": "g18-28",
           "birthYear": null,
           "deathYear": null
@@ -2336,7 +2336,7 @@
         {
           "id": "g19-23",
           "name": "柱平",
-          "info": "以佳三子，端方持重",
+          "info": "以佳行三，端方持重",
           "fatherId": "g18-28",
           "birthYear": null,
           "deathYear": null
@@ -2408,7 +2408,7 @@
         {
           "id": "g19-32",
           "name": "军平",
-          "info": "旺佳长子，名垂族史",
+          "info": "旺佳承宗之嫡，名垂族史",
           "fatherId": "g18-53",
           "birthYear": null,
           "deathYear": null
@@ -2416,7 +2416,7 @@
         {
           "id": "g19-33",
           "name": "上平",
-          "info": "旺佳次子，德馨一方",
+          "info": "旺佳公之次嗣，德馨一方",
           "fatherId": "g18-53",
           "birthYear": null,
           "deathYear": null
@@ -2432,7 +2432,7 @@
         {
           "id": "g19-35",
           "name": "郎平",
-          "info": "福佳长子，气度雍容",
+          "info": "福佳承宗之嫡，气度雍容",
           "fatherId": "g18-55",
           "birthYear": null,
           "deathYear": null
@@ -2440,7 +2440,7 @@
         {
           "id": "g19-36",
           "name": "卓平",
-          "info": "福佳次子，端方持重",
+          "info": "福佳公之次嗣，端方持重",
           "fatherId": "g18-55",
           "birthYear": null,
           "deathYear": null
@@ -2448,7 +2448,7 @@
         {
           "id": "g19-37",
           "name": "焕平",
-          "info": "昆佳长子，育有一嗣，宗祧有托",
+          "info": "昆佳承宗之嫡，育有一嗣，宗祧有托",
           "fatherId": "g18-56",
           "birthYear": null,
           "deathYear": null
@@ -2456,7 +2456,7 @@
         {
           "id": "g19-38",
           "name": "贤平",
-          "info": "昆佳次子，谨厚自持",
+          "info": "昆佳公之次嗣，谨厚自持",
           "fatherId": "g18-56",
           "birthYear": null,
           "deathYear": null
@@ -2464,7 +2464,7 @@
         {
           "id": "g19-39",
           "name": "鑫平",
-          "info": "昆佳三子，清风亮节",
+          "info": "昆佳行三，清风亮节",
           "fatherId": "g18-56",
           "birthYear": null,
           "deathYear": null
@@ -2472,7 +2472,7 @@
         {
           "id": "g19-40",
           "name": "磊平",
-          "info": "永佳长子，宅心仁厚",
+          "info": "永佳承宗之嫡，宅心仁厚",
           "fatherId": "g18-57",
           "birthYear": null,
           "deathYear": null
@@ -2480,7 +2480,7 @@
         {
           "id": "g19-41",
           "name": "鉴平",
-          "info": "永佳次子，品端行正",
+          "info": "永佳公之次嗣，品端行正",
           "fatherId": "g18-57",
           "birthYear": null,
           "deathYear": null
@@ -2488,7 +2488,7 @@
         {
           "id": "g19-42",
           "name": "霄平",
-          "info": "永佳三子，懿行嘉言",
+          "info": "永佳行三，懿行嘉言",
           "fatherId": "g18-57",
           "birthYear": null,
           "deathYear": null
@@ -2520,7 +2520,7 @@
         {
           "id": "g19-46",
           "name": "彬平",
-          "info": "佳裕长子，生育2脉，开枝散叶",
+          "info": "佳裕承宗之嫡，生育2脉，开枝散叶",
           "fatherId": "g18-65",
           "birthYear": null,
           "deathYear": null
@@ -2528,7 +2528,7 @@
         {
           "id": "g19-47",
           "name": "顺平",
-          "info": "佳裕次子，毓生一嗣，血脉绵延",
+          "info": "佳裕公之次嗣，毓生一嗣，血脉绵延",
           "fatherId": "g18-65",
           "birthYear": null,
           "deathYear": null
@@ -2536,7 +2536,7 @@
         {
           "id": "g19-48",
           "name": "志平",
-          "info": "佳勇长子，诞有一嗣，传家有道",
+          "info": "佳勇承宗之嫡，诞有一嗣，传家有道",
           "fatherId": "g18-66",
           "birthYear": null,
           "deathYear": null
@@ -2544,7 +2544,7 @@
         {
           "id": "g19-49",
           "name": "海平",
-          "info": "佳勇次子，生育2胤，门祚以兴",
+          "info": "佳勇公之次嗣，生育2胤，门祚以兴",
           "fatherId": "g18-66",
           "birthYear": null,
           "deathYear": null
@@ -2552,7 +2552,7 @@
         {
           "id": "g19-50",
           "name": "旭平",
-          "info": "佳勇三子，品端行正",
+          "info": "佳勇行三，品端行正",
           "fatherId": "g18-66",
           "birthYear": null,
           "deathYear": null
@@ -2608,7 +2608,7 @@
         {
           "id": "g19-57",
           "name": "栎平",
-          "info": "运佳长子，宅心仁厚",
+          "info": "运佳承宗之嫡，宅心仁厚",
           "fatherId": "g18-76",
           "birthYear": null,
           "deathYear": null
@@ -2616,7 +2616,7 @@
         {
           "id": "g19-58",
           "name": "柯平",
-          "info": "运佳次子，气度雍容",
+          "info": "运佳公之次嗣，气度雍容",
           "fatherId": "g18-76",
           "birthYear": null,
           "deathYear": null
@@ -2661,7 +2661,7 @@
         {
           "id": "g20-5",
           "name": "远泽",
-          "info": "彬平长子，淳厚传家",
+          "info": "彬平承宗之嫡，淳厚传家",
           "fatherId": "g19-46",
           "birthYear": null,
           "deathYear": null
@@ -2669,7 +2669,7 @@
         {
           "id": "g20-6",
           "name": "远柠",
-          "info": "彬平次子，端方持重",
+          "info": "彬平公之次嗣，端方持重",
           "fatherId": "g19-46",
           "birthYear": null,
           "deathYear": null
@@ -2685,7 +2685,7 @@
         {
           "id": "g20-8",
           "name": "远标",
-          "info": "海平长子，懿行嘉言",
+          "info": "海平承宗之嫡，懿行嘉言",
           "fatherId": "g19-49",
           "birthYear": null,
           "deathYear": null
@@ -2693,7 +2693,7 @@
         {
           "id": "g20-9",
           "name": "远霖",
-          "info": "海平次子，德馨一方",
+          "info": "海平公之次嗣，德馨一方",
           "fatherId": "g19-49",
           "birthYear": null,
           "deathYear": null
