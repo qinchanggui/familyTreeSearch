@@ -44,10 +44,10 @@ export function middleware(request: NextRequest) {
     // 来源校验：只允许本站前端请求
     const origin = request.headers.get('origin');
     const referer = request.headers.get('referer');
-    const allowedHost = 'qinshizupu.com';
+    const allowedHosts = ['qinshizupu.com', 'localhost'];
 
-    const isAllowedOrigin = origin && new URL(origin).hostname.endsWith(allowedHost);
-    const isAllowedReferer = referer && new URL(referer).hostname.endsWith(allowedHost);
+    const isAllowedOrigin = origin && allowedHosts.some(h => new URL(origin).hostname.endsWith(h));
+    const isAllowedReferer = referer && allowedHosts.some(h => new URL(referer).hostname.endsWith(h));
 
     // SSR 请求无 origin/referer，放行；Vercel 内部请求也放行
     if (!origin && !referer) {

@@ -1,13 +1,7 @@
 "use client";
 
-import { useMemo, useCallback, useRef, useEffect } from 'react';
-import ReactFlow, {
-  Node, Edge, Background, Controls,
-  Position, Handle, BackgroundVariant,
-} from 'reactflow';
-import { ReactFlowProvider, useReactFlow, useNodesInitialized } from 'reactflow';
-import { Squares2X2Icon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import 'reactflow/dist/style.css';
+import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
+import { Squares2X2Icon, ChevronRightIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { FamilyData } from '@/types/family';
 
 interface TreeViewProps { data: FamilyData }
@@ -21,20 +15,13 @@ const generationColors = [
   '#8B655F',
 ];
 
-const H_GAP = 180;
-const V_GAP = 100;
 const DEFAULT_EXPAND_DEPTH = 2;
-
-/* ---------- 全局 toggle 回调（解决 nodeTypes 闭包问题） ---------- */
-let globalToggleFn: ((nodeId: string) => void) | null = null;
-
-// 使用 getter 函数，避免闭包捕获 null 值
-function getToggleFn() { return globalToggleFn; }
 
 /* ---------- 数据结构 ---------- */
 interface TreeNode {
   id: string;
   name: string;
+  info?: string;
   depth: number;
   borderColor: string;
   childCount: number;
@@ -50,6 +37,7 @@ function buildTree(data: FamilyData): Map<string, TreeNode> {
       map.set(p.id, {
         id: p.id,
         name: p.name,
+        info: p.info || undefined,
         depth: gi,
         borderColor: generationColors[gi % generationColors.length],
         childCount: 0,
@@ -70,250 +58,302 @@ function buildTree(data: FamilyData): Map<string, TreeNode> {
   return map;
 }
 
-/* ---------- 子树宽度计算 ---------- */
-function getSubtreeWidth(nodeMap: Map<string, TreeNode>, id: string, collapsedSet: Set<string>): number {
-  const node = nodeMap.get(id);
-  if (!node || node.childCount === 0 || collapsedSet.has(id)) return 1;
-  let total = 0;
-  for (const cid of node.childIds) {
-    total += getSubtreeWidth(nodeMap, cid, collapsedSet);
-  }
-  return Math.max(total, 1);
-}
+/* ---------- 递归渲染树节点 ---------- */
+function TreeItem({
+  nodeId,
+  nodeMap,
+  collapsedIds,
+  onToggle,
+}: {
+  nodeId: string;
+  nodeMap: Map<string, TreeNode>;
+  collapsedIds: Set<string>;
+  onToggle: (id: string) => void;
+}) {
+  const node = nodeMap.get(nodeId);
+  if (!node) return null;
 
-/* ---------- 布局引擎 ---------- */
-interface LayoutResult { nodes: Node[]; edges: Edge[] }
-
-function layoutTree(nodeMap: Map<string, TreeNode>, rootIds: string[], collapsedSet: Set<string>): LayoutResult {
-  const nodes: Node[] = [];
-  const edges: Edge[] = [];
-  const NODE_HW = 70;
-
-  function lay(id: string, cx: number, y: number) {
-    const node = nodeMap.get(id);
-    if (!node) return;
-    const children = collapsedSet.has(id) ? [] : node.childIds;
-
-    nodes.push({
-      id,
-      type: 'personNode',
-      position: { x: cx - NODE_HW, y },
-      data: {
-        label: node.name,
-        borderColor: node.borderColor,
-        childCount: node.childCount,
-        collapsed: collapsedSet.has(id),
-        nodeId: id,
-      },
-    });
-
-    if (children.length === 0) return;
-    const ws = children.map(cid => getSubtreeWidth(nodeMap, cid, collapsedSet));
-    const totalW = ws.reduce((a, b) => a + b, 0) * H_GAP;
-    let sx = cx - totalW / 2;
-    for (let i = 0; i < children.length; i++) {
-      const ccx = sx + ws[i] * H_GAP / 2;
-      lay(children[i], ccx, y + V_GAP);
-      edges.push({ id: `${id}-${children[i]}`, source: id, target: children[i], style: { stroke: '#D4A574', strokeWidth: 2 } });
-      sx += ws[i] * H_GAP;
-    }
-  }
-
-  const rws = rootIds.map(rid => getSubtreeWidth(nodeMap, rid, collapsedSet));
-  const totalW = rws.reduce((a, b) => a + b, 0) * H_GAP;
-  let sx = -totalW / 2;
-  for (let i = 0; i < rootIds.length; i++) {
-    lay(rootIds[i], sx + rws[i] * H_GAP / 2, 0);
-    sx += rws[i] * H_GAP;
-  }
-
-  return { nodes, edges };
-}
-
-/* ---------- 自定义节点组件 ---------- */
-function PersonNode({ data }: any) {
-  const { label, borderColor, childCount, collapsed, nodeId } = data;
-  const nodeRef = useRef<HTMLDivElement>(null);
-  const mouseDownPos = useRef<{ x: number; y: number } | null>(null);
-
-  useEffect(() => {
-    const el = nodeRef.current;
-    if (!el) return;
-    // Debug: confirm useEffect runs
-    (window as any).__treeDebug = 'useEffect ran';
-    const onDown = (e: PointerEvent) => {
-      mouseDownPos.current = { x: e.clientX, y: e.clientY };
-    };
-    const onUp = (e: PointerEvent) => {
-      if (!mouseDownPos.current) return;
-      const dx = e.clientX - mouseDownPos.current.x;
-      const dy = e.clientY - mouseDownPos.current.y;
-      mouseDownPos.current = null;
-      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) return;
-      const fn = getToggleFn();
-      (window as any).__treeDebug = 'pointerup fired, fn=' + !!fn;
-      if (fn) {
-        try {
-          fn(nodeId);
-          (window as any).__treeDebug += ', toggleNode ok';
-        } catch (e) {
-          (window as any).__treeDebug += ', ERROR: ' + (e as Error).message;
-        }
-      }
-    };
-    el.addEventListener('pointerdown', onDown);
-    el.addEventListener('pointerup', onUp);
-    return () => {
-      el.removeEventListener('pointerdown', onDown);
-      el.removeEventListener('pointerup', onUp);
-    };
-  }, [nodeId]);
+  const isCollapsed = collapsedIds.has(nodeId);
+  const children = isCollapsed ? [] : node.childIds;
 
   return (
-    <div ref={nodeRef} className="nopan nodrag relative">
-      <Handle type="target" position={Position.Top} className="!bg-cinnabar !w-3 !h-3" />
+    <div className="flex flex-col items-center tree-node-item">
+      {/* 人物卡片 */}
       <div
-        className="px-4 py-2.5 rounded-xl bg-card dark:bg-dark-card border-2 shadow-md hover:shadow-lg transition-shadow min-w-[100px] cursor-pointer"
-        style={{ borderColor }}
+        className="px-3 py-2 rounded-xl bg-card dark:bg-dark-card border-2 shadow-md hover:shadow-lg transition-all duration-200 min-w-[80px] sm:min-w-[100px] cursor-pointer select-none hover:scale-105 active:scale-95"
+        style={{ borderColor: node.borderColor }}
+        onClick={() => onToggle(nodeId)}
+        title={node.info || node.name}
       >
-        <p className="font-bold font-serif text-ink dark:text-dark-text text-base whitespace-nowrap text-center">
-          {label}
+        <p className="font-bold font-serif text-ink dark:text-dark-text text-xs sm:text-sm whitespace-nowrap text-center">
+          {node.name}
         </p>
       </div>
-      <Handle type="source" position={Position.Bottom} className="!bg-cinnabar !w-3 !h-3 !bottom-[-18px]" />
-      {childCount > 0 && (
-        <span
-          className={`absolute -bottom-3 left-1/2 -translate-x-1/2 z-10 px-2 py-0.5 rounded-full text-[10px] font-medium border shadow-sm whitespace-nowrap pointer-events-none select-none
-            ${collapsed
-              ? 'bg-cinnabar/10 dark:bg-cinnabar/20 border-cinnabar/40 dark:border-cinnabar/60 text-cinnabar dark:text-dark-cinnabar'
-              : 'bg-forest/10 dark:bg-forest/20 border-forest/40 dark:border-forest/60 text-forest dark:text-dark-forest'
+
+      {/* 展开/折叠指示器 */}
+      {node.childCount > 0 && (
+        <div
+          className={`flex items-center gap-0.5 mt-1 px-2 py-0.5 rounded-full text-[10px] font-medium border shadow-sm whitespace-nowrap cursor-pointer select-none transition-colors
+            ${isCollapsed
+              ? 'bg-cinnabar/10 dark:bg-cinnabar/20 border-cinnabar/40 dark:border-cinnabar/60 text-cinnabar dark:text-dark-cinnabar hover:bg-cinnabar/20'
+              : 'bg-forest/10 dark:bg-forest/20 border-forest/40 dark:border-forest/60 text-forest dark:text-dark-forest hover:bg-forest/20'
             }`}
+          onClick={(e) => { e.stopPropagation(); onToggle(nodeId); }}
         >
-          {collapsed ? (
-            <span className="flex items-center gap-0.5">
+          {isCollapsed ? (
+            <>
               <ChevronRightIcon className="h-3 w-3" />
-              {childCount}人
-            </span>
+              <span>{node.childCount}人</span>
+            </>
           ) : (
-            <span className="flex items-center gap-0.5">
-              收起
-            </span>
+            <>
+              <ChevronDownIcon className="h-3 w-3" />
+              <span>收起</span>
+            </>
           )}
-        </span>
+        </div>
+      )}
+
+      {/* 子节点 */}
+      {children.length > 0 && (
+        <>
+          {/* 竖线（父到分叉） */}
+          <div className="w-px h-4 bg-amber-300/50 dark:bg-amber-600/30" />
+
+          {/* 子树容器 */}
+          <div className="flex items-start gap-0">
+            {children.map((cid, idx) => (
+              <div key={cid} className="flex flex-col items-center relative">
+                {/* 横线连接 */}
+                <div className="flex items-center">
+                  {/* 左横线（非第一个子节点） */}
+                  {idx > 0 && (
+                    <div className="w-3 sm:w-4 h-px bg-amber-300/50 dark:bg-amber-600/30" />
+                  )}
+                  {/* 竖线（子到卡片） */}
+                  <div className="w-px h-4 bg-amber-300/50 dark:bg-amber-600/30" />
+                </div>
+                {/* 递归子节点 */}
+                <TreeItem
+                  nodeId={cid}
+                  nodeMap={nodeMap}
+                  collapsedIds={collapsedIds}
+                  onToggle={onToggle}
+                />
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
 }
 
-const nodeTypes = { personNode: PersonNode };
-
-/* ---------- 内部组件 ---------- */
-function TreeViewInner({ data }: TreeViewProps) {
-  const { fitView, setNodes, setEdges } = useReactFlow();
+/* ---------- 主组件 ---------- */
+export default function TreeView({ data }: TreeViewProps) {
   const treeMap = useMemo(() => buildTree(data), [data]);
-  const rootIds = useMemo(() => (data.generations[0]?.people || []).map(p => p.id!).filter(Boolean), [data]);
+  const rootIds = useMemo(
+    () => (data.generations[0]?.people || []).map(p => p.id!).filter(Boolean),
+    [data]
+  );
 
-  const collapsedIdsRef = useRef<Set<string>>(new Set());
-  // 初始化
-  useMemo(() => {
+  const [collapsedIds, setCollapsedIds] = useState<Set<string>>(() => {
+    const s = new Set<string>();
     treeMap.forEach((node) => {
-      if (node.depth >= DEFAULT_EXPAND_DEPTH) collapsedIdsRef.current.add(node.id);
+      if (node.depth >= DEFAULT_EXPAND_DEPTH) s.add(node.id);
+    });
+    return s;
+  });
+
+  const toggleNode = useCallback((nodeId: string) => {
+    setCollapsedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(nodeId)) {
+        next.delete(nodeId);
+      } else {
+        next.add(nodeId);
+        const node = treeMap.get(nodeId);
+        if (node) {
+          const stack = [...node.childIds];
+          while (stack.length) {
+            const cid = stack.pop()!;
+            next.add(cid);
+            const child = treeMap.get(cid);
+            if (child) stack.push(...child.childIds);
+          }
+        }
+      }
+      return next;
     });
   }, [treeMap]);
 
-  const toggleNode = useCallback((nodeId: string) => {
-    const prev = collapsedIdsRef.current;
-    const next = new Set(prev);
-    if (next.has(nodeId)) {
-      next.delete(nodeId);
-    } else {
-      next.add(nodeId);
-      const node = treeMap.get(nodeId);
-      if (node) {
-        const stack = [...node.childIds];
-        while (stack.length) {
-          const cid = stack.pop()!;
-          next.add(cid);
-          const child = treeMap.get(cid);
-          if (child) stack.push(...child.childIds);
-        }
-      }
-    }
-    collapsedIdsRef.current = next;
-    // 直接通过 ReactFlow API 更新节点
-    const { nodes: newNodes, edges: newEdges } = layoutTree(treeMap, rootIds, next);
-    setNodes(newNodes);
-    setEdges(newEdges);
-    // 延迟 fitView
-    setTimeout(() => fitView({ padding: 0.15, duration: 300 }), 50);
-  }, [treeMap, rootIds, setNodes, setEdges, fitView]);
-
-  const toggleRef = useRef<(nodeId: string) => void>(undefined);
-  toggleRef.current = toggleNode;
+  // Pan/zoom
+  const containerRef = useRef<HTMLDivElement>(null);
+  const panzoomRef = useRef<any>(null);
 
   useEffect(() => {
-    globalToggleFn = toggleRef.current!;
-    return () => { globalToggleFn = null; };
-  }, [toggleRef]);
+    if (!containerRef.current) return;
 
-  // 初始化时居中
-  const nodesInitialized = useNodesInitialized();
-  const fittedRef = useRef(false);
-  useEffect(() => {
-    if (nodesInitialized && !fittedRef.current) {
-      fittedRef.current = true;
-      const timer = setTimeout(() => fitView({ padding: 0.15, duration: 500 }), 100);
-      return () => clearTimeout(timer);
-    }
-  }, [nodesInitialized, fitView]);
+    let destroy: (() => void) | null = null;
+    import('@panzoom/panzoom').then(({ default: Panzoom }) => {
+      if (!containerRef.current) return;
+      const parent = containerRef.current.parentElement;
+      if (!parent) return;
 
-  const { nodes, edges } = useMemo(() => {
-    return layoutTree(treeMap, rootIds, collapsedIdsRef.current);
-  }, [treeMap, rootIds]);
+      const pz = Panzoom(containerRef.current, {
+        contain: 'outside',
+        maxScale: 4,
+        minScale: 0.1,
+        startScale: 0.7,
+        startX: 0,
+        startY: 0,
+      });
 
-  // 初始化时设置节点
-  useEffect(() => {
-    setNodes(nodes);
-    setEdges(edges);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+      parent.addEventListener('wheel', pz.zoomWithWheel);
+      containerRef.current.addEventListener('panzoomchange', (e: any) => {
+        // Sync zoom buttons
+        const btns = parent.querySelectorAll('.zoom-btn');
+        btns[0]?.classList.toggle('opacity-30', e.detail.scale >= 4);
+        btns[1]?.classList.toggle('opacity-30', e.detail.scale <= 0.1);
+      });
+
+      panzoomRef.current = pz;
+
+      // 初始居中
+      setTimeout(() => {
+        if (!parent || !containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        pz.pan(
+          (parent.clientWidth / 2) - (rect.width * 0.7 / 2),
+          20
+        );
+      }, 100);
+
+      destroy = () => {
+        parent.removeEventListener('wheel', pz.zoomWithWheel);
+        pz.destroy();
+      };
+    });
+
+    return () => { destroy?.(); };
+  }, []);
+
+  const handleZoomIn = useCallback(() => {
+    panzoomRef.current?.zoomIn();
+  }, []);
+
+  const handleZoomOut = useCallback(() => {
+    panzoomRef.current?.zoomOut();
+  }, []);
+
+  const handleFitView = useCallback(() => {
+    if (!containerRef.current || !panzoomRef.current) return;
+    const parent = containerRef.current.parentElement;
+    if (!parent) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const scaleX = parent.clientWidth / (rect.width + 80);
+    const scaleY = parent.clientHeight / (rect.height + 80);
+    const scale = Math.min(scaleX, scaleY, 1.5);
+    panzoomRef.current.zoomTo(scale);
+    panzoomRef.current.pan(
+      (parent.clientWidth - rect.width * scale) / 2,
+      20
+    );
+  }, []);
 
   if (!rootIds.length) {
-    return <div className="w-full bg-card dark:bg-dark-card shadow-sm p-6 text-center text-muted dark:text-dark-muted text-sm">暂无数据</div>;
+    return (
+      <div className="w-full bg-card dark:bg-dark-card shadow-sm p-6 text-center text-muted dark:text-dark-muted text-sm">
+        暂无数据
+      </div>
+    );
   }
 
   return (
     <div className="w-full">
       <div className="bg-card dark:bg-dark-card shadow-sm overflow-hidden">
+        {/* Header */}
         <div className="flex items-center justify-between px-3 sm:px-6 py-3 border-b border-border dark:border-dark-border">
           <Squares2X2Icon className="h-5 w-5 text-cinnabar" />
           <h2 className="text-base sm:text-lg font-bold font-serif text-ink dark:text-dark-text">家族树状图</h2>
-          <p className="text-[10px] sm:text-xs text-muted dark:text-dark-muted">点击人物卡片展开/折叠 · 拖拽空白区域移动</p>
+          <p className="text-[10px] sm:text-xs text-muted dark:text-dark-muted">
+            点击卡片展开/折叠 · 滚轮缩放 · 拖拽移动
+          </p>
         </div>
-        <div className="w-full h-[70vh] sm:h-[80vh]">
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            nodeTypes={nodeTypes}
-            defaultViewport={{ x: 0, y: 0, zoom: 0.6 }}
-            minZoom={0.05}
-            maxZoom={4}
-            proOptions={{ hideAttribution: true }}
-            nodesDraggable={false}
-            panOnDrag={true}
-          >
-            <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#E8D5B7" />
-            <Controls showInteractive={false} position="bottom-right" className="!bg-card dark:!bg-dark-card !rounded-lg !shadow-md !border !border-border" />
-          </ReactFlow>
+
+        {/* 画布区域 */}
+        <div
+          ref={containerRef.current ? undefined : undefined}
+          className="w-full h-[70vh] sm:h-[80vh] relative overflow-hidden bg-paper dark:bg-dark-bg cursor-grab active:cursor-grabbing"
+          style={{ touchAction: 'none' }}
+        >
+          {/* 背景装饰 */}
+          <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
+            backgroundImage: 'radial-gradient(circle, #8B2500 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }} />
+
+          {/* 可平移缩放的树内容 */}
+          <div ref={containerRef} className="origin-top-left">
+            <div className="flex gap-6 p-8">
+              {rootIds.map(rid => (
+                <TreeItem
+                  key={rid}
+                  nodeId={rid}
+                  nodeMap={treeMap}
+                  collapsedIds={collapsedIds}
+                  onToggle={toggleNode}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* 控制按钮 */}
+          <div className="absolute bottom-4 right-4 flex flex-col gap-2 z-10">
+            <button
+              onClick={handleZoomIn}
+              className="zoom-btn w-9 h-9 flex items-center justify-center bg-card dark:bg-dark-card rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors text-lg font-bold"
+              title="放大"
+            >+</button>
+            <button
+              onClick={handleZoomOut}
+              className="zoom-btn w-9 h-9 flex items-center justify-center bg-card dark:bg-dark-card rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors text-lg font-bold"
+              title="缩小"
+            >−</button>
+            <button
+              onClick={handleFitView}
+              className="w-9 h-9 flex items-center justify-center bg-card dark:bg-dark-card rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors"
+              title="适应视图"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* 展开全部 / 折叠全部 */}
+          <div className="absolute top-4 right-4 flex gap-2 z-10">
+            <button
+              onClick={() => setCollapsedIds(new Set())}
+              className="px-3 py-1.5 text-xs bg-card dark:bg-dark-card rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors"
+            >
+              展开全部
+            </button>
+            <button
+              onClick={() => {
+                const s = new Set<string>();
+                treeMap.forEach((node) => {
+                  if (node.depth >= 1) s.add(node.id);
+                });
+                setCollapsedIds(s);
+              }}
+              className="px-3 py-1.5 text-xs bg-card dark:bg-dark-card rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors"
+            >
+              折叠全部
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  );
-}
-
-export default function TreeView(props: TreeViewProps) {
-  return (
-    <ReactFlowProvider>
-      <TreeViewInner {...props} />
-    </ReactFlowProvider>
   );
 }
