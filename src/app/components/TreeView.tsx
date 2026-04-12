@@ -155,20 +155,16 @@ export default function TreeView({ data }: TreeViewProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const pzRef = useRef<any>(null);
-  const initedRef = useRef(false);
+  const prevSizeRef = useRef('');
 
-  // fitView 辅助函数
+  // fitView：直接用 totalW/totalH
   const doFitView = useCallback(() => {
-    if (!wrapperRef.current || !pzRef.current || !innerRef.current) return;
-    const parent = wrapperRef.current;
-    const pw = parent.clientWidth;
-    const ph = parent.clientHeight;
-    const tw = innerRef.current.scrollWidth || totalW;
-    const th = innerRef.current.scrollHeight || totalH;
-    if (tw === 0 || th === 0) return;
-    const s = Math.min(pw / tw, ph / th, 1.5) * 0.9;
-    pzRef.current.zoom(s);
-    pzRef.current.pan((pw - tw * s) / 2, (ph - th * s) / 2);
+    if (!wrapperRef.current || !pzRef.current || totalW === 0 || totalH === 0) return;
+    const pw = wrapperRef.current.clientWidth;
+    const ph = wrapperRef.current.clientHeight;
+    const s = Math.min(pw / totalW, ph / totalH, 1.5) * 0.85;
+    pzRef.current.zoom(s, { animate: true });
+    pzRef.current.pan((pw - totalW * s) / 2, (ph - totalH * s) / 2, { animate: true });
   }, [totalW, totalH]);
 
   // 初始化 panzoom（只执行一次）
@@ -185,28 +181,27 @@ export default function TreeView({ data }: TreeViewProps) {
         startScale: 1,
         startX: 0,
         startY: 0,
+        animate: true,
       });
 
       parent.addEventListener('wheel', pz.zoomWithWheel, { passive: false });
       pzRef.current = pz;
-
-      // 等容器稳定后居中
-      setTimeout(() => {
-        doFitView();
-        initedRef.current = true;
-      }, 300);
     });
 
     return () => {
       if (pzRef.current) { pzRef.current.destroy(); pzRef.current = null; }
-      initedRef.current = false;
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // 展开/折叠后自动适应视图（跳过初始化）
+  // 当尺寸变化时自动适应视图
   useEffect(() => {
-    if (!initedRef.current) return;
-    doFitView();
+    if (totalW === 0 || totalH === 0) return;
+    const key = totalW + 'x' + totalH;
+    if (key === prevSizeRef.current) return;
+    prevSizeRef.current = key;
+    // 延迟执行，等待 panzoom 就绪和 DOM 稳定
+    const timer = setTimeout(() => doFitView(), 350);
+    return () => clearTimeout(timer);
   }, [totalW, totalH, doFitView]);
 
   const handleZoomIn = useCallback(() => pzRef.current?.zoomIn(), []);
