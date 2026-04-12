@@ -48,7 +48,6 @@ function buildTree(data: FamilyData): Map<string, TreeNode> {
   return map;
 }
 
-/* ---------- 布局：返回正坐标 ---------- */
 interface PlacedNode {
   id: string; name: string; info?: string;
   x: number; y: number; borderColor: string;
@@ -91,17 +90,14 @@ function layout(nm: Map<string, TreeNode>, roots: string[], col: Set<string>) {
     }
   }
 
-  // 计算所有根的总宽度
   const rws = roots.map(r => subtreeW(nm, r, col));
   const tw = rws.reduce((a, b) => a + b, 0) + H_GAP * (Math.max(roots.length - 1, 0));
-  let sx = PADDING + tw / 2; // 从 PADDING 开始，根居中于自己的子树宽度
+  let sx = PADDING + tw / 2;
   for (let i = 0; i < roots.length; i++) {
-    const cx = sx;
-    lay(roots[i], cx, PADDING);
+    lay(roots[i], sx, PADDING);
     sx += rws[i] + H_GAP;
   }
 
-  // 计算 SVG 总尺寸
   const totalW = (nodes.length ? Math.max(...nodes.map(n => n.x + CARD_W)) : 0) + PADDING;
   const totalH = (nodes.length ? Math.max(...nodes.map(n => n.y + CARD_H)) : 0) + PADDING;
 
@@ -151,68 +147,88 @@ export default function TreeView({ data }: TreeViewProps) {
     [treeMap, rootIds, collapsedIds]
   );
 
-  // 画布引用
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
-  const pzRef = useRef<any>(null);
-  const prevSizeRef = useRef('');
+  // 画布状态：自己管理 transform，不用 panzoom
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
+  const isDragging = useRef(false);
+  const dragStart = useRef({ x: 0, y: 0, tx: 0, ty: 0 });
 
-  // fitView：直接用 totalW/totalH
-  const doFitView = useCallback(() => {
-    if (!wrapperRef.current || !pzRef.current || totalW === 0 || totalH === 0) return;
-    const pw = wrapperRef.current.clientWidth;
-    const ph = wrapperRef.current.clientHeight;
+  // fitView：直接设置 transform
+  const doFitView = useCallback((animated = false) => {
+    if (!containerRef.current || totalW === 0 || totalH === 0) return;
+    const pw = containerRef.current.clientWidth;
+    const ph = containerRef.current.clientHeight;
     const s = Math.min(pw / totalW, ph / totalH, 1.5) * 0.85;
-    pzRef.current.zoom(s, { animate: true });
-    pzRef.current.pan((pw - totalW * s) / 2, (ph - totalH * s) / 2, { animate: true });
+    const tx = (pw - totalW * s) / 2;
+    const ty = (ph - totalH * s) / 2;
+    setTransform({ x: tx, y: ty, scale: s });
   }, [totalW, totalH]);
 
-  // 初始化 panzoom（只执行一次）
-  useEffect(() => {
-    if (!innerRef.current || !wrapperRef.current) return;
-
-    import('@panzoom/panzoom').then(({ default: Panzoom }) => {
-      if (!innerRef.current || !wrapperRef.current) return;
-      const parent = wrapperRef.current;
-
-      const pz = Panzoom(innerRef.current, {
-        maxScale: 4,
-        minScale: 0.02,
-        startScale: 1,
-        startX: 0,
-        startY: 0,
-        animate: true,
-      });
-
-      parent.addEventListener('wheel', pz.zoomWithWheel, { passive: false });
-      pzRef.current = pz;
-    });
-
-    return () => {
-      if (pzRef.current) { pzRef.current.destroy(); pzRef.current = null; }
-    };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // 当尺寸变化时自动适应视图
   useEffect(() => {
     if (totalW === 0 || totalH === 0) return;
-    const key = totalW + 'x' + totalH;
-    if (key === prevSizeRef.current) return;
-    prevSizeRef.current = key;
-    // 延迟执行，等待 panzoom 就绪和 DOM 稳定
-    const timer = setTimeout(() => doFitView(), 350);
+    const timer = setTimeout(() => doFitView(true), 150);
     return () => clearTimeout(timer);
   }, [totalW, totalH, doFitView]);
 
-  const handleZoomIn = useCallback(() => pzRef.current?.zoomIn(), []);
-  const handleZoomOut = useCallback(() => pzRef.current?.zoomOut(), []);
-  const handleFitView = useCallback(() => doFitView(), [doFitView]);
+  // 鼠标/触摸拖拽
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    if (e.button !== 0) return;
+    isDragging.current = true;
+    dragStart.current = { x: e.clientX, y: e.clientY, tx: transform.x, ty: transform.y };
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+  }, [transform.x, transform.y]);
+
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!isDragging.current) return;
+    const dx = e.clientX - dragStart.current.x;
+    const dy = e.clientY - dragStart.current.y;
+    setTransform(prev => ({ ...prev, x: dragStart.current.tx + dx, y: dragStart.current.ty + dy }));
+  }, []);
+
+  const handlePointerUp = useCallback(() => {
+    isDragging.current = false;
+  }, []);
+
+  // 滚轮缩放
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    e.preventDefault();
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const factor = e.deltaY > 0 ? 0.9 : 1.1;
+    const newScale = Math.min(Math.max(transform.scale * factor, 0.02), 4);
+    // 以鼠标位置为中心缩放
+    const newTx = mouseX - (mouseX - transform.x) * (newScale / transform.scale);
+    const newTy = mouseY - (mouseY - transform.y) * (newScale / transform.scale);
+    setTransform({ x: newTx, y: newTy, scale: newScale });
+  }, [transform]);
+
+  const handleZoomIn = useCallback(() => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const cx = rect.width / 2, cy = rect.height / 2;
+    const ns = Math.min(transform.scale * 1.3, 4);
+    setTransform({ x: cx - (cx - transform.x) * (ns / transform.scale), y: cy - (cy - transform.y) * (ns / transform.scale), scale: ns });
+  }, [transform]);
+
+  const handleZoomOut = useCallback(() => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const cx = rect.width / 2, cy = rect.height / 2;
+    const ns = Math.max(transform.scale * 0.7, 0.02);
+    setTransform({ x: cx - (cx - transform.x) * (ns / transform.scale), y: cy - (cy - transform.y) * (ns / transform.scale), scale: ns });
+  }, [transform]);
+
+  const handleFitView = useCallback(() => doFitView(true), [doFitView]);
 
   if (!rootIds.length) {
     return (
       <div className="w-full bg-card dark:bg-dark-card shadow-sm p-6 text-center text-muted dark:text-dark-muted text-sm">暂无数据</div>
     );
   }
+
+  const t = `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`;
 
   return (
     <div className="w-full">
@@ -224,9 +240,14 @@ export default function TreeView({ data }: TreeViewProps) {
         </div>
 
         <div
-          ref={wrapperRef}
-          className="w-full h-[70vh] sm:h-[80vh] relative overflow-hidden bg-paper dark:bg-dark-bg cursor-grab active:cursor-grabbing"
-          style={{ touchAction: 'none' }}
+          ref={containerRef}
+          className="w-full h-[70vh] sm:h-[80vh] relative overflow-hidden bg-paper dark:bg-dark-bg"
+          style={{ touchAction: 'none', cursor: isDragging.current ? 'grabbing' : 'grab' }}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          onWheel={handleWheel}
         >
           {/* 背景 */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
@@ -234,31 +255,23 @@ export default function TreeView({ data }: TreeViewProps) {
             backgroundSize: '20px 20px',
           }} />
 
-          {/* 可平移缩放的画布 */}
-          <div ref={innerRef} className="origin-top-left" style={{ width: totalW, height: totalH }}>
-            {/* SVG 连线层 */}
-            <svg
-              width={totalW}
-              height={totalH}
-              className="absolute top-0 left-0 pointer-events-none"
-              style={{ overflow: 'visible' }}
-            >
-              {edges.map((e, i) => {
-                const my = e.y1 + V_GAP * 0.45;
-                return (
-                  <path
-                    key={i}
-                    d={`M ${e.x1} ${e.y1} C ${e.x1} ${my}, ${e.x2} ${e.y2 - V_GAP * 0.45}, ${e.x2} ${e.y2}`}
-                    fill="none"
-                    stroke="#C4956A"
-                    strokeWidth="1.5"
-                    opacity="0.5"
-                  />
-                );
-              })}
+          {/* 树画布 */}
+          <div
+            className="absolute top-0 left-0"
+            style={{ width: totalW, height: totalH, transform, transformOrigin: '0 0' }}
+          >
+            {/* SVG 连线 */}
+            <svg width={totalW} height={totalH} className="absolute top-0 left-0 pointer-events-none" style={{ overflow: 'visible' }}>
+              {edges.map((e, i) => (
+                <path
+                  key={i}
+                  d={`M ${e.x1} ${e.y1} C ${e.x1} ${e.y1 + V_GAP * 0.45}, ${e.x2} ${e.y2 - V_GAP * 0.45}, ${e.x2} ${e.y2}`}
+                  fill="none" stroke="#C4956A" strokeWidth="1.5" opacity="0.5"
+                />
+              ))}
             </svg>
 
-            {/* 节点卡片层 */}
+            {/* 节点 */}
             {nodes.map(node => (
               <div
                 key={node.id}
