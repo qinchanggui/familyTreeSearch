@@ -206,7 +206,7 @@ export default function TreeView({ data }: TreeViewProps) {
     });
   }, [vs]);
 
-  const onGesture = useCallback((e: React.GestureEvent) => {
+  const onGesture = useCallback((e: any) => {
     e.preventDefault();
     if (e.touches.length === 2) {
       const t0 = e.touches[0];
