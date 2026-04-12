@@ -140,6 +140,8 @@ function PersonNode({ data }: any) {
   useEffect(() => {
     const el = nodeRef.current;
     if (!el) return;
+    // Debug: confirm useEffect runs
+    (window as any).__treeDebug = 'useEffect ran';
     const onDown = (e: PointerEvent) => {
       mouseDownPos.current = { x: e.clientX, y: e.clientY };
     };
@@ -150,6 +152,7 @@ function PersonNode({ data }: any) {
       mouseDownPos.current = null;
       if (Math.abs(dx) > 5 || Math.abs(dy) > 5) return;
       const fn = getToggleFn();
+      (window as any).__treeDebug = 'pointerup fired, fn=' + !!fn;
       if (fn) flushSync(() => fn(nodeId));
     };
     el.addEventListener('pointerdown', onDown);
