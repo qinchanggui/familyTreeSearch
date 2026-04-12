@@ -202,6 +202,27 @@ function TreeViewInner({ data }: TreeViewProps) {
     });
   }, [treeMap]);
 
+  // 使用原生事件监听，绕过 ReactFlow d3-zoom 的事件拦截
+  const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handler = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const nodeEl = target.closest('.react-flow__node');
+      if (!nodeEl) return;
+      const nodeId = nodeEl.getAttribute('data-id');
+      if (!nodeId) return;
+      const treeNode = treeMap.get(nodeId);
+      if (!treeNode || treeNode.childCount === 0) return;
+      toggleNode(nodeId);
+    };
+
+    container.addEventListener('click', handler, true);
+    return () => container.removeEventListener('click', handler, true);
+  }, [treeMap, toggleNode]);
+
   // 初始化时居中
   const nodesInitialized = useNodesInitialized();
   const fittedRef = useRef(false);
@@ -251,12 +272,7 @@ function TreeViewInner({ data }: TreeViewProps) {
             proOptions={{ hideAttribution: true }}
             nodesDraggable={false}
             panOnDrag={true}
-            onNodeClick={(_event, node) => {
-              const nodeId = node.id;
-              const treeNode = treeMap.get(nodeId);
-              if (!treeNode || treeNode.childCount === 0) return;
-              toggleNode(nodeId);
-            }}
+            ref={containerRef}
           >
             <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#E8D5B7" />
             <Controls showInteractive={false} position="bottom-right" className="!bg-card dark:!bg-dark-card !rounded-lg !shadow-md !border !border-border" />
