@@ -195,6 +195,7 @@ export default function TreeView({ data }: TreeViewProps) {
     if (!innerRef.current || !wrapperRef.current) return;
     import('@panzoom/panzoom').then(({ default: Panzoom }) => {
       if (!innerRef.current || !wrapperRef.current) return;
+      const currentW = innerRef.current.scrollWidth;
       const pz = Panzoom(innerRef.current, {
         maxScale: 4,
         minScale: 0.02,
@@ -208,13 +209,13 @@ export default function TreeView({ data }: TreeViewProps) {
       // 初始居中
       const parent = wrapperRef.current;
       const scale = 0.8;
-      pz.zoomTo(scale);
+      pz.zoom(scale);
       pz.pan(
-        (parent.clientWidth / 2) - (svgW * scale / 2),
+        (parent.clientWidth / 2) - (currentW * scale / 2),
         30
       );
     });
-  }, [svgW]);
+  }, []);
 
   useEffect(() => {
     initPanZoom();
@@ -240,7 +241,7 @@ export default function TreeView({ data }: TreeViewProps) {
     const scaleX = parent.clientWidth / (svgW + 40);
     const scaleY = parent.clientHeight / (svgH + 40);
     const scale = Math.min(scaleX, scaleY, 1.5);
-    panzoomRef.current.zoomTo(scale);
+    panzoomRef.current.zoom(scale);
     panzoomRef.current.pan(
       (parent.clientWidth - svgW * scale) / 2,
       (parent.clientHeight - svgH * scale) / 2
