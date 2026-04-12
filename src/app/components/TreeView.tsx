@@ -150,6 +150,7 @@ export default function TreeView({ data }: TreeViewProps) {
   const [vs, setVs] = useState({ x: 0, y: 0, scale: 1 });
   const dragging = useRef(false);
   const dragRef = useRef({ mx: 0, my: 0, ox: 0, oy: 0, os: 0 });
+  const gestureRef = useRef<{ dist: number; scale: number } | null>(null);
 
   // fitView
   const fitView = useCallback((anim = false) => {
@@ -169,6 +170,36 @@ export default function TreeView({ data }: TreeViewProps) {
     const t = setTimeout(() => fitView(true), 200);
     return () => clearTimeout(t);
   }, [totalW, totalH, fitView]);
+
+  // 双指缩放（原生事件）
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const handler = (e: Event) => {
+      const ge = e as any;
+      ge.preventDefault();
+      if (!ge.touches || ge.touches.length < 2) return;
+      const t0 = ge.touches[0];
+      const t1 = ge.touches[1];
+      const cx = (t0.clientX + t1.clientX) / 2;
+      const cy = (t0.clientY + t1.clientY) / 2;
+      const dist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+      if (!gestureRef.current) { gestureRef.current = { dist, scale: vs.scale }; return; }
+      const prev = gestureRef.current!;
+      const ratio = dist / Math.max(prev.dist, 1);
+      const ns = Math.min(Math.max(prev.scale * ratio, 0.02), 4);
+      gestureRef.current = { dist, scale: ns };
+      const rect = el.getBoundingClientRect();
+      const mx = cx - rect.left;
+      const my = cy - rect.top;
+      setVs(p => ({ x: mx - (mx - p.x) * (ns / p.scale), y: my - (my - p.y) * (ns / p.scale), scale: ns }));
+    };
+    el.addEventListener('gesturechange', handler, { passive: false });
+    el.addEventListener('gestureend', () => { gestureRef.current = null; });
+    return () => {
+      el.removeEventListener('gesturechange', handler);
+    };
+  }, []);
 
   // 拖拽
   const onDown = useCallback((e: React.PointerEvent) => {
@@ -206,27 +237,6 @@ export default function TreeView({ data }: TreeViewProps) {
     });
   }, [vs]);
 
-  const onGesture = useCallback((e: any) => {
-    e.preventDefault();
-    if (e.touches.length === 2) {
-      const t0 = e.touches[0];
-      const t1 = e.touches[1];
-      const cx = (t0.clientX + t1.clientX) / 2;
-      const cy = (t0.clientY + t1.clientY) / 2;
-      const dist: number = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
-      if (!gestureRef.current) gestureRef.current = { dist, scale: vs.scale };
-      const { dist: prevDist, scale: prevScale } = gestureRef.current;
-      const ratio: number = dist / Math.max(prevDist || 0, 1);
-      const ns = Math.min(Math.max(prevScale * ratio, 0.02), 4);
-      gestureRef.current = { dist, scale: ns };
-      const rect = containerRef.current?.getBoundingClientRect();
-      if (!rect) return;
-      const mx = cx - rect.left;
-      const my = cy - rect.top;
-      setVs({ x: mx - (mx - vs.x) * (ns / vs.scale), y: my - (my - vs.y) * (ns / vs.scale), scale: ns });
-    }
-  }, [vs]);
-
   const zoomAt = useCallback((factor: number) => {
     const el = containerRef.current;
     if (!el) return;
@@ -251,10 +261,12 @@ export default function TreeView({ data }: TreeViewProps) {
   return (
     <div className="w-full">
       <div className="bg-card dark:bg-dark-card shadow-sm overflow-hidden">
-        <div className="flex items-center justify-between px-3 sm:px-6 py-3 border-b border-border dark:border-dark-border">
-          <Squares2X2Icon className="h-5 w-5 text-cinnabar" />
-          <h2 className="text-base sm:text-lg font-bold font-serif text-ink dark:text-dark-text">家族树状图</h2>
-          <p className="text-[10px] sm:text-xs text-muted dark:text-dark-muted hidden sm:block">点击卡片展开/折叠 · 滚轮缩放 · 拖拽移动</p>
+        <div className="relative px-3 sm:px-6 py-3 border-b border-border dark:border-dark-border">
+          <div className="flex items-center gap-2 absolute left-3 sm:left-6 top-3">
+            <Squares2X2Icon className="h-5 w-5 text-cinnabar" />
+          </div>
+          <h2 className="text-base sm:text-lg font-bold font-serif text-ink dark:text-dark-text text-center">家族树状图</h2>
+          <p className="text-[10px] sm:text-xs text-muted dark:text-dark-muted hidden sm:block text-center mt-0.5">点击卡片展开/折叠 · 滚轮缩放 · 拖拽移动</p>
         </div>
 
         <div
@@ -266,7 +278,6 @@ export default function TreeView({ data }: TreeViewProps) {
           onPointerUp={onUp}
           onPointerCancel={onUp}
           onWheel={onWheel}
-          onGestureStart={onGesture}
         >
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
             backgroundImage: 'radial-gradient(circle, #8B2500 1px, transparent 1px)',
