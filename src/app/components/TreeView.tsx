@@ -213,10 +213,10 @@ export default function TreeView({ data }: TreeViewProps) {
       const t1 = e.touches[1];
       const cx = (t0.clientX + t1.clientX) / 2;
       const cy = (t0.clientY + t1.clientY) / 2;
-      const dist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+      const dist: number = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
       if (!gestureRef.current) gestureRef.current = { dist, scale: vs.scale };
       const { dist: prevDist, scale: prevScale } = gestureRef.current;
-      const ratio = dist / Math.max(prevDist, 1);
+      const ratio: number = dist / Math.max(prevDist || 0, 1);
       const ns = Math.min(Math.max(prevScale * ratio, 0.02), 4);
       gestureRef.current = { dist, scale: ns };
       const rect = containerRef.current?.getBoundingClientRect();
