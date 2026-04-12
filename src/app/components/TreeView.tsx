@@ -161,10 +161,12 @@ export default function TreeView({ data }: TreeViewProps) {
     setVs({ x: (pw - totalW * s) / 2, y: (ph - totalH * s) / 2, scale: s });
   }, [totalW, totalH]);
 
-  // 初始化 + 尺寸变化时自动 fitView
+  // 首次渲染后自动 fitView
+  const firstRender = useRef(true);
   useEffect(() => {
-    if (totalW === 0 || totalH === 0) return;
-    const t = setTimeout(() => fitView(true), 150);
+    if (totalW === 0 || totalH === 0 || !firstRender.current) return;
+    firstRender.current = false;
+    const t = setTimeout(() => fitView(true), 200);
     return () => clearTimeout(t);
   }, [totalW, totalH, fitView]);
 
