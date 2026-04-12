@@ -153,7 +153,14 @@ function PersonNode({ data }: any) {
       if (Math.abs(dx) > 5 || Math.abs(dy) > 5) return;
       const fn = getToggleFn();
       (window as any).__treeDebug = 'pointerup fired, fn=' + !!fn;
-      if (fn) flushSync(() => fn(nodeId));
+      if (fn) {
+        try {
+          flushSync(() => fn(nodeId));
+          (window as any).__treeDebug += ', flushSync ok';
+        } catch (e) {
+          (window as any).__treeDebug += ', ERROR: ' + (e as Error).message;
+        }
+      }
     };
     el.addEventListener('pointerdown', onDown);
     el.addEventListener('pointerup', onUp);
