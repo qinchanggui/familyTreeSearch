@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 import ReactFlow, {
   Node, Edge, Background, Controls,
   Position, Handle, BackgroundVariant,
@@ -149,7 +150,7 @@ function PersonNode({ data }: any) {
       mouseDownPos.current = null;
       if (Math.abs(dx) > 5 || Math.abs(dy) > 5) return;
       const fn = getToggleFn();
-      if (fn) fn(nodeId);
+      if (fn) flushSync(() => fn(nodeId));
     };
     el.addEventListener('pointerdown', onDown);
     el.addEventListener('pointerup', onUp);
