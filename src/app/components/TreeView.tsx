@@ -130,29 +130,33 @@ function layoutTree(nodeMap: Map<string, TreeNode>, rootIds: string[], collapsed
 /* ---------- 自定义节点组件 ---------- */
 function PersonNode({ data }: any) {
   const { label, borderColor, childCount, collapsed, nodeId } = data;
+  const nodeRef = useRef<HTMLDivElement>(null);
   const mouseDownPos = useRef<{ x: number; y: number } | null>(null);
 
-  const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    mouseDownPos.current = { x: e.clientX, y: e.clientY };
-  }, []);
-
-  const handlePointerUp = useCallback((e: React.PointerEvent) => {
-    if (!mouseDownPos.current) return;
-    const dx = e.clientX - mouseDownPos.current.x;
-    const dy = e.clientY - mouseDownPos.current.y;
-    mouseDownPos.current = null;
-    // 只有在几乎没有移动时才算点击（排除拖拽）
-    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) return;
-    if (globalToggleFn) {
-      globalToggleFn(nodeId);
-    }
+  useEffect(() => {
+    const el = nodeRef.current;
+    if (!el) return;
+    const onDown = (e: PointerEvent) => {
+      mouseDownPos.current = { x: e.clientX, y: e.clientY };
+    };
+    const onUp = (e: PointerEvent) => {
+      if (!mouseDownPos.current) return;
+      const dx = e.clientX - mouseDownPos.current.x;
+      const dy = e.clientY - mouseDownPos.current.y;
+      mouseDownPos.current = null;
+      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) return;
+      if (globalToggleFn) globalToggleFn(nodeId);
+    };
+    el.addEventListener('pointerdown', onDown);
+    el.addEventListener('pointerup', onUp);
+    return () => {
+      el.removeEventListener('pointerdown', onDown);
+      el.removeEventListener('pointerup', onUp);
+    };
   }, [nodeId]);
 
   return (
-    <div className="nopan nodrag relative"
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
-    >
+    <div ref={nodeRef} className="nopan nodrag relative">
       <Handle type="target" position={Position.Top} className="!bg-cinnabar !w-3 !h-3" />
       <div
         className="px-4 py-2.5 rounded-xl bg-card dark:bg-dark-card border-2 shadow-md hover:shadow-lg transition-shadow min-w-[100px] cursor-pointer"
