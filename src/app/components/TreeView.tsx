@@ -201,12 +201,12 @@ export default function TreeView({ data }: TreeViewProps) {
       if (!parent) return;
 
       const pz = Panzoom(containerRef.current, {
-        contain: 'outside',
         maxScale: 4,
-        minScale: 0.1,
+        minScale: 0.05,
         startScale: 0.7,
         startX: 0,
         startY: 0,
+        cursor: 'grab',
       });
 
       parent.addEventListener('wheel', pz.zoomWithWheel);
