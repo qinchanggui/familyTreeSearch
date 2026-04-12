@@ -100,11 +100,9 @@ function layout(nm: Map<string, TreeNode>, roots: string[], col: Set<string>) {
 
   const totalW = (nodes.length ? Math.max(...nodes.map(n => n.x + CARD_W)) : 0) + PADDING;
   const totalH = (nodes.length ? Math.max(...nodes.map(n => n.y + CARD_H)) : 0) + PADDING;
-
   return { nodes, edges, totalW, totalH };
 }
 
-/* ---------- 主组件 ---------- */
 export default function TreeView({ data }: TreeViewProps) {
   const treeMap = useMemo(() => buildTree(data), [data]);
   const rootIds = useMemo(
@@ -147,88 +145,85 @@ export default function TreeView({ data }: TreeViewProps) {
     [treeMap, rootIds, collapsedIds]
   );
 
-  // 画布状态：自己管理 transform，不用 panzoom
+  // 视图状态（用 viewState 避免与 CSS Transform 类型名冲突）
   const containerRef = useRef<HTMLDivElement>(null);
-  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
-  const isDragging = useRef(false);
-  const dragStart = useRef({ x: 0, y: 0, tx: 0, ty: 0 });
+  const [vs, setVs] = useState({ x: 0, y: 0, scale: 1 });
+  const dragging = useRef(false);
+  const dragRef = useRef({ mx: 0, my: 0, ox: 0, oy: 0, os: 0 });
 
-  // fitView：直接设置 transform
-  const doFitView = useCallback((animated = false) => {
-    if (!containerRef.current || totalW === 0 || totalH === 0) return;
-    const pw = containerRef.current.clientWidth;
-    const ph = containerRef.current.clientHeight;
+  // fitView
+  const fitView = useCallback((anim = false) => {
+    const el = containerRef.current;
+    if (!el || totalW === 0 || totalH === 0) return;
+    const pw = el.clientWidth;
+    const ph = el.clientHeight;
     const s = Math.min(pw / totalW, ph / totalH, 1.5) * 0.85;
-    const tx = (pw - totalW * s) / 2;
-    const ty = (ph - totalH * s) / 2;
-    setTransform({ x: tx, y: ty, scale: s });
+    setVs({ x: (pw - totalW * s) / 2, y: (ph - totalH * s) / 2, scale: s });
   }, [totalW, totalH]);
 
+  // 初始化 + 尺寸变化时自动 fitView
   useEffect(() => {
     if (totalW === 0 || totalH === 0) return;
-    const timer = setTimeout(() => doFitView(true), 150);
-    return () => clearTimeout(timer);
-  }, [totalW, totalH, doFitView]);
+    const t = setTimeout(() => fitView(true), 150);
+    return () => clearTimeout(t);
+  }, [totalW, totalH, fitView]);
 
-  // 鼠标/触摸拖拽
-  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+  // 拖拽
+  const onDown = useCallback((e: React.PointerEvent) => {
     if (e.button !== 0) return;
-    isDragging.current = true;
-    dragStart.current = { x: e.clientX, y: e.clientY, tx: transform.x, ty: transform.y };
+    dragging.current = true;
+    dragRef.current = { mx: e.clientX, my: e.clientY, ox: vs.x, oy: vs.y, os: vs.scale };
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
-  }, [transform.x, transform.y]);
+  }, [vs.x, vs.y, vs.scale]);
 
-  const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (!isDragging.current) return;
-    const dx = e.clientX - dragStart.current.x;
-    const dy = e.clientY - dragStart.current.y;
-    setTransform(prev => ({ ...prev, x: dragStart.current.tx + dx, y: dragStart.current.ty + dy }));
+  const onMove = useCallback((e: React.PointerEvent) => {
+    if (!dragging.current) return;
+    setVs(p => ({
+      x: dragRef.current.ox + (e.clientX - dragRef.current.mx),
+      y: dragRef.current.oy + (e.clientY - dragRef.current.my),
+      scale: p.scale,
+    }));
   }, []);
 
-  const handlePointerUp = useCallback(() => {
-    isDragging.current = false;
-  }, []);
+  const onUp = useCallback(() => { dragging.current = false; }, []);
 
   // 滚轮缩放
-  const handleWheel = useCallback((e: React.WheelEvent) => {
+  const onWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const factor = e.deltaY > 0 ? 0.9 : 1.1;
-    const newScale = Math.min(Math.max(transform.scale * factor, 0.02), 4);
-    // 以鼠标位置为中心缩放
-    const newTx = mouseX - (mouseX - transform.x) * (newScale / transform.scale);
-    const newTy = mouseY - (mouseY - transform.y) * (newScale / transform.scale);
-    setTransform({ x: newTx, y: newTy, scale: newScale });
-  }, [transform]);
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const f = e.deltaY > 0 ? 0.9 : 1.1;
+    const ns = Math.min(Math.max(vs.scale * f, 0.02), 4);
+    setVs({
+      x: mx - (mx - vs.x) * (ns / vs.scale),
+      y: my - (my - vs.y) * (ns / vs.scale),
+      scale: ns,
+    });
+  }, [vs]);
 
-  const handleZoomIn = useCallback(() => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
+  const zoomAt = useCallback((factor: number) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
     const cx = rect.width / 2, cy = rect.height / 2;
-    const ns = Math.min(transform.scale * 1.3, 4);
-    setTransform({ x: cx - (cx - transform.x) * (ns / transform.scale), y: cy - (cy - transform.y) * (ns / transform.scale), scale: ns });
-  }, [transform]);
+    const ns = Math.min(Math.max(vs.scale * factor, 0.02), 4);
+    setVs({
+      x: cx - (cx - vs.x) * (ns / vs.scale),
+      y: cy - (cy - vs.y) * (ns / vs.scale),
+      scale: ns,
+    });
+  }, [vs]);
 
-  const handleZoomOut = useCallback(() => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const cx = rect.width / 2, cy = rect.height / 2;
-    const ns = Math.max(transform.scale * 0.7, 0.02);
-    setTransform({ x: cx - (cx - transform.x) * (ns / transform.scale), y: cy - (cy - transform.y) * (ns / transform.scale), scale: ns });
-  }, [transform]);
-
-  const handleFitView = useCallback(() => doFitView(true), [doFitView]);
+  const tfm = `translate(${vs.x}px, ${vs.y}px) scale(${vs.scale})`;
 
   if (!rootIds.length) {
     return (
       <div className="w-full bg-card dark:bg-dark-card shadow-sm p-6 text-center text-muted dark:text-dark-muted text-sm">暂无数据</div>
     );
   }
-
-  const t = `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`;
 
   return (
     <div className="w-full">
@@ -242,51 +237,37 @@ export default function TreeView({ data }: TreeViewProps) {
         <div
           ref={containerRef}
           className="w-full h-[70vh] sm:h-[80vh] relative overflow-hidden bg-paper dark:bg-dark-bg"
-          style={{ touchAction: 'none', cursor: isDragging.current ? 'grabbing' : 'grab' }}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={handlePointerUp}
-          onWheel={handleWheel}
+          style={{ touchAction: 'none', cursor: dragging.current ? 'grabbing' : 'grab' }}
+          onPointerDown={onDown}
+          onPointerMove={onMove}
+          onPointerUp={onUp}
+          onPointerCancel={onUp}
+          onWheel={onWheel}
         >
-          {/* 背景 */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
             backgroundImage: 'radial-gradient(circle, #8B2500 1px, transparent 1px)',
             backgroundSize: '20px 20px',
           }} />
 
-          {/* 树画布 */}
-          <div
-            className="absolute top-0 left-0"
-            style={{ width: totalW, height: totalH, transform, transformOrigin: '0 0' }}
-          >
-            {/* SVG 连线 */}
+          <div className="absolute top-0 left-0" style={{ width: totalW, height: totalH, transform: tfm, transformOrigin: '0 0' }}>
             <svg width={totalW} height={totalH} className="absolute top-0 left-0 pointer-events-none" style={{ overflow: 'visible' }}>
               {edges.map((e, i) => (
-                <path
-                  key={i}
+                <path key={i}
                   d={`M ${e.x1} ${e.y1} C ${e.x1} ${e.y1 + V_GAP * 0.45}, ${e.x2} ${e.y2 - V_GAP * 0.45}, ${e.x2} ${e.y2}`}
                   fill="none" stroke="#C4956A" strokeWidth="1.5" opacity="0.5"
                 />
               ))}
             </svg>
 
-            {/* 节点 */}
             {nodes.map(node => (
-              <div
-                key={node.id}
-                className="absolute flex flex-col items-center"
-                style={{ left: node.x, top: node.y, width: CARD_W }}
-              >
+              <div key={node.id} className="absolute flex flex-col items-center" style={{ left: node.x, top: node.y, width: CARD_W }}>
                 <div
                   className="w-full px-2 py-1.5 rounded-lg bg-card dark:bg-dark-card border shadow-sm hover:shadow-md transition-all cursor-pointer select-none hover:scale-105 active:scale-95"
                   style={{ borderColor: node.borderColor }}
                   onClick={() => toggleNode(node.id)}
                   title={node.info || node.name}
                 >
-                  <p className="font-bold font-serif text-ink dark:text-dark-text text-xs leading-tight whitespace-nowrap text-center truncate">
-                    {node.name}
-                  </p>
+                  <p className="font-bold font-serif text-ink dark:text-dark-text text-xs leading-tight whitespace-nowrap text-center truncate">{node.name}</p>
                 </div>
                 {node.childCount > 0 && (
                   <div
@@ -308,22 +289,19 @@ export default function TreeView({ data }: TreeViewProps) {
             ))}
           </div>
 
-          {/* 控制按钮 */}
           <div className="absolute bottom-4 right-4 flex flex-col gap-1.5 z-10">
-            <button onClick={handleZoomIn} className="w-8 h-8 flex items-center justify-center bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors text-base font-bold" title="放大">+</button>
-            <button onClick={handleZoomOut} className="w-8 h-8 flex items-center justify-center bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors text-base font-bold" title="缩小">−</button>
-            <button onClick={handleFitView} className="w-8 h-8 flex items-center justify-center bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors" title="适应视图">
+            <button onClick={() => zoomAt(1.3)} className="w-8 h-8 flex items-center justify-center bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors text-base font-bold" title="放大">+</button>
+            <button onClick={() => zoomAt(1/1.3)} className="w-8 h-8 flex items-center justify-center bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors text-base font-bold" title="缩小">−</button>
+            <button onClick={() => fitView(true)} className="w-8 h-8 flex items-center justify-center bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors" title="适应视图">
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
             </button>
           </div>
 
-          {/* 展开/折叠全部 */}
           <div className="absolute top-3 right-3 flex gap-1.5 z-10">
             <button onClick={() => setCollapsedIds(new Set())} className="px-2.5 py-1 text-[11px] bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors">展开全部</button>
             <button onClick={() => { const s = new Set<string>(); treeMap.forEach((n) => { if (n.depth >= 1) s.add(n.id); }); setCollapsedIds(s); }} className="px-2.5 py-1 text-[11px] bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors">折叠全部</button>
           </div>
 
-          {/* 统计 */}
           <div className="absolute bottom-3 left-3 text-[10px] text-muted dark:text-dark-muted z-10">
             共 {nodes.length} 人 · {new Set(nodes.map(n => n.depth)).size} 世代
           </div>
