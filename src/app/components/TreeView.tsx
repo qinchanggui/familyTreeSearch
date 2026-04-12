@@ -28,6 +28,9 @@ const DEFAULT_EXPAND_DEPTH = 2;
 /* ---------- 全局 toggle 回调（解决 nodeTypes 闭包问题） ---------- */
 let globalToggleFn: ((nodeId: string) => void) | null = null;
 
+// 使用 getter 函数，避免闭包捕获 null 值
+function getToggleFn() { return globalToggleFn; }
+
 /* ---------- 数据结构 ---------- */
 interface TreeNode {
   id: string;
@@ -145,7 +148,8 @@ function PersonNode({ data }: any) {
       const dy = e.clientY - mouseDownPos.current.y;
       mouseDownPos.current = null;
       if (Math.abs(dx) > 5 || Math.abs(dy) > 5) return;
-      if (globalToggleFn) globalToggleFn(nodeId);
+      const fn = getToggleFn();
+      if (fn) fn(nodeId);
     };
     el.addEventListener('pointerdown', onDown);
     el.addEventListener('pointerup', onUp);
