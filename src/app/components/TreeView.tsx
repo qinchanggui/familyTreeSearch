@@ -16,6 +16,10 @@ const generationColors = [
 ];
 
 const DEFAULT_EXPAND_DEPTH = 2;
+const CARD_W = 72;  // 卡片宽度 px
+const CARD_H = 32;  // 卡片高度 px
+const H_GAP = 12;   // 兄弟节点间距
+const V_GAP = 56;   // 父子层间距
 
 /* ---------- 数据结构 ---------- */
 interface TreeNode {
@@ -58,95 +62,68 @@ function buildTree(data: FamilyData): Map<string, TreeNode> {
   return map;
 }
 
-/* ---------- 递归渲染树节点 ---------- */
-function TreeItem({
-  nodeId,
-  nodeMap,
-  collapsedIds,
-  onToggle,
-}: {
-  nodeId: string;
-  nodeMap: Map<string, TreeNode>;
-  collapsedIds: Set<string>;
-  onToggle: (id: string) => void;
-}) {
-  const node = nodeMap.get(nodeId);
-  if (!node) return null;
+/* ---------- 子树宽度（像素） ---------- */
+function subtreeW(nodeMap: Map<string, TreeNode>, id: string, collapsed: Set<string>): number {
+  const node = nodeMap.get(id);
+  if (!node || node.childCount === 0 || collapsed.has(id)) return CARD_W;
+  const total = node.childIds.reduce((sum, cid) => sum + subtreeW(nodeMap, cid, collapsed) + H_GAP, -H_GAP);
+  return Math.max(total, CARD_W);
+}
 
-  const isCollapsed = collapsedIds.has(nodeId);
-  const children = isCollapsed ? [] : node.childIds;
+/* ---------- 布局 + SVG ---------- */
+interface PlacedNode {
+  id: string;
+  name: string;
+  info?: string;
+  x: number;
+  y: number;
+  borderColor: string;
+  childCount: number;
+  isCollapsed: boolean;
+  depth: number;
+}
 
-  return (
-    <div className="flex flex-col items-center tree-node-item">
-      {/* 人物卡片 */}
-      <div
-        className="px-3 py-2 rounded-xl bg-card dark:bg-dark-card border-2 shadow-md hover:shadow-lg transition-all duration-200 min-w-[80px] sm:min-w-[100px] cursor-pointer select-none hover:scale-105 active:scale-95"
-        style={{ borderColor: node.borderColor }}
-        onClick={() => onToggle(nodeId)}
-        title={node.info || node.name}
-      >
-        <p className="font-bold font-serif text-ink dark:text-dark-text text-xs sm:text-sm whitespace-nowrap text-center">
-          {node.name}
-        </p>
-      </div>
+function layoutAll(nodeMap: Map<string, TreeNode>, rootIds: string[], collapsed: Set<string>) {
+  const placed: PlacedNode[] = [];
+  const edges: { x1: number; y1: number; x2: number; y2: number }[] = [];
 
-      {/* 展开/折叠指示器 */}
-      {node.childCount > 0 && (
-        <div
-          className={`flex items-center gap-0.5 mt-1 px-2 py-0.5 rounded-full text-[10px] font-medium border shadow-sm whitespace-nowrap cursor-pointer select-none transition-colors
-            ${isCollapsed
-              ? 'bg-cinnabar/10 dark:bg-cinnabar/20 border-cinnabar/40 dark:border-cinnabar/60 text-cinnabar dark:text-dark-cinnabar hover:bg-cinnabar/20'
-              : 'bg-forest/10 dark:bg-forest/20 border-forest/40 dark:border-forest/60 text-forest dark:text-dark-forest hover:bg-forest/20'
-            }`}
-          onClick={(e) => { e.stopPropagation(); onToggle(nodeId); }}
-        >
-          {isCollapsed ? (
-            <>
-              <ChevronRightIcon className="h-3 w-3" />
-              <span>{node.childCount}人</span>
-            </>
-          ) : (
-            <>
-              <ChevronDownIcon className="h-3 w-3" />
-              <span>收起</span>
-            </>
-          )}
-        </div>
-      )}
+  function lay(id: string, cx: number, y: number) {
+    const node = nodeMap.get(id);
+    if (!node) return;
+    const isCol = collapsed.has(id);
+    placed.push({
+      id, name: node.name, info: node.info,
+      x: cx - CARD_W / 2, y,
+      borderColor: node.borderColor,
+      childCount: node.childCount,
+      isCollapsed: isCol,
+      depth: node.depth,
+    });
+    if (isCol || node.childCount === 0) return;
+    const childWs = node.childIds.map(cid => subtreeW(nodeMap, cid, collapsed));
+    const totalW = childWs.reduce((a, b) => a + b, 0) + H_GAP * (childWs.length - 1);
+    let sx = cx - totalW / 2;
+    const parentBottom = y + CARD_H;
+    const childTop = y + CARD_H + V_GAP;
+    for (let i = 0; i < node.childIds.length; i++) {
+      const ccx = sx + childWs[i] / 2;
+      edges.push({ x1: cx, y1: parentBottom, x2: ccx, y2: childTop });
+      lay(node.childIds[i], ccx, childTop);
+      sx += childWs[i] + H_GAP;
+    }
+  }
 
-      {/* 子节点 */}
-      {children.length > 0 && (
-        <>
-          {/* 竖线（父到分叉） */}
-          <div className="w-px h-4 bg-amber-300/50 dark:bg-amber-600/30" />
+  // 多个根节点水平排列
+  const rootWs = rootIds.map(rid => subtreeW(nodeMap, rid, collapsed));
+  const totalW = rootWs.reduce((a, b) => a + b, 0) + H_GAP * (rootWs.length - 1);
+  let sx = -totalW / 2;
+  for (let i = 0; i < rootIds.length; i++) {
+    const cx = sx + rootWs[i] / 2;
+    lay(rootIds[i], cx, 0);
+    sx += rootWs[i] + H_GAP;
+  }
 
-          {/* 子树容器 */}
-          <div className="flex items-start gap-0">
-            {children.map((cid, idx) => (
-              <div key={cid} className="flex flex-col items-center relative">
-                {/* 横线连接 */}
-                <div className="flex items-center">
-                  {/* 左横线（非第一个子节点） */}
-                  {idx > 0 && (
-                    <div className="w-3 sm:w-4 h-px bg-amber-300/50 dark:bg-amber-600/30" />
-                  )}
-                  {/* 竖线（子到卡片） */}
-                  <div className="w-px h-4 bg-amber-300/50 dark:bg-amber-600/30" />
-                </div>
-                {/* 递归子节点 */}
-                <TreeItem
-                  nodeId={cid}
-                  nodeMap={nodeMap}
-                  collapsedIds={collapsedIds}
-                  onToggle={onToggle}
-                />
-              </div>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  );
+  return { placed, edges };
 }
 
 /* ---------- 主组件 ---------- */
@@ -187,56 +164,67 @@ export default function TreeView({ data }: TreeViewProps) {
     });
   }, [treeMap]);
 
+  // 布局计算
+  const { placed, edges } = useMemo(
+    () => layoutAll(treeMap, rootIds, collapsedIds),
+    [treeMap, rootIds, collapsedIds]
+  );
+
+  // 计算 SVG 尺寸
+  const svgW = useMemo(() => {
+    if (!placed.length) return 400;
+    const maxX = Math.max(...placed.map(n => n.x + CARD_W));
+    return Math.max(maxX + 40, 400);
+  }, [placed]);
+
+  const svgH = useMemo(() => {
+    if (!placed.length) return 300;
+    const maxY = Math.max(...placed.map(n => n.y + CARD_H));
+    return maxY + 60;
+  }, [placed]);
+
+  // 画布偏移（让内容居中）
+  const offsetX = svgW > 0 ? svgW / 2 : 0;
+
   // Pan/zoom
-  const containerRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
   const panzoomRef = useRef<any>(null);
 
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    let destroy: (() => void) | null = null;
+  const initPanZoom = useCallback(() => {
+    if (!innerRef.current || !wrapperRef.current) return;
     import('@panzoom/panzoom').then(({ default: Panzoom }) => {
-      if (!containerRef.current) return;
-      const parent = containerRef.current.parentElement;
-      if (!parent) return;
-
-      const pz = Panzoom(containerRef.current, {
+      if (!innerRef.current || !wrapperRef.current) return;
+      const pz = Panzoom(innerRef.current, {
         maxScale: 4,
-        minScale: 0.05,
-        startScale: 0.7,
+        minScale: 0.02,
+        startScale: 0.8,
         startX: 0,
         startY: 0,
-        cursor: 'grab',
       });
-
-      parent.addEventListener('wheel', pz.zoomWithWheel);
-      containerRef.current.addEventListener('panzoomchange', (e: any) => {
-        // Sync zoom buttons
-        const btns = parent.querySelectorAll('.zoom-btn');
-        btns[0]?.classList.toggle('opacity-30', e.detail.scale >= 4);
-        btns[1]?.classList.toggle('opacity-30', e.detail.scale <= 0.1);
-      });
-
+      wrapperRef.current.addEventListener('wheel', pz.zoomWithWheel, { passive: false });
       panzoomRef.current = pz;
 
       // 初始居中
-      setTimeout(() => {
-        if (!parent || !containerRef.current) return;
-        const rect = containerRef.current.getBoundingClientRect();
-        pz.pan(
-          (parent.clientWidth / 2) - (rect.width * 0.7 / 2),
-          20
-        );
-      }, 100);
-
-      destroy = () => {
-        parent.removeEventListener('wheel', pz.zoomWithWheel);
-        pz.destroy();
-      };
+      const parent = wrapperRef.current;
+      const scale = 0.8;
+      pz.zoomTo(scale);
+      pz.pan(
+        (parent.clientWidth / 2) - (svgW * scale / 2),
+        30
+      );
     });
+  }, [svgW]);
 
-    return () => { destroy?.(); };
-  }, []);
+  useEffect(() => {
+    initPanZoom();
+    return () => {
+      if (panzoomRef.current) {
+        panzoomRef.current.destroy();
+        panzoomRef.current = null;
+      }
+    };
+  }, [initPanZoom]);
 
   const handleZoomIn = useCallback(() => {
     panzoomRef.current?.zoomIn();
@@ -247,19 +235,17 @@ export default function TreeView({ data }: TreeViewProps) {
   }, []);
 
   const handleFitView = useCallback(() => {
-    if (!containerRef.current || !panzoomRef.current) return;
-    const parent = containerRef.current.parentElement;
-    if (!parent) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const scaleX = parent.clientWidth / (rect.width + 80);
-    const scaleY = parent.clientHeight / (rect.height + 80);
+    if (!wrapperRef.current || !panzoomRef.current) return;
+    const parent = wrapperRef.current;
+    const scaleX = parent.clientWidth / (svgW + 40);
+    const scaleY = parent.clientHeight / (svgH + 40);
     const scale = Math.min(scaleX, scaleY, 1.5);
     panzoomRef.current.zoomTo(scale);
     panzoomRef.current.pan(
-      (parent.clientWidth - rect.width * scale) / 2,
-      20
+      (parent.clientWidth - svgW * scale) / 2,
+      (parent.clientHeight - svgH * scale) / 2
     );
-  }, []);
+  }, [svgW, svgH]);
 
   if (!rootIds.length) {
     return (
@@ -276,81 +262,108 @@ export default function TreeView({ data }: TreeViewProps) {
         <div className="flex items-center justify-between px-3 sm:px-6 py-3 border-b border-border dark:border-dark-border">
           <Squares2X2Icon className="h-5 w-5 text-cinnabar" />
           <h2 className="text-base sm:text-lg font-bold font-serif text-ink dark:text-dark-text">家族树状图</h2>
-          <p className="text-[10px] sm:text-xs text-muted dark:text-dark-muted">
+          <p className="text-[10px] sm:text-xs text-muted dark:text-dark-muted hidden sm:block">
             点击卡片展开/折叠 · 滚轮缩放 · 拖拽移动
           </p>
         </div>
 
         {/* 画布区域 */}
         <div
-          ref={containerRef.current ? undefined : undefined}
+          ref={wrapperRef}
           className="w-full h-[70vh] sm:h-[80vh] relative overflow-hidden bg-paper dark:bg-dark-bg cursor-grab active:cursor-grabbing"
           style={{ touchAction: 'none' }}
         >
           {/* 背景装饰 */}
-          <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
             backgroundImage: 'radial-gradient(circle, #8B2500 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
+            backgroundSize: '20px 20px',
           }} />
 
-          {/* 可平移缩放的树内容 */}
-          <div ref={containerRef} className="origin-top-left">
-            <div className="flex gap-6 p-8">
-              {rootIds.map(rid => (
-                <TreeItem
-                  key={rid}
-                  nodeId={rid}
-                  nodeMap={treeMap}
-                  collapsedIds={collapsedIds}
-                  onToggle={toggleNode}
-                />
-              ))}
-            </div>
+          {/* 可平移缩放的内容 */}
+          <div ref={innerRef} className="origin-top-left">
+            <svg
+              width={svgW}
+              height={svgH}
+              className="absolute top-0 left-0 pointer-events-none"
+            >
+              <g>
+                {edges.map((e, i) => (
+                  <path
+                    key={i}
+                    d={`M ${e.x1} ${e.y1} C ${e.x1} ${e.y1 + V_GAP * 0.4}, ${e.x2} ${e.y2 - V_GAP * 0.4}, ${e.x2} ${e.y2}`}
+                    fill="none"
+                    stroke="#D4A574"
+                    strokeWidth="1.5"
+                    opacity="0.6"
+                  />
+                ))}
+              </g>
+            </svg>
+
+            {/* 节点卡片 */}
+            {placed.map(node => (
+              <div
+                key={node.id}
+                className="absolute flex flex-col items-center"
+                style={{ left: node.x, top: node.y, width: CARD_W }}
+              >
+                {/* 卡片 */}
+                <div
+                  className="w-full px-1 py-1.5 rounded-lg bg-card dark:bg-dark-card border shadow-sm hover:shadow-md transition-all cursor-pointer select-none hover:scale-105 active:scale-95 group"
+                  style={{ borderColor: node.borderColor }}
+                  onClick={() => toggleNode(node.id)}
+                  title={node.info || node.name}
+                >
+                  <p className="font-bold font-serif text-ink dark:text-dark-text text-[11px] leading-tight whitespace-nowrap text-center truncate">
+                    {node.name}
+                  </p>
+                </div>
+
+                {/* 展开/折叠指示 */}
+                {node.childCount > 0 && (
+                  <div
+                    className={`mt-0.5 px-1.5 py-px rounded-full text-[9px] font-medium border cursor-pointer select-none whitespace-nowrap
+                      ${node.isCollapsed
+                        ? 'bg-cinnabar/10 dark:bg-cinnabar/20 border-cinnabar/40 dark:border-cinnabar/60 text-cinnabar dark:text-dark-cinnabar'
+                        : 'bg-forest/10 dark:bg-forest/20 border-forest/40 dark:border-forest/60 text-forest dark:text-dark-forest'
+                      }`}
+                    onClick={(e) => { e.stopPropagation(); toggleNode(node.id); }}
+                  >
+                    {node.isCollapsed ? (
+                      <span className="flex items-center gap-0.5">
+                        <ChevronRightIcon className="h-2.5 w-2.5" />
+                        {node.childCount}
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-0.5">
+                        <ChevronDownIcon className="h-2.5 w-2.5" />
+                        收起
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
 
           {/* 控制按钮 */}
-          <div className="absolute bottom-4 right-4 flex flex-col gap-2 z-10">
-            <button
-              onClick={handleZoomIn}
-              className="zoom-btn w-9 h-9 flex items-center justify-center bg-card dark:bg-dark-card rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors text-lg font-bold"
-              title="放大"
-            >+</button>
-            <button
-              onClick={handleZoomOut}
-              className="zoom-btn w-9 h-9 flex items-center justify-center bg-card dark:bg-dark-card rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors text-lg font-bold"
-              title="缩小"
-            >−</button>
-            <button
-              onClick={handleFitView}
-              className="w-9 h-9 flex items-center justify-center bg-card dark:bg-dark-card rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors"
-              title="适应视图"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-              </svg>
+          <div className="absolute bottom-4 right-4 flex flex-col gap-1.5 z-10">
+            <button onClick={handleZoomIn} className="w-8 h-8 flex items-center justify-center bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors text-base font-bold" title="放大">+</button>
+            <button onClick={handleZoomOut} className="w-8 h-8 flex items-center justify-center bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors text-base font-bold" title="缩小">−</button>
+            <button onClick={handleFitView} className="w-8 h-8 flex items-center justify-center bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors" title="适应视图">
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
             </button>
           </div>
 
           {/* 展开全部 / 折叠全部 */}
-          <div className="absolute top-4 right-4 flex gap-2 z-10">
-            <button
-              onClick={() => setCollapsedIds(new Set())}
-              className="px-3 py-1.5 text-xs bg-card dark:bg-dark-card rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors"
-            >
-              展开全部
-            </button>
-            <button
-              onClick={() => {
-                const s = new Set<string>();
-                treeMap.forEach((node) => {
-                  if (node.depth >= 1) s.add(node.id);
-                });
-                setCollapsedIds(s);
-              }}
-              className="px-3 py-1.5 text-xs bg-card dark:bg-dark-card rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors"
-            >
-              折叠全部
-            </button>
+          <div className="absolute top-3 right-3 flex gap-1.5 z-10">
+            <button onClick={() => setCollapsedIds(new Set())} className="px-2.5 py-1 text-[11px] bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors">展开全部</button>
+            <button onClick={() => { const s = new Set<string>(); treeMap.forEach((n) => { if (n.depth >= 1) s.add(n.id); }); setCollapsedIds(s); }} className="px-2.5 py-1 text-[11px] bg-card/90 dark:bg-dark-card/90 backdrop-blur rounded-lg shadow-md border border-border dark:border-dark-border text-ink dark:text-dark-text hover:bg-cinnabar/10 transition-colors">折叠全部</button>
+          </div>
+
+          {/* 世代统计 */}
+          <div className="absolute bottom-3 left-3 text-[10px] text-muted dark:text-dark-muted z-10">
+            共 {placed.length} 人 · {new Set(placed.map(n => n.depth)).size} 世代
           </div>
         </div>
       </div>
