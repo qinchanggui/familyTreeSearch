@@ -150,10 +150,14 @@ function PersonNode({ data }: any) {
           {label}
         </p>
       </div>
+      <Handle type="source" position={Position.Bottom} className="!bg-cinnabar !w-3 !h-3 !bottom-[-18px]" />
       {childCount > 0 && (
         <button
           onClick={handleClick}
-          className="absolute -bottom-3 left-1/2 -translate-x-1/2 z-10 px-2 py-0.5 rounded-full text-[10px] font-medium border shadow-sm transition-all
+          onMouseDown={(e) => e.stopPropagation()}
+          onPointerDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+          className="nodrag nopan absolute -bottom-3 left-1/2 -translate-x-1/2 z-50 px-2 py-0.5 rounded-full text-[10px] font-medium border shadow-sm transition-all
             bg-cinnabar/10 dark:bg-cinnabar/20 border-cinnabar/40 dark:border-cinnabar/60 text-cinnabar dark:text-dark-cinnabar
             hover:bg-cinnabar/20 dark:hover:bg-cinnabar/30 active:scale-95 whitespace-nowrap cursor-pointer"
         >
@@ -169,7 +173,6 @@ function PersonNode({ data }: any) {
           )}
         </button>
       )}
-      <Handle type="source" position={Position.Bottom} className="!bg-cinnabar !w-3 !h-3" />
     </div>
   );
 }

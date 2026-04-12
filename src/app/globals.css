@@ -152,3 +152,17 @@ body {
 .dark .card-heritage:hover {
   box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.4), 0 4px 10px -5px rgba(212, 165, 116, 0.1);
 }
+
+/* ReactFlow: 确保折叠按钮可点击 */
+.react-flow__node {
+  cursor: default !important;
+}
+.react-flow__node .nodrag,
+.react-flow__node .nopan {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  user-select: none !important;
+  position: relative !important;
+  z-index: 50 !important;
+}
