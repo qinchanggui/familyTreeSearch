@@ -25,9 +25,6 @@ const H_GAP = 180;
 const V_GAP = 100;
 const DEFAULT_EXPAND_DEPTH = 2;
 
-/* ---------- 全局 toggle 回调（解决 nodeTypes 闭包问题） ---------- */
-let globalToggleFn: ((nodeId: string) => void) | null = null;
-
 /* ---------- 数据结构 ---------- */
 interface TreeNode {
   id: string;
@@ -129,15 +126,7 @@ function layoutTree(nodeMap: Map<string, TreeNode>, rootIds: string[], collapsed
 
 /* ---------- 自定义节点组件 ---------- */
 function PersonNode({ data }: any) {
-  const { label, borderColor, childCount, collapsed, nodeId } = data;
-
-  const handleClick = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    if (globalToggleFn) {
-      globalToggleFn(nodeId);
-    }
-  }, [nodeId]);
+  const { label, borderColor, childCount, collapsed } = data;
 
   return (
     <div className="relative">
@@ -152,14 +141,12 @@ function PersonNode({ data }: any) {
       </div>
       <Handle type="source" position={Position.Bottom} className="!bg-cinnabar !w-3 !h-3 !bottom-[-18px]" />
       {childCount > 0 && (
-        <button
-          onClick={handleClick}
-          onMouseDown={(e) => e.stopPropagation()}
-          onPointerDown={(e) => e.stopPropagation()}
-          onTouchStart={(e) => e.stopPropagation()}
-          className="nodrag nopan absolute -bottom-3 left-1/2 -translate-x-1/2 z-50 px-2 py-0.5 rounded-full text-[10px] font-medium border shadow-sm transition-all
-            bg-cinnabar/10 dark:bg-cinnabar/20 border-cinnabar/40 dark:border-cinnabar/60 text-cinnabar dark:text-dark-cinnabar
-            hover:bg-cinnabar/20 dark:hover:bg-cinnabar/30 active:scale-95 whitespace-nowrap cursor-pointer"
+        <span
+          className={`absolute -bottom-3 left-1/2 -translate-x-1/2 z-10 px-2 py-0.5 rounded-full text-[10px] font-medium border shadow-sm whitespace-nowrap pointer-events-none select-none
+            ${collapsed
+              ? 'bg-cinnabar/10 dark:bg-cinnabar/20 border-cinnabar/40 dark:border-cinnabar/60 text-cinnabar dark:text-dark-cinnabar'
+              : 'bg-forest/10 dark:bg-forest/20 border-forest/40 dark:border-forest/60 text-forest dark:text-dark-forest'
+            }`}
         >
           {collapsed ? (
             <span className="flex items-center gap-0.5">
@@ -171,7 +158,7 @@ function PersonNode({ data }: any) {
               收起
             </span>
           )}
-        </button>
+        </span>
       )}
     </div>
   );
@@ -193,9 +180,7 @@ function TreeViewInner({ data }: TreeViewProps) {
     return s;
   });
 
-  // 注册全局 toggle 回调
-  const toggleRef = useRef<(nodeId: string) => void>(undefined);
-  toggleRef.current = useCallback((nodeId: string) => {
+  const toggleNode = useCallback((nodeId: string) => {
     setCollapsedIds(prev => {
       const next = new Set(prev);
       if (next.has(nodeId)) {
@@ -216,11 +201,6 @@ function TreeViewInner({ data }: TreeViewProps) {
       return next;
     });
   }, [treeMap]);
-
-  useEffect(() => {
-    globalToggleFn = toggleRef.current!;
-    return () => { globalToggleFn = null; };
-  }, [toggleRef]);
 
   // 初始化时居中
   const nodesInitialized = useNodesInitialized();
@@ -258,7 +238,7 @@ function TreeViewInner({ data }: TreeViewProps) {
         <div className="flex items-center justify-between px-3 sm:px-6 py-3 border-b border-border dark:border-dark-border">
           <Squares2X2Icon className="h-5 w-5 text-cinnabar" />
           <h2 className="text-base sm:text-lg font-bold font-serif text-ink dark:text-dark-text">家族树状图</h2>
-          <p className="text-[10px] sm:text-xs text-muted dark:text-dark-muted">点击展开/折叠 · 拖拽移动</p>
+          <p className="text-[10px] sm:text-xs text-muted dark:text-dark-muted">点击人物卡片展开/折叠 · 拖拽空白区域移动</p>
         </div>
         <div className="w-full h-[70vh] sm:h-[80vh]">
           <ReactFlow
@@ -270,6 +250,13 @@ function TreeViewInner({ data }: TreeViewProps) {
             maxZoom={4}
             proOptions={{ hideAttribution: true }}
             nodesDraggable={false}
+            panOnDrag={true}
+            onNodeClick={(_event, node) => {
+              const nodeId = node.id;
+              const treeNode = treeMap.get(nodeId);
+              if (!treeNode || treeNode.childCount === 0) return;
+              toggleNode(nodeId);
+            }}
           >
             <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#E8D5B7" />
             <Controls showInteractive={false} position="bottom-right" className="!bg-card dark:!bg-dark-card !rounded-lg !shadow-md !border !border-border" />
