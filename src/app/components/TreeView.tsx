@@ -206,6 +206,27 @@ export default function TreeView({ data }: TreeViewProps) {
     });
   }, [vs]);
 
+  const onGesture = useCallback((e: React.GestureEvent) => {
+    e.preventDefault();
+    if (e.touches.length === 2) {
+      const t0 = e.touches[0];
+      const t1 = e.touches[1];
+      const cx = (t0.clientX + t1.clientX) / 2;
+      const cy = (t0.clientY + t1.clientY) / 2;
+      const dist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+      if (!gestureRef.current) gestureRef.current = { dist, scale: vs.scale };
+      const { dist: prevDist, scale: prevScale } = gestureRef.current;
+      const ratio = dist / Math.max(prevDist, 1);
+      const ns = Math.min(Math.max(prevScale * ratio, 0.02), 4);
+      gestureRef.current = { dist, scale: ns };
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const mx = cx - rect.left;
+      const my = cy - rect.top;
+      setVs({ x: mx - (mx - vs.x) * (ns / vs.scale), y: my - (my - vs.y) * (ns / vs.scale), scale: ns });
+    }
+  }, [vs]);
+
   const zoomAt = useCallback((factor: number) => {
     const el = containerRef.current;
     if (!el) return;
@@ -245,6 +266,7 @@ export default function TreeView({ data }: TreeViewProps) {
           onPointerUp={onUp}
           onPointerCancel={onUp}
           onWheel={onWheel}
+          onGestureStart={onGesture}
         >
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
             backgroundImage: 'radial-gradient(circle, #8B2500 1px, transparent 1px)',
