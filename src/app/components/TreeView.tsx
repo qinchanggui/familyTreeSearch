@@ -14,7 +14,7 @@ const generationColors = [
   '#8B655F',
 ];
 
-const DEFAULT_EXPAND_DEPTH = 2;
+const DEFAULT_EXPAND_DEPTH = 1;
 const CARD_W = 80;
 const CARD_H = 36;
 const H_GAP = 16;
@@ -156,7 +156,9 @@ export default function TreeView({ data }: TreeViewProps) {
   const innerRef = useRef<HTMLDivElement>(null);
   const pzRef = useRef<any>(null);
 
-  // 初始化 panzoom 并自动居中
+  // 初始化 panzoom
+  const initedRef = useRef(false);
+
   useEffect(() => {
     if (!innerRef.current || !wrapperRef.current || totalW === 0) return;
 
@@ -170,7 +172,6 @@ export default function TreeView({ data }: TreeViewProps) {
       const pw = parent.clientWidth;
       const ph = parent.clientHeight;
 
-      // 计算合适的初始缩放
       const scaleX = pw / totalW;
       const scaleY = ph / totalH;
       const initScale = Math.min(scaleX, scaleY, 1.2) * 0.9;
@@ -191,11 +192,25 @@ export default function TreeView({ data }: TreeViewProps) {
         (pw - totalW * initScale) / 2,
         (ph - totalH * initScale) / 2
       );
+
+      // 标记初始化完成
+      setTimeout(() => { initedRef.current = true; }, 200);
     });
 
     return () => {
       if (pzRef.current) { pzRef.current.destroy(); pzRef.current = null; }
+      initedRef.current = false;
     };
+  }, [totalW, totalH]);
+
+  // 展开/折叠后自动适应视图
+  useEffect(() => {
+    if (!initedRef.current || !pzRef.current || !wrapperRef.current || totalW === 0) return;
+    const pw = wrapperRef.current.clientWidth;
+    const ph = wrapperRef.current.clientHeight;
+    const s = Math.min(pw / totalW, ph / totalH, 1.5) * 0.9;
+    pzRef.current.zoom(s);
+    pzRef.current.pan((pw - totalW * s) / 2, (ph - totalH * s) / 2);
   }, [totalW, totalH]);
 
   const handleZoomIn = useCallback(() => pzRef.current?.zoomIn(), []);
