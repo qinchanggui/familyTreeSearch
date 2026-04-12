@@ -336,7 +336,7 @@ export default function Home() {
             ) : viewMode === 'memorial' ? (
               <MemorialMap places={memorialPlaces} />
             ) : (
-              <TreeView data={treeData} />
+              <TreeView data={filteredFamilyData} />
             )}
           </>
         )}
