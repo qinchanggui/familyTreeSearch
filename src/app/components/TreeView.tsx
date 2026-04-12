@@ -130,21 +130,33 @@ function layoutTree(nodeMap: Map<string, TreeNode>, rootIds: string[], collapsed
 /* ---------- 自定义节点组件 ---------- */
 function PersonNode({ data }: any) {
   const { label, borderColor, childCount, collapsed, nodeId } = data;
+  const mouseDownPos = useRef<{ x: number; y: number } | null>(null);
 
-  const handleClick = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    mouseDownPos.current = { x: e.clientX, y: e.clientY };
+  }, []);
+
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    if (!mouseDownPos.current) return;
+    const dx = e.clientX - mouseDownPos.current.x;
+    const dy = e.clientY - mouseDownPos.current.y;
+    mouseDownPos.current = null;
+    // 只有在几乎没有移动时才算点击（排除拖拽）
+    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) return;
     if (globalToggleFn) {
       globalToggleFn(nodeId);
     }
   }, [nodeId]);
 
   return (
-    <div className="nopan nodrag relative">
+    <div className="nopan nodrag relative"
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+    >
       <Handle type="target" position={Position.Top} className="!bg-cinnabar !w-3 !h-3" />
       <div
         className="px-4 py-2.5 rounded-xl bg-card dark:bg-dark-card border-2 shadow-md hover:shadow-lg transition-shadow min-w-[100px] cursor-pointer"
         style={{ borderColor }}
-        onClick={handleClick}
       >
         <p className="font-bold font-serif text-ink dark:text-dark-text text-base whitespace-nowrap text-center">
           {label}
