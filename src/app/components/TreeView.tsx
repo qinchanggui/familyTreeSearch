@@ -1,7 +1,6 @@
 "use client";
 
-import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
-import { flushSync } from 'react-dom';
+import { useMemo, useCallback, useRef, useEffect } from 'react';
 import ReactFlow, {
   Node, Edge, Background, Controls,
   Position, Handle, BackgroundVariant,
@@ -155,8 +154,8 @@ function PersonNode({ data }: any) {
       (window as any).__treeDebug = 'pointerup fired, fn=' + !!fn;
       if (fn) {
         try {
-          flushSync(() => fn(nodeId));
-          (window as any).__treeDebug += ', flushSync ok';
+          fn(nodeId);
+          (window as any).__treeDebug += ', toggleNode ok';
         } catch (e) {
           (window as any).__treeDebug += ', ERROR: ' + (e as Error).message;
         }
@@ -210,39 +209,44 @@ const nodeTypes = { personNode: PersonNode };
 
 /* ---------- 内部组件 ---------- */
 function TreeViewInner({ data }: TreeViewProps) {
-  const { fitView } = useReactFlow();
+  const { fitView, setNodes, setEdges } = useReactFlow();
   const treeMap = useMemo(() => buildTree(data), [data]);
   const rootIds = useMemo(() => (data.generations[0]?.people || []).map(p => p.id!).filter(Boolean), [data]);
 
-  const [collapsedIds, setCollapsedIds] = useState<Set<string>>(() => {
-    const s = new Set<string>();
+  const collapsedIdsRef = useRef<Set<string>>(new Set());
+  // 初始化
+  useMemo(() => {
     treeMap.forEach((node) => {
-      if (node.depth >= DEFAULT_EXPAND_DEPTH) s.add(node.id);
-    });
-    return s;
-  });
-
-  const toggleNode = useCallback((nodeId: string) => {
-    setCollapsedIds(prev => {
-      const next = new Set(prev);
-      if (next.has(nodeId)) {
-        next.delete(nodeId);
-      } else {
-        next.add(nodeId);
-        const node = treeMap.get(nodeId);
-        if (node) {
-          const stack = [...node.childIds];
-          while (stack.length) {
-            const cid = stack.pop()!;
-            next.add(cid);
-            const child = treeMap.get(cid);
-            if (child) stack.push(...child.childIds);
-          }
-        }
-      }
-      return next;
+      if (node.depth >= DEFAULT_EXPAND_DEPTH) collapsedIdsRef.current.add(node.id);
     });
   }, [treeMap]);
+
+  const toggleNode = useCallback((nodeId: string) => {
+    const prev = collapsedIdsRef.current;
+    const next = new Set(prev);
+    if (next.has(nodeId)) {
+      next.delete(nodeId);
+    } else {
+      next.add(nodeId);
+      const node = treeMap.get(nodeId);
+      if (node) {
+        const stack = [...node.childIds];
+        while (stack.length) {
+          const cid = stack.pop()!;
+          next.add(cid);
+          const child = treeMap.get(cid);
+          if (child) stack.push(...child.childIds);
+        }
+      }
+    }
+    collapsedIdsRef.current = next;
+    // 直接通过 ReactFlow API 更新节点
+    const { nodes: newNodes, edges: newEdges } = layoutTree(treeMap, rootIds, next);
+    setNodes(newNodes);
+    setEdges(newEdges);
+    // 延迟 fitView
+    setTimeout(() => fitView({ padding: 0.15, duration: 300 }), 50);
+  }, [treeMap, rootIds, setNodes, setEdges, fitView]);
 
   const toggleRef = useRef<(nodeId: string) => void>(undefined);
   toggleRef.current = toggleNode;
@@ -263,20 +267,15 @@ function TreeViewInner({ data }: TreeViewProps) {
     }
   }, [nodesInitialized, fitView]);
 
-  // 折叠变化后重新居中
-  const prevKeyRef = useRef('');
-  useEffect(() => {
-    const key = [...collapsedIds].sort().join(',');
-    if (key !== prevKeyRef.current) {
-      prevKeyRef.current = key;
-      const timer = setTimeout(() => fitView({ padding: 0.15, duration: 300 }), 50);
-      return () => clearTimeout(timer);
-    }
-  }, [collapsedIds, fitView]);
-
   const { nodes, edges } = useMemo(() => {
-    return layoutTree(treeMap, rootIds, collapsedIds);
-  }, [treeMap, rootIds, collapsedIds]);
+    return layoutTree(treeMap, rootIds, collapsedIdsRef.current);
+  }, [treeMap, rootIds]);
+
+  // 初始化时设置节点
+  useEffect(() => {
+    setNodes(nodes);
+    setEdges(edges);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!rootIds.length) {
     return <div className="w-full bg-card dark:bg-dark-card shadow-sm p-6 text-center text-muted dark:text-dark-muted text-sm">暂无数据</div>;
