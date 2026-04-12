@@ -25,6 +25,9 @@ const H_GAP = 180;
 const V_GAP = 100;
 const DEFAULT_EXPAND_DEPTH = 2;
 
+/* ---------- 全局 toggle 回调（解决 nodeTypes 闭包问题） ---------- */
+let globalToggleFn: ((nodeId: string) => void) | null = null;
+
 /* ---------- 数据结构 ---------- */
 interface TreeNode {
   id: string;
@@ -126,14 +129,22 @@ function layoutTree(nodeMap: Map<string, TreeNode>, rootIds: string[], collapsed
 
 /* ---------- 自定义节点组件 ---------- */
 function PersonNode({ data }: any) {
-  const { label, borderColor, childCount, collapsed } = data;
+  const { label, borderColor, childCount, collapsed, nodeId } = data;
+
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (globalToggleFn) {
+      globalToggleFn(nodeId);
+    }
+  }, [nodeId]);
 
   return (
-    <div className="relative">
+    <div className="nopan nodrag relative">
       <Handle type="target" position={Position.Top} className="!bg-cinnabar !w-3 !h-3" />
       <div
-        className="px-4 py-2.5 rounded-xl bg-card dark:bg-dark-card border-2 shadow-md hover:shadow-lg transition-shadow min-w-[100px]"
+        className="px-4 py-2.5 rounded-xl bg-card dark:bg-dark-card border-2 shadow-md hover:shadow-lg transition-shadow min-w-[100px] cursor-pointer"
         style={{ borderColor }}
+        onClick={handleClick}
       >
         <p className="font-bold font-serif text-ink dark:text-dark-text text-base whitespace-nowrap text-center">
           {label}
@@ -202,26 +213,13 @@ function TreeViewInner({ data }: TreeViewProps) {
     });
   }, [treeMap]);
 
-  // 使用原生事件监听，绕过 ReactFlow d3-zoom 的事件拦截
-  const containerRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<(nodeId: string) => void>(undefined);
+  toggleRef.current = toggleNode;
+
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handler = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const nodeEl = target.closest('.react-flow__node');
-      if (!nodeEl) return;
-      const nodeId = nodeEl.getAttribute('data-id');
-      if (!nodeId) return;
-      const treeNode = treeMap.get(nodeId);
-      if (!treeNode || treeNode.childCount === 0) return;
-      toggleNode(nodeId);
-    };
-
-    container.addEventListener('click', handler, true);
-    return () => container.removeEventListener('click', handler, true);
-  }, [treeMap, toggleNode]);
+    globalToggleFn = toggleRef.current!;
+    return () => { globalToggleFn = null; };
+  }, [toggleRef]);
 
   // 初始化时居中
   const nodesInitialized = useNodesInitialized();
@@ -272,7 +270,6 @@ function TreeViewInner({ data }: TreeViewProps) {
             proOptions={{ hideAttribution: true }}
             nodesDraggable={false}
             panOnDrag={true}
-            ref={containerRef}
           >
             <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#E8D5B7" />
             <Controls showInteractive={false} position="bottom-right" className="!bg-card dark:!bg-dark-card !rounded-lg !shadow-md !border !border-border" />
