@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import FamilyTree from './components/FamilyTree';
 import TimelineView from './components/TimelineView';
@@ -43,6 +43,8 @@ export default function Home() {
     selectedGenerations: [],
   });
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+
+  const genScrollRef = useRef<HTMLDivElement>(null);
 
   const familyFullName = useMemo(() => getFamilyFullName(), []);
 
@@ -290,7 +292,14 @@ export default function Home() {
             {viewMode === 'list' && (
               <div className="sticky top-0 z-20 bg-parchment dark:bg-dark-bg pb-2 mb-4">
               <div className="max-w-7xl mx-auto px-3 sm:px-4">
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-1 px-1 scroll-smooth snap-x snap-mandatory">
+              <div ref={genScrollRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-1 px-1 scroll-smooth snap-x snap-mandatory"
+                onWheel={(e) => {
+                  if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                    e.preventDefault();
+                    (genScrollRef.current!).scrollLeft += e.deltaY;
+                  }
+                }}
+              >
                 {familyData.generations.map((g, i) => (
                   <button
                     key={g.title}
