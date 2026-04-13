@@ -290,7 +290,7 @@ export default function Home() {
             {viewMode === 'list' && (
               <div className="sticky top-0 z-20 bg-parchment dark:bg-dark-bg pb-2 mb-4">
               <div className="max-w-7xl mx-auto px-3 sm:px-4">
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin -mx-1 px-1">
+              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-1 px-1 scroll-smooth snap-x snap-mandatory">
                 {familyData.generations.map((g, i) => (
                   <button
                     key={g.title}
@@ -300,7 +300,7 @@ export default function Home() {
                       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                       setTimeout(() => setActiveGen(null), 2000);
                     }}
-                    className={`flex-shrink-0 px-4 py-1.5 text-xs font-medium font-serif border transition-colors whitespace-nowrap relative ${
+                    className={`flex-shrink-0 snap-start px-4 py-1.5 text-xs font-medium font-serif border transition-colors whitespace-nowrap relative ${
                       activeGen === g.title
                         ? 'border-cinnabar dark:border-dark-cinnabar bg-cinnabar/10 dark:bg-dark-cinnabar/20 text-cinnabar dark:text-dark-cinnabar'
                         : 'border-border dark:border-dark-border bg-card dark:bg-dark-card text-ink dark:text-dark-text hover:text-cinnabar dark:hover:text-dark-cinnabar hover:border-gold-light dark:hover:border-dark-gold hover:bg-heritage-hover dark:hover:bg-dark-heritage-hover'
