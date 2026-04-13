@@ -29,14 +29,8 @@ export function middleware(request: NextRequest) {
 
   const response = NextResponse.next();
 
-  // 安全头（所有页面生效）
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('X-Frame-Options', 'DENY');
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  response.headers.set('X-XSS-Protection', '1; mode=block');
-  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
-  response.headers.set('X-DNS-Prefetch-Control', 'on');
-  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  // 安全头由 vercel.json 统一管理，middleware 只处理限流和来源校验
+  // 纵深防御：阻止伪造的内部请求头（CVE-2025-29927）
   response.headers.set('X-Download-Options', 'noopen');
 
   // API 路由额外处理
@@ -44,7 +38,7 @@ export function middleware(request: NextRequest) {
     // 来源校验：只允许本站前端请求
     const origin = request.headers.get('origin');
     const referer = request.headers.get('referer');
-    const allowedHosts = ['qinshizupu.com', 'localhost'];
+    const allowedHosts = ['qinshizupu.com'];
 
     const isAllowedOrigin = origin && allowedHosts.some(h => new URL(origin).hostname.endsWith(h));
     const isAllowedReferer = referer && allowedHosts.some(h => new URL(referer).hostname.endsWith(h));

@@ -220,7 +220,7 @@ export default function FamilyTree({ familyData, fullFamilyData, searchTerm, onP
             setPersonMap(createPersonMap(familyData));
             setSonsMap(createSonsMap(familyData));
         }
-    }, [familyData]);
+    }, [familyData, fullFamilyData]);
     
     const scrollToPerson = (personId: string) => {
         const element = document.getElementById(`person-${personId}`);

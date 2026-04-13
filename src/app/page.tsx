@@ -16,13 +16,24 @@ import { ANIMATION_DELAYS } from '@/utils/constants';
 import { QueueListIcon, Squares2X2Icon, ClockIcon, SunIcon, MoonIcon, ChartBarIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import { getFamilyFullName } from '@/utils/config';
 import { searchFamilyData, createFilteredFamilyData, SearchResult } from '@/utils/search';
-import { buildFamilyTree } from '@/utils/familyTree';
+
+interface MemorialPlace {
+  id: string;
+  name: string;
+  address: string;
+  lng: number;
+  lat: number;
+  memorialDay: string;
+  ancestor: string;
+  note: string;
+  photo: string;
+}
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<'list' | 'timeline' | 'tree' | 'stats' | 'memorial'>('list');
   const [activeGen, setActiveGen] = useState<string | null>(null);
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
-  const [memorialPlaces, setMemorialPlaces] = useState<any[]>([]);
+  const [memorialPlaces, setMemorialPlaces] = useState<MemorialPlace[]>([]);
   const { data: familyData, loading: dataLoading, error: dataError } = useFamilyData();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -34,13 +45,6 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
   const familyFullName = useMemo(() => getFamilyFullName(), []);
-
-  const treeData = useMemo(() => {
-    if (dataLoading || dataError || !familyData.generations.length) {
-      return { generations: [{ title: "家族树", people: [] }] };
-    }
-    return buildFamilyTree(familyData);
-  }, [familyData, dataLoading, dataError]);
 
   const matchedIds = useMemo(() => {
     return new Set(searchResults.filter(r => r.person.id).map(r => r.person.id!));
@@ -58,14 +62,6 @@ export default function Home() {
     setSearchFilters(filters);
   }, []);
 
-  useEffect(() => {
-    // 缓存全量数据供搜索模式下FamilyTree组件使用
-    if (!dataLoading && !dataError && familyData.generations.length) {
-      // 全量数据缓存供搜索模式使用
-    }
-  }, [familyData, dataLoading, dataError]);
-
-  // 加载祭祖地点数据
   useEffect(() => {
     fetch('/api/memorial-places')
       .then(res => res.json())

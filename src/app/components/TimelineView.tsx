@@ -3,18 +3,11 @@
 import { useState, useMemo } from 'react';
 import { FamilyData, Person } from '@/types/family';
 import { UserIcon, ChevronDownIcon, ChevronRightIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { GENERATION_COLORS } from '@/utils/constants';
 
 interface TimelineViewProps {
     data: FamilyData;
 }
-
-const genColors = [
-    '#8B2500', '#993820', '#8C3020', '#A84830', '#8B3A25',
-    '#9B4830', '#8A3528', '#A85540', '#944535', '#B06848',
-    '#8C4838', '#9A5848', '#884535', '#A86050', '#955040',
-    '#B07858', '#A06848', '#986050', '#8C5040', '#B88868',
-    '#A88070',
-];
 
 interface GenBlockProps {
     generation: { title: string; people: Person[] };
@@ -23,7 +16,7 @@ interface GenBlockProps {
 
 function GenBlock({ generation, index }: GenBlockProps) {
     const [expanded, setExpanded] = useState(false);
-    const color = genColors[index % genColors.length];
+    const color = GENERATION_COLORS[index % GENERATION_COLORS.length];
 
     return (
         <div className="mb-2">

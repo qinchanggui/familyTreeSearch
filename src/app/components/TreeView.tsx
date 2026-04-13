@@ -3,16 +3,9 @@
 import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { Squares2X2Icon, ChevronRightIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { FamilyData } from '@/types/family';
+import { GENERATION_COLORS } from '@/utils/constants';
 
 interface TreeViewProps { data: FamilyData }
-
-const generationColors = [
-  '#8B2500', '#7A2E00', '#6B3500', '#5C3C00', '#4D4300',
-  '#8B3520', '#7A3A2A', '#6B4034', '#5C463E', '#4D4C48',
-  '#8B4535', '#7A4A3D', '#6B5045', '#5C564D', '#4D5C55',
-  '#8B554A', '#7A5A50', '#6B6055', '#5C665A', '#4D6C5F',
-  '#8B655F',
-];
 
 const DEFAULT_EXPAND_DEPTH = 1;
 const CARD_W = 80;
@@ -33,7 +26,7 @@ function buildTree(data: FamilyData): Map<string, TreeNode> {
       if (!p.id) return;
       map.set(p.id, {
         id: p.id, name: p.name, info: p.info || undefined, depth: gi,
-        borderColor: generationColors[gi % generationColors.length],
+        borderColor: GENERATION_COLORS[gi % GENERATION_COLORS.length],
         childCount: 0, childIds: [],
       });
     });
